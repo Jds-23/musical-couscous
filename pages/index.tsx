@@ -14,7 +14,7 @@ export default function Home() {
   const [currency, setCurrency] = useState("bnb");
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <div className={styles.container}>
+    <div className={styles.home__container}>
       <CustomModal title={"This a ti"} isOpen={isOpen} onClose={onClose}>
         <ModalBody>
           <h1>Iam a modal</h1>
@@ -26,6 +26,20 @@ export default function Home() {
       <h1>Hello</h1>
       <Head>
         <title>Gain Protocol SwapX</title>
+        <meta name="description" content="Coin offering" />
+        <link rel="icon" href="/favicon.ico" />
+        <link
+          rel="preload"
+          href="/fonts/euro_technic_extended_regular.ttf"
+          as="font"
+          crossOrigin=""
+        />
+        <link
+          rel="preload"
+          href="/fonts/Eurostile-Bold.ttf"
+          as="font"
+          crossOrigin=""
+        />
       </Head>
       <CustomButton onClick={onOpen} block>
         Unlock Wallet
