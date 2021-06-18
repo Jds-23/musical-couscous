@@ -1,0 +1,18 @@
+.button {
+  background: linear-gradient(
+    90deg,
+    #ecb42a 0%,
+    #e8a839 48%,
+    #c637c1 81%,
+    #bb12ee 100%
+  );
+  font-size: 20px;
+  border-radius: 100px;
+  color: #fff;
+  border: none;
+  outline: none;
+  padding: 9px;
+}
+.button__block {
+  width: 100%;
+}

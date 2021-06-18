@@ -1,9 +1,23 @@
+@font-face {
+  font-family: "Eurostile";
+  src: url("/fonts/euro_technic_extended_regular.ttf");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Eurostile";
+  src: url("/fonts/Eurostile-Bold.ttf");
+  font-style: medium;
+  font-weight: 500;
+  font-display: swap;
+}
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: Eurostile, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+    Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 a {
@@ -13,4 +27,5 @@ a {
 
 * {
   box-sizing: border-box;
+  margin: 0;
 }
