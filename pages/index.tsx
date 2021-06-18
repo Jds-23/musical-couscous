@@ -44,7 +44,7 @@ export default function Home() {
         </CustomModal>
         <Header />
         <h1>Hello</h1>
-        <CustomButton onClick={onOpen} block>
+        <CustomButton disabled onClick={onOpen} block>
           Unlock Wallet
         </CustomButton>
         <Switch options={["Buy", "Sell"]} state={state} setState={setState} />

@@ -12,7 +12,28 @@
   border: none;
   outline: none;
   padding: 9px;
+  transform: scale(1);
+  transition: 0.1s all ease-in-out;
 }
 .button__block {
   width: 100%;
+}
+.button__disabled {
+  background: rgba(122, 113, 167, 0.1);
+  color: rgba(122, 113, 167, 0.8);
+}
+.button__large {
+  font-size: 20px;
+  padding: 7px 20px;
+}
+.button__small {
+  font-size: 15px;
+  padding: 5px 12px;
+}
+.button:hover {
+  transform: scale(1.05);
+}
+.button:active {
+  transform: scale(1.02);
+  transition: 0.02s all ease-in-out;
 }
