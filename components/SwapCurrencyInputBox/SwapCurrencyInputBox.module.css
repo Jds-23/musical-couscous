@@ -1,0 +1,88 @@
+.swapCurrencyOutput {
+  display: flex;
+  flex-flow: column nowrap;
+  position: relative;
+  background: rgba(122, 113, 167, 0.1);
+  border-radius: 17px;
+  z-index: 1;
+}
+.swapCurrencyOutput__container {
+  border-radius: 17px;
+}
+.swapCurrencyOutput__container__row1 {
+  display: flex;
+  flex-flow: row nowrap;
+  -webkit-box-align: center;
+  align-items: center;
+  color: rgb(40, 13, 95);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  padding: 0.75rem 1rem 0px;
+}
+.swapCurrencyOutput__container__row1__content {
+  width: 100%;
+  display: flex;
+  padding: 0px;
+  -webkit-box-align: center;
+  align-items: center;
+  justify-content: space-between;
+}
+.swapCurrencyOutput__container__row1__content > p {
+  color: #786fa6;
+  font-weight: 400;
+  line-height: 1.5;
+  font-size: 14px;
+}
+.swapCurrencyOutput__container__row2 {
+  display: flex;
+  flex-flow: row nowrap;
+  -webkit-box-align: center;
+  align-items: center;
+  padding: 0.75rem 0.75rem 0.75rem 1rem;
+}
+.swapCurrencyOutput__container__row2 > input {
+  color: #786fa6;
+  position: relative;
+  font-weight: 400;
+  outline: none;
+  border: none;
+  flex: 1 1 auto;
+  background-color: transparent;
+  font-size: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0px;
+  appearance: textfield;
+}
+.swapCurrencyOutput__container__row2 > button {
+  -webkit-box-align: center;
+  align-items: center;
+  height: 34px;
+  font-size: 16px;
+  font-weight: 400;
+  background-color: transparent;
+  color: #786fa6;
+  border-radius: 12px;
+  outline: none;
+  cursor: pointer;
+  user-select: none;
+  border: none;
+  padding: 0px 0.5rem;
+  transition: all 0.5s ease;
+}
+.swapCurrencyOutput__container__row2 > button:hover {
+  background: rgba(122, 113, 167, 0.1);
+}
+.swapCurrencyOutput__container__row2 > button > span {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+}
+.swapCurrencyOutput__container__row2 > button > span > img {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+}
