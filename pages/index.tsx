@@ -2,6 +2,7 @@ import Head from "next/head";
 import React, { useState } from "react";
 import CustomButton from "../components/Button/Button";
 import Switch from "../components/Switch/Switch";
+import Header from "../components/Header/Header";
 import CustomModal from "../components/Modal/Modal";
 import SwapCurrencyInputBox from "../components/SwapCurrencyInputBox/SwapCurrencyInputBox";
 import styles from "../styles/Home.module.css";
@@ -23,6 +24,7 @@ export default function Home() {
           <CustomButton onClick={onClose}>Close</CustomButton>
         </ModalFooter>
       </CustomModal>
+      <Header />
       <h1>Hello</h1>
       <Head>
         <title>Gain Protocol SwapX</title>

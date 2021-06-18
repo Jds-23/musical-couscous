@@ -1,0 +1,13 @@
+.header {
+  position: fixed;
+  top: 0;
+  padding: 20px 45px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.header__brand {
+  width: 240px;
+  object-fit: contain;
+}
