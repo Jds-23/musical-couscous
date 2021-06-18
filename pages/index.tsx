@@ -16,16 +16,6 @@ export default function Home() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <div className={styles.home__container}>
-      <CustomModal title={"This a ti"} isOpen={isOpen} onClose={onClose}>
-        <ModalBody>
-          <h1>Iam a modal</h1>
-        </ModalBody>
-        <ModalFooter>
-          <CustomButton onClick={onClose}>Close</CustomButton>
-        </ModalFooter>
-      </CustomModal>
-      <Header />
-      <h1>Hello</h1>
       <Head>
         <title>Gain Protocol SwapX</title>
         <meta name="description" content="Coin offering" />
@@ -43,19 +33,31 @@ export default function Home() {
           crossOrigin=""
         />
       </Head>
-      <CustomButton onClick={onOpen} block>
-        Unlock Wallet
-      </CustomButton>
-      <Switch options={["Buy", "Sell"]} state={state} setState={setState} />
-      <SwapCurrencyInputBox
-        type={"to"}
-        amount={amount}
-        currency={currency}
-        balance={balance}
-        currencyOptions={["bnb"]}
-        setAmount={setAmount}
-        setCurrency={setCurrency}
-      />
+      <div className={styles.home__content}>
+        <CustomModal title={"This a ti"} isOpen={isOpen} onClose={onClose}>
+          <ModalBody>
+            <h1>Iam a modal</h1>
+          </ModalBody>
+          <ModalFooter>
+            <CustomButton onClick={onClose}>Close</CustomButton>
+          </ModalFooter>
+        </CustomModal>
+        <Header />
+        <h1>Hello</h1>
+        <CustomButton onClick={onOpen} block>
+          Unlock Wallet
+        </CustomButton>
+        <Switch options={["Buy", "Sell"]} state={state} setState={setState} />
+        <SwapCurrencyInputBox
+          type={"to"}
+          amount={amount}
+          currency={currency}
+          balance={balance}
+          currencyOptions={["bnb"]}
+          setAmount={setAmount}
+          setCurrency={setCurrency}
+        />
+      </div>
     </div>
   );
 }

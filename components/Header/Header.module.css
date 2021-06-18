@@ -1,11 +1,12 @@
 .header {
   position: fixed;
   top: 0;
-  padding: 20px 45px;
+  padding: 0 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  height: 75px;
 }
 .header__brand {
   width: 240px;

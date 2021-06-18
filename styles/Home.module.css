@@ -5,4 +5,7 @@
   min-height: 100vh;
   background-attachment: fixed;
   background-size: cover;
+  padding-top: 75px;
+}
+.home__content {
 }
