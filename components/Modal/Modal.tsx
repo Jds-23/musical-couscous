@@ -19,7 +19,7 @@ const CustomModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
 }) => {
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} colorScheme={"brand.100"}>
         <ModalOverlay />
         <ModalContent
           marginLeft={"10px"}

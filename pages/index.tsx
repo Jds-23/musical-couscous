@@ -8,10 +8,11 @@ import styles from "../styles/Home.module.css";
 import { ModalFooter, ModalBody, useDisclosure } from "@chakra-ui/react";
 import BuySection from "../components/BuySection/BuySection";
 import SellSection from "../components/SellSection/SellSection";
+import WalletInfoModal from "../components/WalletInfoModal/WalletInfoModal";
 
 export default function Home() {
   const [state, setState] = useState(0);
-
+  const [walletInfoModal, setWalletInfoModal] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <div className={styles.home__container}>
@@ -32,7 +33,7 @@ export default function Home() {
           crossOrigin=""
         />
       </Head>
-      <Header />
+      <Header openWalletInfoModal={() => setWalletInfoModal(true)} />
       <CustomModal title={"This a ti"} isOpen={isOpen} onClose={onClose}>
         <ModalBody>
           <h1>Iam a modal</h1>
@@ -41,6 +42,10 @@ export default function Home() {
           <CustomButton onClick={onClose}>Close</CustomButton>
         </ModalFooter>
       </CustomModal>
+      <WalletInfoModal
+        isOpen={walletInfoModal}
+        onClose={() => setWalletInfoModal(false)}
+      />
       <div className={styles.home__content}>
         <Switch
           options={["Buy", "Sell"]}

@@ -6,6 +6,12 @@ function MyApp({ Component, pageProps }) {
     fonts: {
       body: "Eurostile",
     },
+    colors: {
+      brand: {
+        100: "#f7fafc",
+        900: "#1a202c",
+      },
+    },
   });
   return (
     <ChakraProvider theme={theme}>
