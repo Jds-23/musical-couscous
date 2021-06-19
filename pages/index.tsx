@@ -7,6 +7,7 @@ import CustomModal from "../components/Modal/Modal";
 import SwapCurrencyInputBox from "../components/SwapCurrencyInputBox/SwapCurrencyInputBox";
 import styles from "../styles/Home.module.css";
 import { ModalFooter, ModalBody, useDisclosure } from "@chakra-ui/react";
+import Main from "../components/Main/Main";
 
 export default function Home() {
   const [state, setState] = useState(0);
@@ -48,15 +49,17 @@ export default function Home() {
           Unlock Wallet
         </CustomButton>
         <Switch options={["Buy", "Sell"]} state={state} setState={setState} />
-        <SwapCurrencyInputBox
-          type={"to"}
-          amount={amount}
-          currency={currency}
-          balance={balance}
-          currencyOptions={["bnb"]}
-          setAmount={setAmount}
-          setCurrency={setCurrency}
-        />
+        <Main>
+          <SwapCurrencyInputBox
+            type={"to"}
+            amount={amount}
+            currency={currency}
+            balance={balance}
+            currencyOptions={["bnb"]}
+            setAmount={setAmount}
+            setCurrency={setCurrency}
+          />
+        </Main>
       </div>
     </div>
   );

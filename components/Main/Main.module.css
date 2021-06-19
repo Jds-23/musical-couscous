@@ -1,0 +1,24 @@
+.main {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 47px;
+}
+.main__header {
+  display: flex;
+  border-bottom: 1px solid lightblue;
+  align-items: center;
+  color: #786fa6;
+}
+.main__header__left {
+  flex-grow: 1;
+}
+.main__header__left > p:first-child {
+  color: #24135b;
+}
+.main__header__right {
+  display: flex;
+}
+.main__header__right > img {
+  object-fit: contain;
+  width: 27px;
+}
