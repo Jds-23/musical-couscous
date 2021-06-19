@@ -2,6 +2,7 @@ import styles from "./WalletInfoModal.module.css";
 import CustomModal from "../Modal/Modal";
 import CustomButton from "../Button/Button";
 import { ModalBody, ModalFooter } from "@chakra-ui/react";
+import { useWalletAddress } from "../../context/StateProvider";
 interface MyProps {
   isOpen: boolean;
   onClose: () => void;
@@ -9,6 +10,7 @@ interface MyProps {
 const WalletInfoModal: React.FC<
   React.HTMLAttributes<HTMLDivElement> & MyProps
 > = ({ isOpen, onClose, ...props }) => {
+  const { address, setAddress } = useWalletAddress();
   return (
     <>
       <CustomModal
@@ -18,7 +20,7 @@ const WalletInfoModal: React.FC<
         {...props}
       >
         <ModalBody>
-          <h1>0x394759jfhdsbjk3klpombvggma7s9d8asbn49nq2</h1>
+          <h1>{address}</h1>
 
           <div style={{ display: "flex" }}>
             <div className={styles.link}>
@@ -36,7 +38,14 @@ const WalletInfoModal: React.FC<
           </div>
         </ModalBody>
         <ModalFooter justifyContent="flex-end">
-          <CustomButton onClick={onClose}>Logout</CustomButton>
+          <CustomButton
+            onClick={() => {
+              setAddress("");
+              onClose();
+            }}
+          >
+            Logout
+          </CustomButton>
         </ModalFooter>
       </CustomModal>
     </>
