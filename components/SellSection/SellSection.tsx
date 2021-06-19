@@ -1,16 +1,15 @@
+import styles from "./SellSection.module.css";
 import { useState } from "react";
-import styles from "./BuySection.module.css";
 import CustomButton from "../Button/Button";
 import SwapCurrencyInputBox from "../SwapCurrencyInputBox/SwapCurrencyInputBox";
 import Main from "../Main/Main";
-
-const BuySection = () => {
+const SellSection = () => {
   const [amount, setAmount] = useState("");
   const [balance, setBalance] = useState("");
   const [currency, setCurrency] = useState("bnb");
   return (
     <div className={styles.container}>
-      <Main type={"Buy"}>
+      <Main type={"Sell"}>
         <SwapCurrencyInputBox
           type={"From"}
           amount={amount}
@@ -83,4 +82,4 @@ const BuySection = () => {
   );
 };
 
-export default BuySection;
+export default SellSection;

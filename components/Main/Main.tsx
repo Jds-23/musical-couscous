@@ -1,11 +1,18 @@
 import styles from "./Main.module.css";
-const Main: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ children }) => {
+interface MyProps {
+  type: string;
+}
+const Main: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
+  type,
+  children,
+  ...props
+}) => {
   return (
-    <main className={styles.main}>
+    <main className={styles.main} {...props}>
       <div className={styles.main__header}>
         <div className={styles.main__header__left}>
           <p>Exchange</p>
-          <p>Buy Gain in an Instant</p>
+          <p>{type} Gain in an Instant</p>
         </div>
         <div className={styles.main__header__right}>
           <button className={styles.main__header__buttons}>

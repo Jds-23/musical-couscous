@@ -7,6 +7,7 @@ import CustomModal from "../components/Modal/Modal";
 import styles from "../styles/Home.module.css";
 import { ModalFooter, ModalBody, useDisclosure } from "@chakra-ui/react";
 import BuySection from "../components/BuySection/BuySection";
+import SellSection from "../components/SellSection/SellSection";
 
 export default function Home() {
   const [state, setState] = useState(0);
@@ -51,7 +52,7 @@ export default function Home() {
           state={state}
           setState={setState}
         />
-        <BuySection />
+        {state === 0 ? <BuySection /> : <SellSection />}
       </div>
     </div>
   );
