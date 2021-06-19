@@ -1,0 +1,27 @@
+.heading {
+  font-size: 12px;
+  color: #24135b;
+}
+.label {
+  display: flex;
+  align-items: center;
+  font-size: 10px;
+  color: #7a71a7;
+}
+.tolerance {
+  display: grid;
+  gap: 11px;
+  grid-template-columns: 2fr 2fr 2fr 6fr;
+  margin-top: 20px;
+}
+.deadline {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+.switches {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 22px;
+}

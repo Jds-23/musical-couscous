@@ -1,5 +1,6 @@
 import styles from "./Main.module.css";
 import RecentTransaction from "../RecentTransaction/RecentTransaction";
+import SettingsModal from "../SettingsModal/SettingsModal";
 import { useState } from "react";
 
 interface MyProps {
@@ -11,11 +12,16 @@ const Main: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
   ...props
 }) => {
   const [recentTransaction, setRecentTransaction] = useState(false);
+  const [settingsModal, setSettingsModal] = useState(false);
   return (
     <>
       <RecentTransaction
         isOpen={recentTransaction}
         onClose={() => setRecentTransaction(false)}
+      />
+      <SettingsModal
+        isOpen={settingsModal}
+        onClose={() => setSettingsModal(false)}
       />
       <main className={styles.main} {...props}>
         <div className={styles.main__header}>
@@ -25,7 +31,10 @@ const Main: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
           </div>
           <div className={styles.main__header__right}>
             <button className={styles.main__header__buttons}>
-              <img src={"./images/MenuIcon.svg"} />
+              <img
+                onClick={() => setSettingsModal(true)}
+                src={"./images/MenuIcon.svg"}
+              />
             </button>
             <button className={styles.main__header__buttons}>
               <img

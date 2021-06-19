@@ -1,6 +1,5 @@
 import CustomModal from "../Modal/Modal";
-import { ModalFooter, ModalBody } from "@chakra-ui/react";
-import CustomButton from "../Button/Button";
+import { ModalBody } from "@chakra-ui/react";
 interface MyProps {
   isOpen: boolean;
   onClose: () => void;
@@ -14,6 +13,7 @@ const RecentTransaction: React.FC<
         title={"Recent Transactions"}
         isOpen={isOpen}
         onClose={onClose}
+        {...props}
       >
         <ModalBody>
           <h1>No Transactions History</h1>

@@ -26,6 +26,7 @@ const CustomModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
           marginRight={"10px"}
           maxWidth={"600px"}
           borderRadius={"30px"}
+          alignSelf={"center"}
         >
           <ModalHeader fontWeight="400">{title}</ModalHeader>
           <ModalCloseButton />
