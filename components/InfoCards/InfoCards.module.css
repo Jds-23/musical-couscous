@@ -1,0 +1,23 @@
+.container {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 25px;
+  width: 100%;
+  max-width: 500px;
+  font-size: 10px;
+  margin-top: 30px;
+}
+.label {
+  display: flex;
+  align-items: center;
+  color: #7a71a7;
+}
+.container > div {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+.container > p {
+  color: #615c87;
+  text-align: right;
+}
