@@ -34,18 +34,17 @@ export default function Home() {
           crossOrigin=""
         />
       </Head>
+      <Header />
+      <CustomModal title={"This a ti"} isOpen={isOpen} onClose={onClose}>
+        <ModalBody>
+          <h1>Iam a modal</h1>
+        </ModalBody>
+        <ModalFooter>
+          <CustomButton onClick={onClose}>Close</CustomButton>
+        </ModalFooter>
+      </CustomModal>
       <div className={styles.home__content}>
-        <CustomModal title={"This a ti"} isOpen={isOpen} onClose={onClose}>
-          <ModalBody>
-            <h1>Iam a modal</h1>
-          </ModalBody>
-          <ModalFooter>
-            <CustomButton onClick={onClose}>Close</CustomButton>
-          </ModalFooter>
-        </CustomModal>
-        <Header />
-        <h1>Hello</h1>
-        <CustomButton disabled onClick={onOpen} block>
+        <CustomButton onClick={onOpen} block>
           Unlock Wallet
         </CustomButton>
         <Switch options={["Buy", "Sell"]} state={state} setState={setState} />
