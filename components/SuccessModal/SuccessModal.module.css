@@ -1,0 +1,21 @@
+.image {
+  height: 77px;
+  object-fit: contain;
+  margin-bottom: 31px;
+}
+.text {
+  text-align: center;
+  color: #24135b;
+  font-size: 20px;
+}
+.addInfo {
+  padding: 4px 30px;
+  color: #24135b;
+  background-color: #f0f4f5;
+  border-radius: 10px;
+}
+.addInfo > p > img {
+  display: inline;
+  object-fit: contain;
+  height: 32px;
+}

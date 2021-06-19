@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="70.309" height="77.68" viewBox="0 0 70.309 77.68">
+  <defs>
+    <linearGradient id="linear-gradient" x1="-5.666" y1="12.905" x2="-4.666" y2="12.905" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#ffa7b3"/>
+      <stop offset="0.131" stop-color="#faa2b9"/>
+      <stop offset="0.319" stop-color="#ec94cc"/>
+      <stop offset="0.478" stop-color="#dd85e2"/>
+      <stop offset="0.899" stop-color="#bf7df8"/>
+      <stop offset="1" stop-color="#b77bff"/>
+    </linearGradient>
+  </defs>
+  <path id="BigArrow" d="M9928.923,1905.688a5.383,5.383,0,0,0,7.614,0l19.078-19.079v51.006a5.385,5.385,0,1,0,10.77,0V1886.8l19.078,19.078a5.384,5.384,0,1,0,7.614-7.615l-27.82-27.82a5.356,5.356,0,0,0-4.257-2.122c-.016,0-.03,0-.046.005s-.032-.005-.049-.005a5.369,5.369,0,0,0-3.808,1.578l-28.175,28.175A5.383,5.383,0,0,0,9928.923,1905.688Z" transform="translate(-9925.846 -1866.82)" stroke="#fff" stroke-miterlimit="10" stroke-width="3" fill="url(#linear-gradient)"/>
+</svg>

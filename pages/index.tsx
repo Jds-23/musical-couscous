@@ -10,12 +10,14 @@ import WalletInfoModal from "../components/WalletInfoModal/WalletInfoModal";
 import ConfirmSwapModal from "../components/ConfirmSwapModal/ConfirmSwapModal";
 import InfoCards from "../components/InfoCards/InfoCards";
 import ErrorModal from "../components/ErrorModal/ErrorModal";
+import SuccessModal from "../components/SuccessModal/SuccessModal";
 
 export default function Home() {
   const [state, setState] = useState(0);
   const [walletInfoModal, setWalletInfoModal] = useState(false);
   const [confirmSwapModal, setConfirmSwapModal] = useState(false);
-  const [errorModal, setErrorModal] = useState(true);
+  const [errorModal, setErrorModal] = useState(false);
+  const [successModal, setSuccessModal] = useState(true);
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <div className={styles.home__container}>
@@ -46,6 +48,10 @@ export default function Home() {
         onClose={() => setConfirmSwapModal(false)}
       />
       <ErrorModal isOpen={errorModal} onClose={() => setErrorModal(false)} />
+      <SuccessModal
+        isOpen={successModal}
+        onClose={() => setSuccessModal(false)}
+      />
       <div className={styles.home__content}>
         <Switch
           options={["Buy", "Sell"]}
