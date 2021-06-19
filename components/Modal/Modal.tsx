@@ -21,7 +21,12 @@ const CustomModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent borderRadius={"30px"}>
+        <ModalContent
+          marginLeft={"10px"}
+          marginRight={"10px"}
+          maxWidth={"600px"}
+          borderRadius={"30px"}
+        >
           <ModalHeader fontWeight="400">{title}</ModalHeader>
           <ModalCloseButton />
           {children}
