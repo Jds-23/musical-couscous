@@ -8,8 +8,12 @@ const Main: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ children }) => {
           <p>Buy Gain in an Instant</p>
         </div>
         <div className={styles.main__header__right}>
-          <img src={"./images/MenuIcon.svg"} />
-          <img src={"./images/RecentIcon.svg"} />
+          <button className={styles.main__header__buttons}>
+            <img src={"./images/MenuIcon.svg"} />
+          </button>
+          <button className={styles.main__header__buttons}>
+            <img src={"./images/RecentIcon.svg"} />
+          </button>
         </div>
       </div>
       <div className={styles.main__body}>{children}</div>
