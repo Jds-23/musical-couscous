@@ -107,7 +107,7 @@ export default function Home() {
           <div
             style={{
               display: "flex",
-              marginBottom: "10px",
+              marginBottom: "30px",
               justifyContent: "space-between",
               color: "#7A71A7",
               padding: "1px 5px",

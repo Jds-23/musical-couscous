@@ -50,17 +50,34 @@ const SwapCurrencyInputBox: React.FC<
               {(currency || currency !== "") && (
                 <img src={`./images/${currency}.png`} alt={`${currency}`} />
               )}
-              <div>
+              <div style={{ marginRight: "4px" }}>
                 {currency || currency !== "" ? currency : "Select a currency"}
               </div>
               <svg
-                viewBox="0 0 24 24"
-                color="text"
-                width="20px"
                 xmlns="http://www.w3.org/2000/svg"
-                className="sc-bdvvaa iQxzfF"
+                width="24.999"
+                height="14.535"
+                viewBox="0 0 24.999 14.535"
               >
-                <path d="M8.11997 9.29006L12 13.1701L15.88 9.29006C16.27 8.90006 16.9 8.90006 17.29 9.29006C17.68 9.68006 17.68 10.3101 17.29 10.7001L12.7 15.2901C12.31 15.6801 11.68 15.6801 11.29 15.2901L6.69997 10.7001C6.30997 10.3101 6.30997 9.68006 6.69997 9.29006C7.08997 8.91006 7.72997 8.90006 8.11997 9.29006Z"></path>
+                <defs>
+                  <linearGradient
+                    id="linear-gradient"
+                    y1="0.5"
+                    x2="1"
+                    y2="0.5"
+                    gradientUnits="objectBoundingBox"
+                  >
+                    <stop offset="0" stop-color="#cfc5f7" />
+                    <stop offset="0.894" stop-color="#cfa8f7" />
+                  </linearGradient>
+                </defs>
+                <path
+                  id="Path_673"
+                  data-name="Path 673"
+                  d="M6725.535,511.289a1.992,1.992,0,0,1-1.414-.586l-10.535-10.535a2,2,0,0,1,2.828-2.828l9.121,9.12,9.051-9.05a2,2,0,0,1,2.828,2.828L6726.949,510.7A1.991,1.991,0,0,1,6725.535,511.289Z"
+                  transform="translate(-6713 -496.754)"
+                  fill="url(#linear-gradient)"
+                />
               </svg>
             </span>
           </button>

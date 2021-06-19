@@ -26,6 +26,10 @@ const Switch: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
           </button>
         );
       })}
+      <span
+        style={state === 0 ? { left: 0 } : { left: "50%" }}
+        className={styles.switch__drop}
+      ></span>
     </div>
   );
 };
