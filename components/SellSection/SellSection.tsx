@@ -4,7 +4,12 @@ import CustomButton from "../Button/Button";
 import SwapCurrencyInputBox from "../SwapCurrencyInputBox/SwapCurrencyInputBox";
 import Main from "../Main/Main";
 import { useWalletAddress } from "../../context/StateProvider";
-const SellSection = ({ onOpen }) => {
+interface MyProps {
+  onOpen: () => void;
+}
+const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
+  onOpen,
+}) => {
   const [amount, setAmount] = useState("");
   const [balance, setBalance] = useState("");
   const [currency, setCurrency] = useState("bnb");
