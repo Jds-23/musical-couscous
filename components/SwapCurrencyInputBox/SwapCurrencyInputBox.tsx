@@ -48,7 +48,7 @@ const SwapCurrencyInputBox: React.FC<
           <button>
             <span>
               {(currency || currency !== "") && (
-                <img src={`./images/${currency}.png`} alt={`${currency}`} />
+                <img src={`./images/${currency}.svg`} alt={`${currency}`} />
               )}
               <div style={{ marginRight: "4px" }}>
                 {currency || currency !== "" ? currency : "Select a currency"}

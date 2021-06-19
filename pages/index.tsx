@@ -1,18 +1,18 @@
 import Head from "next/head";
 import React, { useState } from "react";
-import CustomButton from "../components/Button/Button";
 import Switch from "../components/Switch/Switch";
 import Header from "../components/Header/Header";
-import CustomModal from "../components/Modal/Modal";
 import styles from "../styles/Home.module.css";
 import { ModalFooter, ModalBody, useDisclosure } from "@chakra-ui/react";
 import BuySection from "../components/BuySection/BuySection";
 import SellSection from "../components/SellSection/SellSection";
 import WalletInfoModal from "../components/WalletInfoModal/WalletInfoModal";
+import ConfirmSwapModal from "../components/ConfirmSwapModal/ConfirmSwapModal";
 
 export default function Home() {
   const [state, setState] = useState(0);
   const [walletInfoModal, setWalletInfoModal] = useState(false);
+  const [confirmSwapModal, setConfirmSwapModal] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <div className={styles.home__container}>
@@ -34,17 +34,13 @@ export default function Home() {
         />
       </Head>
       <Header openWalletInfoModal={() => setWalletInfoModal(true)} />
-      <CustomModal title={"This a ti"} isOpen={isOpen} onClose={onClose}>
-        <ModalBody>
-          <h1>Iam a modal</h1>
-        </ModalBody>
-        <ModalFooter>
-          <CustomButton onClick={onClose}>Close</CustomButton>
-        </ModalFooter>
-      </CustomModal>
       <WalletInfoModal
         isOpen={walletInfoModal}
         onClose={() => setWalletInfoModal(false)}
+      />
+      <ConfirmSwapModal
+        isOpen={confirmSwapModal}
+        onClose={() => setConfirmSwapModal(false)}
       />
       <div className={styles.home__content}>
         <Switch
@@ -57,7 +53,11 @@ export default function Home() {
           state={state}
           setState={setState}
         />
-        {state === 0 ? <BuySection /> : <SellSection />}
+        {state === 0 ? (
+          <BuySection />
+        ) : (
+          <SellSection onOpen={() => setConfirmSwapModal(true)} />
+        )}
       </div>
     </div>
   );

@@ -7,18 +7,20 @@ import Main from "../Main/Main";
 const BuySection = () => {
   const [amount, setAmount] = useState("");
   const [balance, setBalance] = useState("");
-  const [currency, setCurrency] = useState("bnb");
+
+  const [fromCurrency, setFromCurrency] = useState("BNB");
+  const [toCurrency, setToCurrency] = useState("GP");
   return (
     <div className={styles.container}>
       <Main type={"Buy"}>
         <SwapCurrencyInputBox
           type={"From"}
           amount={amount}
-          currency={""}
+          currency={fromCurrency}
           balance={balance}
           currencyOptions={["bnb"]}
           setAmount={setAmount}
-          setCurrency={setCurrency}
+          setCurrency={setFromCurrency}
           style={{ marginTop: "15px", marginBottom: "15px" }}
         />
         <div
@@ -53,11 +55,11 @@ const BuySection = () => {
         <SwapCurrencyInputBox
           type={"To"}
           amount={amount}
-          currency={currency}
+          currency={toCurrency}
           balance={balance}
           currencyOptions={["bnb"]}
           setAmount={setAmount}
-          setCurrency={setCurrency}
+          setCurrency={setToCurrency}
           style={{ marginTop: "15px", marginBottom: "15px" }}
         />
         <div

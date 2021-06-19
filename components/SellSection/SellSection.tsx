@@ -3,17 +3,22 @@ import { useState } from "react";
 import CustomButton from "../Button/Button";
 import SwapCurrencyInputBox from "../SwapCurrencyInputBox/SwapCurrencyInputBox";
 import Main from "../Main/Main";
-const SellSection = () => {
+import { useWalletAddress } from "../../context/StateProvider";
+const SellSection = ({ onOpen }) => {
   const [amount, setAmount] = useState("");
   const [balance, setBalance] = useState("");
   const [currency, setCurrency] = useState("bnb");
+
+  const [fromCurrency, setFromCurrency] = useState("GP");
+  const [toCurrency, setToCurrency] = useState("BNB");
+  const { address, setAddress } = useWalletAddress();
   return (
     <div className={styles.container}>
       <Main type={"Sell"}>
         <SwapCurrencyInputBox
           type={"From"}
           amount={amount}
-          currency={""}
+          currency={fromCurrency}
           balance={balance}
           currencyOptions={["bnb"]}
           setAmount={setAmount}
@@ -52,7 +57,7 @@ const SellSection = () => {
         <SwapCurrencyInputBox
           type={"To"}
           amount={amount}
-          currency={currency}
+          currency={toCurrency}
           balance={balance}
           currencyOptions={["bnb"]}
           setAmount={setAmount}
@@ -71,11 +76,8 @@ const SellSection = () => {
           <p>Slippage Tolerance</p>
           <p>12%</p>
         </div>
-        <CustomButton
-          // onClick={onOpen}
-          block
-        >
-          Unlock Wallet
+        <CustomButton onClick={onOpen} block>
+          {address === "" ? "Unlock Wallet" : "Swap"}
         </CustomButton>
       </Main>
     </div>
