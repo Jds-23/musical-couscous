@@ -42,6 +42,7 @@
 }
 .swapCurrencyOutput__container__row2 > input {
   color: #786fa6;
+  width: 0;
   position: relative;
   font-weight: 400;
   outline: none;
@@ -85,4 +86,10 @@
   width: 24px;
   height: 24px;
   margin-right: 8px;
+}
+@media only screen and (max-width: 425px) {
+  .swapCurrencyOutput__container__row1 {
+    font-size: 0.5rem;
+    padding: 0.5rem 0.25rem 0px;
+  }
 }

@@ -23,9 +23,10 @@ const SwapCurrencyInputBox: React.FC<
   setCurrency,
   setAmount,
   currencyOptions,
+  ...props
 }) => {
   return (
-    <div className={styles.swapCurrencyOutput}>
+    <div className={styles.swapCurrencyOutput} {...props}>
       <div className={styles.swapCurrencyOutput__container}>
         <div className={styles.swapCurrencyOutput__container__row1}>
           <div className={styles.swapCurrencyOutput__container__row1__content}>

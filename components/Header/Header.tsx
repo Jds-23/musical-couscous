@@ -5,7 +5,9 @@ const Header = () => {
   return (
     <header className={styles.header}>
       <img src={"./images/brand.svg"} className={styles.header__brand} />
-      <CustomButton onClick={() => {}}>Connect</CustomButton>
+      <CustomButton size={"sm"} onClick={() => {}}>
+        Connect
+      </CustomButton>
     </header>
   );
 };

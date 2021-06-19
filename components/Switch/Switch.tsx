@@ -12,7 +12,7 @@ const Switch: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
   ...props
 }) => {
   return (
-    <div className={styles.switch}>
+    <div className={styles.switch} {...props}>
       {options.map((option, id) => {
         return (
           <button
