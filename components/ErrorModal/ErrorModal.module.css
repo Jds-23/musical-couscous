@@ -1,0 +1,10 @@
+.text {
+  text-align: center;
+  color: #24135b;
+  font-size: 20px;
+}
+.image {
+  height: 77px;
+  object-fit: contain;
+  margin-bottom: 31px;
+}
