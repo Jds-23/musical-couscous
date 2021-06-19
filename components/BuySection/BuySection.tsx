@@ -3,13 +3,15 @@ import styles from "./BuySection.module.css";
 import CustomButton from "../Button/Button";
 import SwapCurrencyInputBox from "../SwapCurrencyInputBox/SwapCurrencyInputBox";
 import Main from "../Main/Main";
+import { useWalletAddress } from "../../context/StateProvider";
 
-const BuySection = () => {
+const BuySection = ({ onOpen }) => {
   const [amount, setAmount] = useState("");
   const [balance, setBalance] = useState("");
 
   const [fromCurrency, setFromCurrency] = useState("BNB");
   const [toCurrency, setToCurrency] = useState("GP");
+  const { address, setAddress } = useWalletAddress();
   return (
     <div className={styles.container}>
       <Main type={"Buy"}>
@@ -74,11 +76,8 @@ const BuySection = () => {
           <p>Slippage Tolerance</p>
           <p>12%</p>
         </div>
-        <CustomButton
-          // onClick={onOpen}
-          block
-        >
-          Unlock Wallet
+        <CustomButton onClick={onOpen} block>
+          {address === "" ? "Unlock Wallet" : "Swap"}
         </CustomButton>
       </Main>
     </div>

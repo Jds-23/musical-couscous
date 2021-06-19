@@ -54,7 +54,7 @@ export default function Home() {
           setState={setState}
         />
         {state === 0 ? (
-          <BuySection />
+          <BuySection onOpen={() => setConfirmSwapModal(true)} />
         ) : (
           <SellSection onOpen={() => setConfirmSwapModal(true)} />
         )}
