@@ -7,11 +7,13 @@ import CustomButton from "../Button/Button";
 interface MyProps {
   isOpen: boolean;
   onClose: () => void;
+  successToast: Function;
+  onSuccessOpen: () => void;
 }
 
 const ConfirmSwapModal: React.FC<
   React.HTMLAttributes<HTMLDivElement> & MyProps
-> = ({ isOpen, onClose, ...props }) => {
+> = ({ isOpen, onClose, successToast, onSuccessOpen, ...props }) => {
   return (
     <>
       <CustomModal
@@ -108,7 +110,16 @@ const ConfirmSwapModal: React.FC<
           </div>
         </ModalBody>
         <ModalFooter>
-          <CustomButton block>Confirm Swap</CustomButton>
+          <CustomButton
+            block
+            onClick={() => {
+              onClose();
+              onSuccessOpen();
+              successToast();
+            }}
+          >
+            Confirm Swap
+          </CustomButton>
         </ModalFooter>
       </CustomModal>
     </>

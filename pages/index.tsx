@@ -11,14 +11,33 @@ import ConfirmSwapModal from "../components/ConfirmSwapModal/ConfirmSwapModal";
 import InfoCards from "../components/InfoCards/InfoCards";
 import ErrorModal from "../components/ErrorModal/ErrorModal";
 import SuccessModal from "../components/SuccessModal/SuccessModal";
+import { useToast, Box } from "@chakra-ui/react";
 
 export default function Home() {
   const [state, setState] = useState(0);
   const [walletInfoModal, setWalletInfoModal] = useState(false);
   const [confirmSwapModal, setConfirmSwapModal] = useState(false);
   const [errorModal, setErrorModal] = useState(false);
-  const [successModal, setSuccessModal] = useState(true);
+  const [successModal, setSuccessModal] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
+
+  const successToast = () => {
+    toast({
+      position: "top",
+      render: () => (
+        <Box width={"100%"} color="#24135B" p={3} bg="#FFFFFF">
+          <h1 style={{ fontSize: "22px", marginBottom: "50px" }}>
+            Swap 0.0584758 BNB for 5794877 GAIN PROTOCOL
+          </h1>
+          <h1 style={{ fontSize: "19px", marginBottom: "10px" }}>
+            View on BscScan
+          </h1>
+        </Box>
+      ),
+      isClosable: true,
+    });
+  };
   return (
     <div className={styles.home__container}>
       <Head>
@@ -45,6 +64,8 @@ export default function Home() {
       />
       <ConfirmSwapModal
         isOpen={confirmSwapModal}
+        successToast={successToast}
+        onSuccessOpen={() => setSuccessModal(true)}
         onClose={() => setConfirmSwapModal(false)}
       />
       <ErrorModal isOpen={errorModal} onClose={() => setErrorModal(false)} />
