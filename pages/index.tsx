@@ -11,10 +11,12 @@ import ConfirmSwapModal from "../components/ConfirmSwapModal/ConfirmSwapModal";
 import InfoCards from "../components/InfoCards/InfoCards";
 import ErrorModal from "../components/ErrorModal/ErrorModal";
 import SuccessModal from "../components/SuccessModal/SuccessModal";
+import ProgressStepper from "../components/ProgressStepper/ProgressStepper";
 import { useToast, Box } from "@chakra-ui/react";
 
 export default function Home() {
   const [state, setState] = useState(0);
+  const [state2, setState2] = useState(0);
   const [walletInfoModal, setWalletInfoModal] = useState(false);
   const [confirmSwapModal, setConfirmSwapModal] = useState(false);
   const [errorModal, setErrorModal] = useState(false);
@@ -75,6 +77,7 @@ export default function Home() {
           onClose={() => setSuccessModal(false)}
         />
         <div className={styles.home__content}>
+          <ProgressStepper state={state2} setState={setState2} />
           <Switch
             options={["Buy", "Sell"]}
             style={{
