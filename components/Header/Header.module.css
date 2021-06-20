@@ -12,3 +12,10 @@
   width: 240px;
   object-fit: contain;
 }
+
+@media only screen and (max-width: 400px) {
+  .header__brand {
+    width: 180px;
+    object-fit: contain;
+  }
+}
