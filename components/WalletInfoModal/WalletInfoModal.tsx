@@ -17,10 +17,11 @@ const WalletInfoModal: React.FC<
         title={"Your Wallet"}
         isOpen={isOpen}
         onClose={onClose}
+        maxWidth={"700px"}
         {...props}
       >
         <ModalBody>
-          <h1>{address}</h1>
+          <h1 style={{ fontSize: "20px" }}>{address}</h1>
 
           <div style={{ display: "flex" }}>
             <div className={styles.link}>

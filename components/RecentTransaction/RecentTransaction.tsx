@@ -13,6 +13,7 @@ const RecentTransaction: React.FC<
         title={"Recent Transactions"}
         isOpen={isOpen}
         onClose={onClose}
+        maxWidth={"600px"}
         {...props}
       >
         <ModalBody>

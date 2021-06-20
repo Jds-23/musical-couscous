@@ -14,7 +14,13 @@ const ErrorModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
 }) => {
   return (
     <>
-      <CustomModal title={"Error"} isOpen={isOpen} onClose={onClose} {...props}>
+      <CustomModal
+        title={"Error"}
+        isOpen={isOpen}
+        maxWidth={"593px"}
+        onClose={onClose}
+        {...props}
+      >
         <ModalBody
           display="flex"
           flexDirection="column"

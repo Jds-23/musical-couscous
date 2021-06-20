@@ -16,6 +16,7 @@ const SettingsModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
           title={"Settings"}
           isOpen={isOpen}
           onClose={onClose}
+          maxWidth={"650px"}
           {...props}
         >
           <ModalBody paddingBottom={"20px"}>

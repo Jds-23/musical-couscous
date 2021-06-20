@@ -14,6 +14,7 @@ const SuccessModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
           title={"Recent Transactions"}
           isOpen={isOpen}
           onClose={onClose}
+          maxWidth={"593px"}
           {...props}
         >
           <ModalBody

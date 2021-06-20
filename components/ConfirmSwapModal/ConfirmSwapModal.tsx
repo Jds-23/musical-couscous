@@ -18,6 +18,7 @@ const ConfirmSwapModal: React.FC<
         title={"Confirm Swap"}
         isOpen={isOpen}
         onClose={onClose}
+        maxWidth={"553px"}
         {...props}
       >
         <ModalBody>

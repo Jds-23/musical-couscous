@@ -10,12 +10,14 @@ interface MyProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
+  maxWidth?: string;
 }
 const CustomModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
   isOpen,
   onClose,
   title,
   children,
+  maxWidth = "600px",
 }) => {
   return (
     <>
@@ -24,7 +26,7 @@ const CustomModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
         <ModalContent
           marginLeft={"10px"}
           marginRight={"10px"}
-          maxWidth={"600px"}
+          maxWidth={maxWidth}
           borderRadius={"30px"}
           alignSelf={"center"}
         >
