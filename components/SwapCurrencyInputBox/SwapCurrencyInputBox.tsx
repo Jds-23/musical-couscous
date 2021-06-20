@@ -51,7 +51,11 @@ const SwapCurrencyInputBox: React.FC<
                 <img src={`./images/${currency}.svg`} alt={`${currency}`} />
               )}
               <div style={{ marginRight: "4px" }}>
-                {currency || currency !== "" ? currency : "Select a currency"}
+                {currency || currency !== ""
+                  ? currency === "GAINPROTOCOL"
+                    ? ""
+                    : currency
+                  : "Select a currency"}
               </div>
               <svg
                 xmlns="http://www.w3.org/2000/svg"

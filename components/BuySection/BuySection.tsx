@@ -14,7 +14,7 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
   const [balance, setBalance] = useState("");
 
   const [fromCurrency, setFromCurrency] = useState("BNB");
-  const [toCurrency, setToCurrency] = useState("GP");
+  const [toCurrency, setToCurrency] = useState("GAINPROTOCOL");
   const { address, setAddress } = useWalletAddress();
   return (
     <div className={styles.container}>
