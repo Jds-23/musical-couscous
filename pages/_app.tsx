@@ -1,8 +1,9 @@
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import "../styles/globals.css";
 import { WalletAddressContext } from "../context/StateProvider";
+import type { AppProps } from "next/app";
 import { useState } from "react";
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }: AppProps) {
   const [address, setAddress] = useState("");
   const theme = extendTheme({
     fonts: {
