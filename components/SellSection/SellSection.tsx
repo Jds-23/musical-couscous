@@ -4,6 +4,8 @@ import CustomButton from "../Button/Button";
 import SwapCurrencyInputBox from "../SwapCurrencyInputBox/SwapCurrencyInputBox";
 import Main from "../Main/Main";
 import { useWalletAddress } from "../../context/StateProvider";
+import { QuestionOutlineIcon } from "@chakra-ui/icons";
+
 interface MyProps {
   onOpen: () => void;
 }
@@ -19,6 +21,36 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
   const { address, setAddress } = useWalletAddress();
   return (
     <div className={styles.container}>
+      <div className={styles.GPInfo}>
+        <div className={styles.label}>
+          <h4>Total Liquidity</h4>
+          <QuestionOutlineIcon />
+        </div>
+        <div className={styles.data}>
+          <p>5000,000</p>
+          <img src={"./images/GP.svg"} />
+        </div>
+      </div>
+      <div className={styles.GPInfo}>
+        <div className={styles.label}>
+          <h4>2% Liquidity</h4>
+          <QuestionOutlineIcon />
+        </div>
+        <div className={styles.data}>
+          <p>5000,000</p>
+          <img src={"./images/GP.svg"} />
+        </div>
+      </div>
+      <div className={styles.GPInfo}>
+        <div className={styles.label}>
+          <h4>Daily Sell Capacity</h4>
+          <QuestionOutlineIcon />
+        </div>
+        <div className={styles.data}>
+          <p>5000,000</p>
+          <img src={"./images/GP.svg"} />
+        </div>
+      </div>
       <Main type={"Sell"}>
         <SwapCurrencyInputBox
           type={"From"}

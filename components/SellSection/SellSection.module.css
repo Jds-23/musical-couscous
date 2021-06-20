@@ -5,3 +5,20 @@
   -webkit-box-align: center;
   align-items: center;
 }
+.GPInfo {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 500px;
+  padding: 0 30px;
+  margin-bottom: 10px;
+}
+.label {
+  display: flex;
+  align-items: center;
+  color: #7a71a7;
+}
+.data {
+  display: flex;
+  color: #7a71a7;
+}
