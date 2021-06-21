@@ -1,0 +1,10 @@
+.moreDetails__container {
+  width: 100%;
+  transition: max-height 1s ease;
+  max-height: 0px;
+  overflow: hidden;
+}
+.moreDetails__see {
+  max-height: 500px;
+  transition: max-height 1s ease;
+}

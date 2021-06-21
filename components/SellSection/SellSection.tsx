@@ -8,6 +8,7 @@ import { QuestionOutlineIcon } from "@chakra-ui/icons";
 import ProgressStepper from "../ProgressStepper/ProgressStepper";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import Info from "../Info/Info";
+import HidableBar from "../HidableBar/HidableBar";
 
 interface MyProps {
   onOpen: () => void;
@@ -19,6 +20,7 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
   const [balance, setBalance] = useState("");
   const [currency, setCurrency] = useState("bnb");
   const [state2, setState2] = useState(0);
+  const [seeMoreDetails, setSeeMoreDetails] = useState(false);
 
   const [fromCurrency, setFromCurrency] = useState("GAINPROTOCOL");
   const [toCurrency, setToCurrency] = useState("BNB");
@@ -26,29 +28,38 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
   return (
     <div className={styles.container}>
       <div className={styles.dailySellingLimit}>
-        <Info>Daily Selling Limit</Info>
+        <Info>DAILY SELLING LIMITS</Info>
         <ProgressBar percent={50} />
       </div>
-      <div className={styles.GPInfo}>
-        <div className={styles.label}>
-          <h4>2% Liquidity</h4>
-          <QuestionOutlineIcon />
+      <span
+        className={styles.moreDetails}
+        onClick={() => setSeeMoreDetails(!seeMoreDetails)}
+      >
+        SEE MORE DETAILS
+      </span>
+      <HidableBar
+        style={{ maxWidth: "500px", padding: "0 30px", marginBottom: "10px" }}
+        isHidden={seeMoreDetails}
+      >
+        <div className={styles.GPInfo}>
+          <div className={styles.label}>
+            <Info>2% Liquidity</Info>
+          </div>
+          <div className={styles.data}>
+            <p>5000,000</p>
+            <img src={"./images/GP.svg"} />
+          </div>
         </div>
-        <div className={styles.data}>
-          <p>5000,000</p>
-          <img src={"./images/GP.svg"} />
+        <div className={styles.GPInfo}>
+          <div className={styles.label}>
+            <Info>Daily Sell Capacity</Info>
+          </div>
+          <div className={styles.data}>
+            <p>5000,000</p>
+            <img src={"./images/GP.svg"} />
+          </div>
         </div>
-      </div>
-      <div className={styles.GPInfo}>
-        <div className={styles.label}>
-          <h4>Daily Sell Capacity</h4>
-          <QuestionOutlineIcon />
-        </div>
-        <div className={styles.data}>
-          <p>5000,000</p>
-          <img src={"./images/GP.svg"} />
-        </div>
-      </div>
+      </HidableBar>
       <Main type={"Sell"}>
         <SwapCurrencyInputBox
           type={"From"}

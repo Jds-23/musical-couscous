@@ -9,10 +9,15 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  max-width: 500px;
-  padding: 0 30px;
   margin-bottom: 10px;
 }
+.moreDetails {
+  text-decoration: underline;
+  font-size: 14px;
+  color: #7a71a7;
+  cursor: pointer;
+}
+
 .dailySellingLimit {
   display: flex;
   flex-direction: column;
