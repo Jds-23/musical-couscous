@@ -1,11 +1,13 @@
 import styles from "./SellSection.module.css";
-import { useState } from "react";
+import React, { useState } from "react";
 import CustomButton from "../Button/Button";
 import SwapCurrencyInputBox from "../SwapCurrencyInputBox/SwapCurrencyInputBox";
 import Main from "../Main/Main";
 import { useWalletAddress } from "../../context/StateProvider";
 import { QuestionOutlineIcon } from "@chakra-ui/icons";
 import ProgressStepper from "../ProgressStepper/ProgressStepper";
+import ProgressBar from "../ProgressBar/ProgressBar";
+import Info from "../Info/Info";
 
 interface MyProps {
   onOpen: () => void;
@@ -23,15 +25,9 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
   const { address, setAddress } = useWalletAddress();
   return (
     <div className={styles.container}>
-      <div className={styles.GPInfo}>
-        <div className={styles.label}>
-          <h4>Total Liquidity</h4>
-          <QuestionOutlineIcon />
-        </div>
-        <div className={styles.data}>
-          <p>5000,000</p>
-          <img src={"./images/GP.svg"} />
-        </div>
+      <div className={styles.dailySellingLimit}>
+        <Info>Daily Selling Limit</Info>
+        <ProgressBar percent={50} />
       </div>
       <div className={styles.GPInfo}>
         <div className={styles.label}>

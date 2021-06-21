@@ -4,7 +4,7 @@ import React from "react";
 export interface info {
   label: string;
   data: string;
-  isDataYellow?: boolean;
+  isYellow?: boolean;
 }
 interface MyProps {
   infoArr: info[];
