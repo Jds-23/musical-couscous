@@ -129,49 +129,55 @@ export default function Home() {
                 }}
                 onClick={() => setSeeMoreDetails(!seeMoreDetails)}
               >
-                SEE MORE DETAILS
+                {!seeMoreDetails ? "CLOSE" : "VIEW"} DETAILS
               </span>
             </div>
             <HidableBar isHidden={seeMoreDetails}>
               <div
                 style={{
-                  display: "flex",
-                  justifyContent: "space-between",
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr 1fr",
+                  width: "100%",
                 }}
               >
-                <Info>Liquidity</Info>
-                <p>3.5%</p>
-                <p>56,789</p>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                }}
-              >
-                <Info>Team</Info>
-                <p>3.5%</p>
-                <p>56,789</p>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                }}
-              >
-                <Info>Sweepstakes</Info>
-                <p>3.5%</p>
-                <p>56,789</p>
+                <div>
+                  <Info>Liquidity</Info>
+                  <Info>Team</Info>
+                  <Info>Sweepstakes</Info>
+                </div>
+                <div style={{ textAlign: "center" }}>
+                  <p>3.5%</p>
+                  <p>3.5%</p>
+                  <p>3.5%</p>
+                </div>
+                <div style={{ textAlign: "right" }}>
+                  <p>56,789</p>
+                  <p>56,789</p>
+                  <p>56,789</p>
+                </div>
               </div>
             </HidableBar>
           </InfoCards>
-          {/* <InfoCards
-            infoArr={[
-              { label: "Minimum received", data: "0.038759 BNB" },
-              { label: "Liquidity", data: "<0.01%", isYellow: true },
-              { label: "Liquidity Provider Fee", data: "23.42 GAIN PROTOCOL" },
-            ]}
-          /> */}
+          <InfoCards>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                width: "100%",
+              }}
+            >
+              <div>
+                <Info>Minimum received</Info>
+                <Info>Price Impact</Info>
+                <Info>Liquidity Provider Fee</Info>
+              </div>
+              <div style={{ textAlign: "right" }}>
+                <p>56,789</p>
+                <p style={{ color: "#ECB42A" }}>{"<"}0.01%</p>
+                <p>23.42 GAIN PROTOCOL</p>
+              </div>
+            </div>
+          </InfoCards>
         </div>
       </div>
     </>

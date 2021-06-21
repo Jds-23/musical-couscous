@@ -39,7 +39,7 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
         className={styles.moreDetails}
         onClick={() => setSeeMoreDetails(!seeMoreDetails)}
       >
-        SEE MORE DETAILS
+        {!seeMoreDetails ? "CLOSE" : "VIEW"} DETAILS
       </span>
       <HidableBar
         style={{ maxWidth: "500px", padding: "0 30px", marginBottom: "10px" }}
