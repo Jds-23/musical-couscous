@@ -27,7 +27,7 @@ const Main: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
         <div className={styles.main__header}>
           <div className={styles.main__header__left}>
             <p>Exchange</p>
-            <p>{type} Gain in an Instant</p>
+            <p style={{ fontSize: "14px" }}>{type} Gain in an Instant</p>
           </div>
           <div className={styles.main__header__right}>
             <button className={styles.main__header__buttons}>
