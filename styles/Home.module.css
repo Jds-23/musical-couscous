@@ -7,6 +7,11 @@
   background-size: cover;
   padding-top: 75px;
 }
+@media only screen and (max-width: 768px) {
+  .countdown__container {
+    background-image: url("./mobile-background.svg");
+  }
+}
 .home__content {
   display: flex;
   flex-direction: column;
