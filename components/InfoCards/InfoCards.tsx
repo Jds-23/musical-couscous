@@ -1,5 +1,5 @@
 import styles from "./InfoCards.module.css";
-import { QuestionOutlineIcon } from "@chakra-ui/icons";
+import Info from "../Info/Info";
 import React from "react";
 export interface info {
   label: string;
@@ -18,10 +18,7 @@ const InfoCards: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
       {infoArr.map(({ label, data, isYellow }, id) => {
         return (
           <div key={id}>
-            <div className={styles.label}>
-              <h4>{label}</h4>
-              <QuestionOutlineIcon />
-            </div>
+            <Info>{label}</Info>
             <p style={isYellow ? { color: "#ECB42A" } : {}}>{data}</p>
           </div>
         );

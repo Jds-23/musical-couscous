@@ -1,0 +1,8 @@
+.info {
+  display: flex;
+  align-items: center;
+  color: #7a71a7;
+}
+.info > h4 {
+  margin-right: 3px;
+}
