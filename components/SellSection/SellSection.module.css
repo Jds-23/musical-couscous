@@ -37,3 +37,13 @@
   display: flex;
   color: #7a71a7;
 }
+.swap_icon {
+  object-fit: contain;
+  height: 22px;
+  cursor: pointer;
+  transform: rotate(0deg);
+  transition: 1s all ease-in-out;
+}
+.swap__icon__rotate {
+  transform: rotate(1800deg);
+}

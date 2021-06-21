@@ -9,8 +9,10 @@ import SellSection from "../components/SellSection/SellSection";
 import WalletInfoModal from "../components/WalletInfoModal/WalletInfoModal";
 import ConfirmSwapModal from "../components/ConfirmSwapModal/ConfirmSwapModal";
 import InfoCards from "../components/InfoCards/InfoCards";
+import Info from "../components/Info/Info";
 import ErrorModal from "../components/ErrorModal/ErrorModal";
 import SuccessModal from "../components/SuccessModal/SuccessModal";
+import HidableBar from "../components/HidableBar/HidableBar";
 import { useToast, Box } from "@chakra-ui/react";
 
 export default function Home() {
@@ -20,6 +22,7 @@ export default function Home() {
   const [errorModal, setErrorModal] = useState(false);
   const [successModal, setSuccessModal] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [seeMoreDetails, setSeeMoreDetails] = useState(false);
   const toast = useToast();
 
   const successToast = () => {
@@ -86,25 +89,89 @@ export default function Home() {
             setState={setState}
           />
           {state === 0 ? (
-            <BuySection onOpen={() => setConfirmSwapModal(true)} />
+            <BuySection
+              state={state}
+              setState={setState}
+              onOpen={() => setConfirmSwapModal(true)}
+            />
           ) : (
-            <SellSection onOpen={() => setConfirmSwapModal(true)} />
+            <SellSection
+              state={state}
+              setState={setState}
+              onOpen={() => setConfirmSwapModal(true)}
+            />
           )}
-          <InfoCards
-            infoArr={[
-              { label: "Buyer Fee", data: "3.5% = 56,689 Gain" },
-              { label: "Liquidity", data: "3.5% = 56,689 Gain" },
-              { label: "Team", data: "3.5% = 56,689 Gain" },
-              { label: "Sweepstakes", data: "3.5% = 56,689 Gain" },
-            ]}
-          />
-          <InfoCards
+          <InfoCards>
+            <div
+              style={{
+                fontSize: "14px",
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <Info>Buyer Fee</Info>
+              <p>3.5%</p>
+              <p>56,789</p>
+            </div>
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "flex-end",
+              }}
+            >
+              <span
+                style={{
+                  textDecoration: "underline",
+                  fontSize: "14px",
+                  color: "#7a71a7",
+                  cursor: "pointer",
+                }}
+                onClick={() => setSeeMoreDetails(!seeMoreDetails)}
+              >
+                SEE MORE DETAILS
+              </span>
+            </div>
+            <HidableBar isHidden={seeMoreDetails}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Info>Liquidity</Info>
+                <p>3.5%</p>
+                <p>56,789</p>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Info>Team</Info>
+                <p>3.5%</p>
+                <p>56,789</p>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Info>Sweepstakes</Info>
+                <p>3.5%</p>
+                <p>56,789</p>
+              </div>
+            </HidableBar>
+          </InfoCards>
+          {/* <InfoCards
             infoArr={[
               { label: "Minimum received", data: "0.038759 BNB" },
               { label: "Liquidity", data: "<0.01%", isYellow: true },
               { label: "Liquidity Provider Fee", data: "23.42 GAIN PROTOCOL" },
             ]}
-          />
+          /> */}
         </div>
       </div>
     </>
