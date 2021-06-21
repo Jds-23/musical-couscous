@@ -32,24 +32,13 @@
 .countdown__content > h1 {
   font-size: 51px;
 }
-.timer {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-}
-.div {
+
+/* .div {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-.timer > div > h3 {
-  text-align: center;
-  font-size: 41px;
-}
-.timer > div > p {
-  text-align: center;
-  font-size: 10px;
-}
+} */
+
 .line {
   width: 600px;
   border-radius: 4px;
@@ -66,9 +55,6 @@
   .countdown__content > h1 {
     font-size: 25px;
   }
-  .timer > div > h3 {
-    font-size: 21px;
-  }
   .line {
     width: 300px;
     border-radius: 2px;
@@ -81,16 +67,6 @@
 @media only screen and (max-width: 425px) {
   .countdown__content > h1 {
     font-size: 17px;
-  }
-  .timer {
-    align-self: center;
-    width: 100%;
-  }
-  .timer > div > h3 {
-    font-size: 15px;
-  }
-  .timer > div > p {
-    font-size: 10px;
   }
   .line {
     width: 250px;

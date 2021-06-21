@@ -1,7 +1,8 @@
 import styles from "../styles/Countdown.module.css";
 import Head from "next/head";
 import Header from "../components/Header/Header";
-import { useState } from "react";
+import React, { useState } from "react";
+import CountdownTimer from "../components/CountdownTimer/CountdownTimer";
 
 const Countdown = () => {
   const [walletInfoModal, setWalletInfoModal] = useState(false);
@@ -29,24 +30,7 @@ const Countdown = () => {
       <div className={styles.countdown__content}>
         <h1>TRADING OPENS IN </h1>
         <div className={styles.line}></div>
-        <div className={styles.timer}>
-          <div>
-            <h3>17</h3>
-            <p>days</p>
-          </div>
-          <div>
-            <h3>23</h3>
-            <p>hours</p>
-          </div>
-          <div>
-            <h3>3</h3>
-            <p>minutes</p>
-          </div>
-          <div>
-            <h3>23</h3>
-            <p>seconds</p>
-          </div>
-        </div>
+        <CountdownTimer opensDate={"Jun 25, 2021 00:00:00"} />
       </div>
     </div>
   );
