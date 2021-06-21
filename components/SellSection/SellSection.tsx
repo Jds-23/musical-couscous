@@ -106,6 +106,26 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
             fontSize: "14px",
           }}
         >
+          <p>Price</p>
+          <p style={{ textAlign: "right" }}>
+            0.049585748 BNB per Gain Protocol
+            <img
+              style={{ display: "inline" }}
+              src="./images/reload.svg"
+              alt="reload"
+            />
+          </p>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            marginBottom: "30px",
+            justifyContent: "space-between",
+            color: "#7A71A7",
+            padding: "1px 5px",
+            fontSize: "14px",
+          }}
+        >
           <p>Slippage Tolerance</p>
           <p>12%</p>
         </div>
