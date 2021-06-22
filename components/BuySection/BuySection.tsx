@@ -79,7 +79,7 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
         >
           <p>Price</p>
           <p style={{ textAlign: "right" }}>
-            0.049585748 BNB per Gain Protocol
+            0.049585748 BNB per GAIN
             <img
               style={{ display: "inline" }}
               src="./images/reload.svg"

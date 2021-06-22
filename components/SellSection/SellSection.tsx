@@ -4,7 +4,6 @@ import CustomButton from "../Button/Button";
 import SwapCurrencyInputBox from "../SwapCurrencyInputBox/SwapCurrencyInputBox";
 import Main from "../Main/Main";
 import { useWalletAddress } from "../../context/StateProvider";
-import { QuestionOutlineIcon } from "@chakra-ui/icons";
 import ProgressStepper from "../ProgressStepper/ProgressStepper";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import Info from "../Info/Info";
@@ -42,7 +41,7 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
   return (
     <div className={styles.container}>
       <div className={styles.dailySellingLimit}>
-        <Info>DAILY SELLING LIMITS</Info>
+        <Info style={{ marginBottom: "7px" }}>DAILY SELLING LIMITS</Info>
         <ProgressBar percent={50} />
       </div>
       <span
@@ -60,8 +59,7 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
             <Info>2% Liquidity</Info>
           </div>
           <div className={styles.data}>
-            <p>5000,000</p>
-            <img src={"./images/GP.svg"} />
+            <p>5,000,000</p>
           </div>
         </div>
         <div className={styles.GPInfo}>
@@ -69,8 +67,7 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
             <Info>Daily Sell Capacity</Info>
           </div>
           <div className={styles.data}>
-            <p>5000,000</p>
-            <img src={"./images/GP.svg"} />
+            <p>5,000,000</p>
           </div>
         </div>
       </HidableBar>
@@ -118,7 +115,7 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
         >
           <p>Price</p>
           <p style={{ textAlign: "right" }}>
-            0.049585748 BNB per Gain Protocol
+            0.049585748 BNB per GAIN{" "}
             <img
               className={styles.reload}
               src="./images/reload.svg"

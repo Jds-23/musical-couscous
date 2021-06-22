@@ -57,32 +57,6 @@ const SwapCurrencyInputBox: React.FC<
                     : currency
                   : "Select a currency"}
               </div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24.999"
-                height="14.535"
-                viewBox="0 0 24.999 14.535"
-              >
-                <defs>
-                  <linearGradient
-                    id="linear-gradient"
-                    y1="0.5"
-                    x2="1"
-                    y2="0.5"
-                    gradientUnits="objectBoundingBox"
-                  >
-                    <stop offset="0" stop-color="#cfc5f7" />
-                    <stop offset="0.894" stop-color="#cfa8f7" />
-                  </linearGradient>
-                </defs>
-                <path
-                  id="Path_673"
-                  data-name="Path 673"
-                  d="M6725.535,511.289a1.992,1.992,0,0,1-1.414-.586l-10.535-10.535a2,2,0,0,1,2.828-2.828l9.121,9.12,9.051-9.05a2,2,0,0,1,2.828,2.828L6726.949,510.7A1.991,1.991,0,0,1,6725.535,511.289Z"
-                  transform="translate(-6713 -496.754)"
-                  fill="url(#linear-gradient)"
-                />
-              </svg>
             </span>
           </button>
         </div>

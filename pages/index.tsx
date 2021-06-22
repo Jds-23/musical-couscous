@@ -105,13 +105,13 @@ export default function Home() {
             <div
               style={{
                 fontSize: "14px",
-                display: "flex",
-                justifyContent: "space-between",
+                display: "grid",
+                gridTemplateColumns: "4fr 1fr 4fr",
               }}
             >
               <Info>Buyer Fee</Info>
-              <p>3.5%</p>
-              <p>56,789</p>
+              <p style={{ textAlign: "center" }}>3.5%</p>
+              <p style={{ textAlign: "right" }}>56,789 GAIN</p>
             </div>
             <div
               style={{
@@ -136,8 +136,9 @@ export default function Home() {
               <div
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "1fr 1fr 1fr",
+                  gridTemplateColumns: "4fr 1fr 4fr",
                   width: "100%",
+                  fontSize: "11px",
                 }}
               >
                 <div>
@@ -151,9 +152,9 @@ export default function Home() {
                   <p>3.5%</p>
                 </div>
                 <div style={{ textAlign: "right" }}>
-                  <p>56,789</p>
-                  <p>56,789</p>
-                  <p>56,789</p>
+                  <p>56,789 GAIN</p>
+                  <p>56,789 GAIN</p>
+                  <p>56,789 GAIN</p>
                 </div>
               </div>
             </HidableBar>
@@ -162,8 +163,9 @@ export default function Home() {
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "1fr 1fr",
+                gridTemplateColumns: "5fr 3fr",
                 width: "100%",
+                fontSize: "11px",
               }}
             >
               <div>
@@ -172,9 +174,9 @@ export default function Home() {
                 <Info>Liquidity Provider Fee</Info>
               </div>
               <div style={{ textAlign: "right" }}>
-                <p>56,789</p>
+                <p>56,789 GAIN</p>
                 <p style={{ color: "#ECB42A" }}>{"<"}0.01%</p>
-                <p>23.42 GAIN PROTOCOL</p>
+                <p>23.42 GAIN</p>
               </div>
             </div>
           </InfoCards>

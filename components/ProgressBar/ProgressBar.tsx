@@ -12,7 +12,7 @@ const ProgressBar: React.FC<myProps & React.HTMLAttributes<HTMLDivElement>> = ({
         style={{ width: `${percent ? percent : 0}%` }}
         className={`${styles.progressBarChild} `}
       ></div>
-      <span className={styles.label}>{percent}/100 GAINS</span>
+      <span className={styles.label}>{percent}/100 GAIN</span>
     </div>
   );
 };
