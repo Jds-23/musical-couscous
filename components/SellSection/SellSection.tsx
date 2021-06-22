@@ -26,9 +26,19 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
   const [state2, setState2] = useState(0);
   const [seeMoreDetails, setSeeMoreDetails] = useState(false);
 
+  const [approving, setApproving] = useState(false);
+
   const [fromCurrency, setFromCurrency] = useState("GAINPROTOCOL");
   const [toCurrency, setToCurrency] = useState("BNB");
   const { address, setAddress } = useWalletAddress();
+  const approve = () => {
+    setApproving(true);
+    setTimeout(() => {
+      console.log("Hello");
+      setState2(1);
+      setApproving(false);
+    }, 40500);
+  };
   return (
     <div className={styles.container}>
       <div className={styles.dailySellingLimit}>
@@ -110,7 +120,7 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
           <p style={{ textAlign: "right" }}>
             0.049585748 BNB per Gain Protocol
             <img
-              style={{ display: "inline" }}
+              className={styles.reload}
               src="./images/reload.svg"
               alt="reload"
             />
@@ -131,16 +141,27 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
         </div>
         <div style={{ display: "flex", gap: "5px", width: "100%" }}>
           <CustomButton
-            onClick={() => setState2(1)}
+            onClick={approve}
             style={{
               borderRadius: "14px",
               width: "40%",
               fontSize: "12px",
               lineHeight: "13px",
             }}
-            disabled={state2 > 0}
+            disabled={state2 > 0 || approving}
           >
-            {"Approve Gain Protocol"}
+            {state2 === 0 && !approving && "Approve Gain Protocol"}
+            {approving && (
+              <span>
+                Approving
+                <img
+                  src="./images/reload.svg"
+                  className={styles.approving}
+                  alt="approving"
+                />
+              </span>
+            )}
+            {state2 >= 1 && !approving && "Approved"}
           </CustomButton>
           <CustomButton
             onClick={() => setState2(2)}
@@ -150,7 +171,7 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
               fontSize: "12px",
               lineHeight: "13px",
             }}
-            disabled={state2 !== 1}
+            disabled={state2 < 1 || approving}
           >
             {"Swap"}
           </CustomButton>

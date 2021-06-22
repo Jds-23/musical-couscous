@@ -36,6 +36,12 @@
 .data {
   display: flex;
   color: #7a71a7;
+  align-items: center;
+}
+.data > img {
+  height: 18px;
+  object-fit: contain;
+  margin-left: 3px;
 }
 .swap_icon {
   object-fit: contain;
@@ -45,5 +51,35 @@
   transition: 1s all ease-in-out;
 }
 .swap__icon__rotate {
-  transform: rotate(1800deg);
+  transform: rotate(180deg);
+}
+.approving {
+  display: inline;
+  vertical-align: middle;
+  height: 100%;
+  object-fit: contain;
+  -webkit-animation: spin 4s linear infinite;
+  -moz-animation: spin 4s linear infinite;
+  animation: spin 4s linear infinite;
+}
+.reload {
+  display: inline;
+  vertical-align: middle;
+  object-fit: contain;
+}
+@-moz-keyframes spin {
+  100% {
+    -moz-transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }
