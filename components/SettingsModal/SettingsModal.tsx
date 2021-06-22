@@ -4,12 +4,15 @@ import { ModalBody } from "@chakra-ui/react";
 import { QuestionOutlineIcon } from "@chakra-ui/icons";
 import { Input } from "@chakra-ui/react";
 import { Switch } from "@chakra-ui/react";
+import Info from "../Info/Info";
+import { useState } from "react";
 interface MyProps {
   isOpen: boolean;
   onClose: () => void;
 }
 const SettingsModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
   ({ isOpen, onClose, ...props }) => {
+    const [activeTolerance, setActiveTolerance] = useState("3.5");
     return (
       <>
         <CustomModal
@@ -21,47 +24,62 @@ const SettingsModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
         >
           <ModalBody paddingBottom={"20px"}>
             <h3 className={styles.heading}>Transactions Settings</h3>
-            <div className={styles.label} style={{ marginTop: "20px" }}>
+            <Info style={{ marginTop: "20px", fontSize: "10px" }}>
               <h4>Slippage tolerance</h4>
-              <QuestionOutlineIcon />
-            </div>
+            </Info>
             <div className={styles.tolerance}>
-              <Input variant="filled" />
-              <Input variant="filled" />
-              <Input variant="filled" />
-              <Input variant="filled" />
+              <button
+                className={`${styles.button} ${
+                  activeTolerance === "1" ? styles.button__active : ""
+                }`}
+                onClick={() => setActiveTolerance("1")}
+              >
+                1
+              </button>
+              <button
+                className={`${styles.button} ${
+                  activeTolerance === "3.5" ? styles.button__active : ""
+                }`}
+                onClick={() => setActiveTolerance("3.5")}
+              >
+                3.5
+              </button>
+              <button
+                className={`${styles.button} ${
+                  activeTolerance === "5.0" ? styles.button__active : ""
+                }`}
+                onClick={() => setActiveTolerance("5.0")}
+              >
+                5.0
+              </button>
+              <Input
+                value={activeTolerance}
+                onChange={(e) => setActiveTolerance(e.target.value)}
+                borderRadius="9px"
+                variant="filled"
+                color="#7a71a7"
+              />
             </div>
-            <div className={styles.label} style={{ marginTop: "20px" }}>
+            <Info style={{ marginTop: "20px", fontSize: "10px" }}>
               <h4>Transaction deadline</h4>
-              <QuestionOutlineIcon />
-            </div>
+            </Info>
             <div className={styles.deadline}>
-              <Input width="90px" marginRight="10px" variant="filled" />
+              <Input
+                width="90px"
+                marginRight="10px"
+                variant="filled"
+                defaultValue="20"
+              />
               <p>minutes</p>
             </div>
             <h3 className={styles.heading} style={{ marginTop: "30px" }}>
               Interface Settings
             </h3>
             <div className={styles.switches}>
-              <div className={styles.label}>
+              <Info style={{ fontSize: "10px" }}>
                 <h4>Toggle Expert Mode</h4>
-                <QuestionOutlineIcon />
-              </div>
-              <Switch size="lg" />
-            </div>
-            <div className={styles.switches}>
-              <div className={styles.label}>
-                <h4>Disable Multipleshops</h4>
-                <QuestionOutlineIcon />
-              </div>
-              <Switch size="lg" />
-            </div>
-            <div className={styles.switches}>
-              <div className={styles.label}>
-                <h4>Audio</h4>
-                <QuestionOutlineIcon />
-              </div>
-              <Switch size="lg" />
+              </Info>
+              <Switch size="lg" colorScheme={"brand"} />
             </div>
           </ModalBody>
         </CustomModal>

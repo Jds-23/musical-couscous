@@ -39,7 +39,7 @@
 }
 .swap_icon {
   object-fit: contain;
-  height: 22px;
+  height: 32px;
   cursor: pointer;
   transform: rotate(0deg);
   transition: 1s all ease-in-out;
