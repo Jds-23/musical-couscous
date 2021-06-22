@@ -117,22 +117,22 @@ export default function Home() {
               style={{
                 width: "100%",
                 display: "flex",
-                justifyContent: "flex-end",
+                justifyContent: "center",
               }}
             >
               <span
                 style={{
                   textDecoration: "underline",
-                  fontSize: "14px",
+                  fontSize: "10px",
                   color: "#7a71a7",
                   cursor: "pointer",
                 }}
                 onClick={() => setSeeMoreDetails(!seeMoreDetails)}
               >
-                {!seeMoreDetails ? "CLOSE" : "VIEW"} DETAILS
+                {seeMoreDetails ? "CLOSE" : "VIEW"} DETAILS
               </span>
             </div>
-            <HidableBar isHidden={seeMoreDetails}>
+            <HidableBar isHidden={!seeMoreDetails}>
               <div
                 style={{
                   display: "grid",
