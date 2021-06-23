@@ -1,31 +1,32 @@
 .timer {
   display: flex;
   justify-content: space-between;
-  gap: 20px;
+  width: 100%;
+  max-width: 652px;
 }
 .timer > div > h3 {
   text-align: center;
-  font-size: 41px;
+  font-size: 55px;
+  line-height: 69px;
 }
 .timer > div > p {
   text-align: center;
-  font-size: 10px;
+  font-size: 15px;
 }
 
 @media only screen and (max-width: 768px) {
-  .timer > div > h3 {
-    font-size: 21px;
-  }
-}
-@media only screen and (max-width: 425px) {
   .timer {
-    align-self: center;
-    width: 100%;
+    max-width: 100%;
   }
   .timer > div > h3 {
-    font-size: 15px;
+    font-size: 7.531vw;
+    line-height: 9vw;
   }
   .timer > div > p {
-    font-size: 10px;
+    font-size: 2.5vw;
+    line-height: 2.5vw;
+  }
+  .timer {
+    width: 85vw;
   }
 }
