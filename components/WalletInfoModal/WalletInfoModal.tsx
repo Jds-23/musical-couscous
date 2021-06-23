@@ -21,8 +21,7 @@ const WalletInfoModal: React.FC<
         {...props}
       >
         <ModalBody>
-          <h1 style={{ fontSize: "20px" }}>{address}</h1>
-
+          <h1 style={{ fontSize: "18px",  color:"#7a71a7" }}>{address}</h1>
           <div style={{ display: "flex" }}>
             <div className={styles.link}>
               <p>View on BscScan</p>

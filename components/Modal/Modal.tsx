@@ -28,9 +28,10 @@ const CustomModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
           marginRight={"10px"}
           maxWidth={maxWidth}
           borderRadius={"30px"}
+          overflow={"hidden"}
           alignSelf={"center"}
         >
-          <ModalHeader fontWeight="400">{title}</ModalHeader>
+          <ModalHeader fontWeight="400" backgroundColor="#F2F2F2">{title}</ModalHeader>
           <ModalCloseButton />
           {children}
         </ModalContent>

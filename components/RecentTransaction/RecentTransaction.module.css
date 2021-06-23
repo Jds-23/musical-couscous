@@ -1,0 +1,15 @@
+.transaction{
+    font-size:16px;
+    color:#7a71a7;
+    text-align: center;
+}
+.transaction>h1>img{
+    display: inline;
+    margin-left: 3px;
+    cursor: pointer;
+}
+@media only screen and (max-width: 425px) {
+    .transaction{
+        font-size:14px;
+    }
+}
