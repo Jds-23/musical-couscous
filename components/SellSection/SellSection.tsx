@@ -72,7 +72,7 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
           </div>
         </div>
       </HidableBar>
-      <Main type={"Sell"}>
+      <Main style={{ marginTop: "10px" }} type={"Sell"}>
         <SwapCurrencyInputBox
           type={"From"}
           amount={amount}
