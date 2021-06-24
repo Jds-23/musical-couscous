@@ -31,7 +31,14 @@ const CustomModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
           overflow={"hidden"}
           alignSelf={"center"}
         >
-          <ModalHeader fontWeight="400" backgroundColor="#F2F2F2">{title}</ModalHeader>
+          <ModalHeader
+            fontWeight="400"
+            fontSize="16px"
+            color=""
+            backgroundColor="#cfc5f7"
+          >
+            {title}
+          </ModalHeader>
           <ModalCloseButton />
           {children}
         </ModalContent>
