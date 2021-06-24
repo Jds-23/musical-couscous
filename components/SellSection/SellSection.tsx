@@ -38,10 +38,11 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
       setApproving(false);
     }, 40500);
   };
+
   return (
     <div className={styles.container}>
       <div className={styles.dailySellingLimit}>
-        <Info style={{ marginBottom: "7px" }}>DAILY SELLING LIMITS</Info>
+        <Info style={{ marginBottom: "7px" }}>DAILY SELL LIMIT</Info>
         <ProgressBar percent={50} />
       </div>
       <span
@@ -56,18 +57,18 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
       >
         <div className={styles.GPInfo}>
           <div className={styles.label}>
-            <Info>2% Liquidity</Info>
+            <Info>Total Liquidity</Info>
           </div>
           <div className={styles.data}>
-            <p>5,000,000</p>
+            <p>5,000,000 GAIN</p>
           </div>
         </div>
         <div className={styles.GPInfo}>
           <div className={styles.label}>
-            <Info>Daily Sell Capacity</Info>
+            <Info>Daily Sell Limit</Info>
           </div>
           <div className={styles.data}>
-            <p>5,000,000</p>
+            <p>5,000,000 GAIN</p>
           </div>
         </div>
       </HidableBar>
