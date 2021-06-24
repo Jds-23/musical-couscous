@@ -65,7 +65,7 @@ export default function Home() {
             crossOrigin=""
           />
         </Head>
-
+        <div className={styles.home__background} />
         <img
           src={"./images/background/LeftTop.svg"}
           className={styles.home__bg_left_top}
