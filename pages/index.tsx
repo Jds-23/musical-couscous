@@ -65,7 +65,26 @@ export default function Home() {
             crossOrigin=""
           />
         </Head>
+        <div className={styles.home__background} />
+        <img
+          src={"./images/background/LeftTop.svg"}
+          className={styles.home__bg_left_top}
+        />
+
+        <img
+          src={"./images/background/TopRight.svg"}
+          className={styles.home__bg_right_top}
+        />
+        <img
+          src={"./images/background/LeftBottom.svg"}
+          className={styles.home__bg_left_bottom}
+        />
+        <img
+          src={"./images/background/RightBottom.svg"}
+          className={styles.home__bg_right_bottom}
+        />
         <Header openWalletInfoModal={() => setWalletInfoModal(true)} />
+
         <ConfirmSwapModal
           isOpen={confirmSwapModal}
           successToast={successToast}

@@ -1,10 +1,58 @@
-.home__container {
+.home__bg_left_top {
+  z-index: -1;
+  position: fixed;
+  top: -70px;
+  left: -70px;
+  width: 360px;
+  clip: rect(70px, 3500px, 300px, 70px);
+}
+
+@media only screen and (max-width: 400px) {
+  .home__bg_left_top {
+    width: 300px;
+  }
+}
+
+.home__bg_right_top {
+  z-index: -1;
+  position: fixed;
+  top: -2.5%;
+  right: -2.5%;
+  max-width: 30%;
+}
+
+.home__bg_left_bottom {
+  z-index: -1;
+  position: fixed;
+  bottom: -110px;
+  left: -130px;
+  max-height: 50%;
+}
+
+.home__bg_right_bottom {
+  z-index: -1;
+  position: fixed;
+  bottom: -200px;
+  right: -330px;
+  max-height: 75%;
+}
+
+.home__background {
+  z-index: -3;
+  position: fixed;
   background-color: #f1f1f1;
   background-image: url("./background.svg");
   background-repeat: no-repeat;
-  min-height: 100vh;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
   background-attachment: fixed;
   background-size: cover;
+}
+
+.home__container {
+  min-height: 100vh;
   padding-top: 75px;
 }
 @media only screen and (max-width: 768px) {
