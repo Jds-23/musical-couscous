@@ -1,15 +1,29 @@
-.transaction{
-    font-size:16px;
-    color:#7a71a7;
-    text-align: center;
+.top {
+  font-size: 10px;
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
 }
-.transaction>h1>img{
-    display: inline;
-    margin-left: 3px;
-    cursor: pointer;
+.top > h1 {
+  width: fit-content;
 }
-@media only screen and (max-width: 425px) {
-    .transaction{
-        font-size:14px;
-    }
+.top > button {
+  background-color: #cfc5f7;
+  border-radius: 30px;
+  padding: 5px;
+  color: #7a71a7;
+}
+.transaction {
+  font-size: 12px;
+  color: #7a71a7;
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 0;
+}
+.transaction > h1 > img {
+  display: inline;
+  margin-left: 3px;
+  cursor: pointer;
+  object-fit: contain;
+  height: 15px;
 }
