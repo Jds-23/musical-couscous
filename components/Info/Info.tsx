@@ -1,8 +1,12 @@
 import styles from "./Info.module.css";
 import { QuestionOutlineIcon } from "@chakra-ui/icons";
 import { Tooltip } from "@chakra-ui/react";
-const Info: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
+interface MyProps {
+  tooltip?: string;
+}
+const Info: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
   children,
+  tooltip = "Hey, I'm here!",
   ...props
 }) => {
   return (
@@ -11,7 +15,7 @@ const Info: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
       <Tooltip
         placement="top"
         hasArrow
-        label="Hey, I'm here!"
+        label={tooltip}
         aria-label="A tooltip"
         bg="#D9D0FB"
         color="#7A71A7"

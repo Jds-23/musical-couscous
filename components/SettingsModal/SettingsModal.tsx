@@ -24,7 +24,10 @@ const SettingsModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
         >
           <ModalBody paddingBottom={"20px"}>
             <h3 className={styles.heading}>Transactions Settings</h3>
-            <Info style={{ marginTop: "20px", fontSize: "10px" }}>
+            <Info
+              tooltip="Your transaction will revert if the price changes unfavorably by more than this percentage."
+              style={{ marginTop: "20px", fontSize: "10px" }}
+            >
               <h4>Slippage tolerance</h4>
             </Info>
             <div className={styles.tolerance}>
@@ -60,7 +63,10 @@ const SettingsModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
                 color="#7a71a7"
               />
             </div>
-            <Info style={{ marginTop: "20px", fontSize: "10px" }}>
+            <Info
+              tooltip="Your transaction will revert if it is pending for more than this long."
+              style={{ marginTop: "20px", fontSize: "10px" }}
+            >
               <h4>Transaction deadline</h4>
             </Info>
             <div className={styles.deadline}>
@@ -69,6 +75,7 @@ const SettingsModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
                 marginRight="10px"
                 variant="filled"
                 defaultValue="20"
+                color="#7a71a7"
               />
               <p>minutes</p>
             </div>
@@ -76,7 +83,10 @@ const SettingsModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
               Interface Settings
             </h3>
             <div className={styles.switches}>
-              <Info style={{ fontSize: "10px" }}>
+              <Info
+                tooltip="Bypasses confirmation modals and allows high slippage trades. Use at your own risk."
+                style={{ fontSize: "10px" }}
+              >
                 <h4>Toggle Expert Mode</h4>
               </Info>
               <Switch size="lg" colorScheme={"brand"} />
