@@ -1,15 +1,22 @@
 .home__bg_left_top {
   position: fixed;
-  top: -109px;
+  top: -70px;
   left: -70px;
-  max-width: 50%;
+  width: 360px;
+  clip: rect(70px, 3500px, 300px, 70px);
+}
+
+@media only screen and (max-width: 400px) {
+  .home__bg_left_top {
+    width: 300px;
+  }
 }
 
 .home__bg_right_top {
   position: fixed;
-  top: -50px;
-  right: -140px;
-  max-width: 50%;
+  top: -2.5%;
+  right: -2.5%;
+  max-width: 30%;
 }
 
 .home__bg_left_bottom {
