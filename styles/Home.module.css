@@ -1,3 +1,31 @@
+.home__bg_left_top {
+  position: fixed;
+  top: -109px;
+  left: -70px;
+  max-width: 50%;
+}
+
+.home__bg_right_top {
+  position: fixed;
+  top: -50px;
+  right: -140px;
+  max-width: 50%;
+}
+
+.home__bg_left_bottom {
+  position: fixed;
+  bottom: -110px;
+  left: -130px;
+  max-height: 50%;
+}
+
+.home__bg_right_bottom {
+  position: fixed;
+  bottom: -200px;
+  right: -330px;
+  max-height: 75%;
+}
+
 .home__container {
   background-color: #f1f1f1;
   background-image: url("./background.svg");
