@@ -1,5 +1,5 @@
 import Head from "next/head";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Switch from "../components/Switch/Switch";
 import Header from "../components/Header/Header";
 import styles from "../styles/Home.module.css";
@@ -14,7 +14,8 @@ import ErrorModal from "../components/ErrorModal/ErrorModal";
 import SuccessModal from "../components/SuccessModal/SuccessModal";
 import HidableBar from "../components/HidableBar/HidableBar";
 import { useToast, Box } from "@chakra-ui/react";
-
+import CountdownScreen from "../components/CountdownScreen/CountdownScreen";
+const opensDate = "Jun 25, 2021 18:29:00";
 export default function Home() {
   const [state, setState] = useState(0);
   const [walletInfoModal, setWalletInfoModal] = useState(false);
@@ -23,6 +24,9 @@ export default function Home() {
   const [successModal, setSuccessModal] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [seeMoreDetails, setSeeMoreDetails] = useState(false);
+  const [time, setTime] = useState(
+    new Date(opensDate).getTime() - new Date().getTime()
+  );
   const toast = useToast();
 
   const successToast = () => {
@@ -41,6 +45,12 @@ export default function Home() {
       isClosable: true,
     });
   };
+  useEffect(() => {
+    setInterval(
+      () => setTime(new Date(opensDate).getTime() - new Date().getTime()),
+      1000
+    );
+  }, []);
   return (
     <>
       <WalletInfoModal
@@ -84,122 +94,130 @@ export default function Home() {
           className={styles.home__bg_right_bottom}
         />
         <Header openWalletInfoModal={() => setWalletInfoModal(true)} />
-
-        <ConfirmSwapModal
-          isOpen={confirmSwapModal}
-          successToast={successToast}
-          onSuccessOpen={() => setSuccessModal(true)}
-          onClose={() => setConfirmSwapModal(false)}
-        />
-        <ErrorModal isOpen={errorModal} onClose={() => setErrorModal(false)} />
-        <SuccessModal
-          isOpen={successModal}
-          onClose={() => setSuccessModal(false)}
-        />
-        <div className={styles.home__content}>
-          <Switch
-            options={["Buy", "Sell"]}
-            style={{
-              marginLeft: "auto",
-              marginRight: "auto",
-              marginBottom: "48px",
-            }}
-            state={state}
-            setState={setState}
-          />
-          {state === 0 ? (
-            <BuySection
-              state={state}
-              setState={setState}
-              onOpen={() => setConfirmSwapModal(true)}
+        {time > 0 ? (
+          <CountdownScreen opensDate={opensDate} />
+        ) : (
+          <>
+            <ConfirmSwapModal
+              isOpen={confirmSwapModal}
+              successToast={successToast}
+              onSuccessOpen={() => setSuccessModal(true)}
+              onClose={() => setConfirmSwapModal(false)}
             />
-          ) : (
-            <SellSection
-              state={state}
-              setState={setState}
-              onOpen={() => setConfirmSwapModal(true)}
+            <ErrorModal
+              isOpen={errorModal}
+              onClose={() => setErrorModal(false)}
             />
-          )}
-          <InfoCards>
-            <div
-              style={{
-                fontSize: "14px",
-                display: "grid",
-                gridTemplateColumns: "4fr 1fr 4fr",
-              }}
-            >
-              <Info>Buyer Fee</Info>
-              <p style={{ textAlign: "center" }}>3.5%</p>
-              <p style={{ textAlign: "right" }}>56,789 GAIN</p>
-            </div>
-            <div
-              style={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <span
+            <SuccessModal
+              isOpen={successModal}
+              onClose={() => setSuccessModal(false)}
+            />
+            <div className={styles.home__content}>
+              <Switch
+                options={["Buy", "Sell"]}
                 style={{
-                  textDecoration: "underline",
-                  fontSize: "10px",
-                  color: "#7a71a7",
-                  cursor: "pointer",
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                  marginBottom: "48px",
                 }}
-                onClick={() => setSeeMoreDetails(!seeMoreDetails)}
-              >
-                {seeMoreDetails ? "CLOSE" : "VIEW"} DETAILS
-              </span>
+                state={state}
+                setState={setState}
+              />
+              {state === 0 ? (
+                <BuySection
+                  state={state}
+                  setState={setState}
+                  onOpen={() => setConfirmSwapModal(true)}
+                />
+              ) : (
+                <SellSection
+                  state={state}
+                  setState={setState}
+                  onOpen={() => setConfirmSwapModal(true)}
+                />
+              )}
+              <InfoCards>
+                <div
+                  style={{
+                    fontSize: "14px",
+                    display: "grid",
+                    gridTemplateColumns: "4fr 1fr 4fr",
+                  }}
+                >
+                  <Info>Buyer Fee</Info>
+                  <p style={{ textAlign: "center" }}>3.5%</p>
+                  <p style={{ textAlign: "right" }}>56,789 GAIN</p>
+                </div>
+                <div
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  <span
+                    style={{
+                      textDecoration: "underline",
+                      fontSize: "10px",
+                      color: "#7a71a7",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => setSeeMoreDetails(!seeMoreDetails)}
+                  >
+                    {seeMoreDetails ? "CLOSE" : "VIEW"} DETAILS
+                  </span>
+                </div>
+                <HidableBar isHidden={!seeMoreDetails}>
+                  <div
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "4fr 1fr 4fr",
+                      width: "100%",
+                      fontSize: "11px",
+                    }}
+                  >
+                    <div>
+                      <Info>Liquidity</Info>
+                      <Info>Team</Info>
+                      <Info>Sweepstakes</Info>
+                    </div>
+                    <div style={{ textAlign: "center" }}>
+                      <p>3.5%</p>
+                      <p>3.5%</p>
+                      <p>3.5%</p>
+                    </div>
+                    <div style={{ textAlign: "right" }}>
+                      <p>56,789 GAIN</p>
+                      <p>56,789 GAIN</p>
+                      <p>56,789 GAIN</p>
+                    </div>
+                  </div>
+                </HidableBar>
+              </InfoCards>
+              <InfoCards>
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "5fr 3fr",
+                    width: "100%",
+                    fontSize: "11px",
+                  }}
+                >
+                  <div>
+                    <Info>Minimum received</Info>
+                    <Info>Price Impact</Info>
+                    <Info>Liquidity Provider Fee</Info>
+                  </div>
+                  <div style={{ textAlign: "right" }}>
+                    <p>56,789 GAIN</p>
+                    <p style={{ color: "#ECB42A" }}>{"<"}0.01%</p>
+                    <p>23.42 GAIN</p>
+                  </div>
+                </div>
+              </InfoCards>
             </div>
-            <HidableBar isHidden={!seeMoreDetails}>
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "4fr 1fr 4fr",
-                  width: "100%",
-                  fontSize: "11px",
-                }}
-              >
-                <div>
-                  <Info>Liquidity</Info>
-                  <Info>Team</Info>
-                  <Info>Sweepstakes</Info>
-                </div>
-                <div style={{ textAlign: "center" }}>
-                  <p>3.5%</p>
-                  <p>3.5%</p>
-                  <p>3.5%</p>
-                </div>
-                <div style={{ textAlign: "right" }}>
-                  <p>56,789 GAIN</p>
-                  <p>56,789 GAIN</p>
-                  <p>56,789 GAIN</p>
-                </div>
-              </div>
-            </HidableBar>
-          </InfoCards>
-          <InfoCards>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "5fr 3fr",
-                width: "100%",
-                fontSize: "11px",
-              }}
-            >
-              <div>
-                <Info>Minimum received</Info>
-                <Info>Price Impact</Info>
-                <Info>Liquidity Provider Fee</Info>
-              </div>
-              <div style={{ textAlign: "right" }}>
-                <p>56,789 GAIN</p>
-                <p style={{ color: "#ECB42A" }}>{"<"}0.01%</p>
-                <p>23.42 GAIN</p>
-              </div>
-            </div>
-          </InfoCards>
-        </div>
+          </>
+        )}
       </div>
     </>
   );

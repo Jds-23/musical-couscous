@@ -57,11 +57,7 @@
   min-height: 100vh;
   padding-top: 75px;
 }
-@media only screen and (max-width: 768px) {
-  .countdown__container {
-    background-image: url("./mobile-background.svg");
-  }
-}
+
 .home__content {
   display: flex;
   flex-direction: column;
@@ -75,6 +71,4 @@
   .home__content {
     padding: 10px;
   }
-}
-@media only screen and (max-width: 425px) {
 }

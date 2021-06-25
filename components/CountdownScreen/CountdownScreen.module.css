@@ -1,0 +1,44 @@
+.countdown__content {
+  display: flex;
+  flex-direction: column;
+  -webkit-box-align: center;
+  align-items: center;
+  justify-content: center;
+  /* width: calc(61vw + 32px); */
+  padding: 16px 16px 30px;
+  min-height: calc(100vh - 64px);
+  color: #7a71a7;
+}
+.countdown__content > h1 {
+  font-size: 6.53vw;
+}
+.line {
+  width: 652px;
+  border-radius: 4px;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    #ecb42a 0%,
+    #e8a839 48%,
+    #c637c1 81%,
+    #bb12ee 100%
+  );
+}
+@media only screen and (min-width: 1080px) {
+  .countdown__content > h1 {
+    font-size: 87px;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .countdown__content {
+    max-width: 100%;
+  }
+  .countdown__content > h1 {
+    font-size: 6.532vw;
+  }
+  .line {
+    width: 78.125vw;
+    border-radius: 2px;
+    height: 2px;
+  }
+}
