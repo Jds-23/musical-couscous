@@ -1,15 +1,15 @@
 .home__bg_left_top {
   z-index: -1;
   position: fixed;
-  top: -70px;
-  left: -70px;
-  width: 360px;
-  clip: rect(70px, 3500px, 300px, 70px);
+  top: min(calc(-100px + 13%), 0px);
+  left: 0px;
+  min-width: 360px;
 }
 
 @media only screen and (max-width: 400px) {
   .home__bg_left_top {
     width: 300px;
+    top: -100px;
   }
 }
 
@@ -24,17 +24,17 @@
 .home__bg_left_bottom {
   z-index: -1;
   position: fixed;
-  bottom: -110px;
-  left: -130px;
-  max-height: 50%;
+  bottom: 0px;
+  left: 0px;
+  max-width: 30%;
 }
 
 .home__bg_right_bottom {
   z-index: -1;
   position: fixed;
-  bottom: -200px;
-  right: -330px;
-  max-height: 75%;
+  bottom: 0px;
+  right: 0px;
+  max-width: 60%;
 }
 
 .home__background {
