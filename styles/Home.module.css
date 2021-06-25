@@ -19,6 +19,7 @@
   top: -2.5%;
   right: -2.5%;
   max-width: 30%;
+  max-height: max(30%, 160px);
 }
 
 .home__bg_left_bottom {
@@ -35,6 +36,7 @@
   bottom: 0px;
   right: 0px;
   max-width: 60%;
+  max-height: 60%;
 }
 
 .home__background {
