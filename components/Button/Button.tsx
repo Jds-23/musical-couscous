@@ -1,5 +1,5 @@
 import styles from "./Button.module.css";
-interface ButtonProps {
+export interface ButtonProps {
   size?: string;
   block?: boolean;
   disabled?: boolean;

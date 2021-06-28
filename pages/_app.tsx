@@ -3,6 +3,21 @@ import "../styles/globals.css";
 import { WalletAddressContext } from "../context/StateProvider";
 import type { AppProps } from "next/app";
 import { useState } from "react";
+import { light, dark } from "@pancakeswap-libs/uikit";
+import { ThemeProvider } from "styled-components";
+import { ModalProvider } from "@pancakeswap-libs/uikit";
+import { Web3ReactProvider } from "@web3-react/core";
+import {
+  ExternalProvider,
+  JsonRpcFetchFunc,
+  Web3Provider,
+} from "@ethersproject/providers";
+function getLibrary(
+  provider: ExternalProvider | JsonRpcFetchFunc,
+  connector: any
+) {
+  return new Web3Provider(provider); // this will vary according to whether you use e.g. ethers or web3.js
+}
 function MyApp({ Component, pageProps }: AppProps) {
   const [address, setAddress] = useState("");
   const theme = extendTheme({
@@ -18,11 +33,15 @@ function MyApp({ Component, pageProps }: AppProps) {
     },
   });
   return (
-    <WalletAddressContext.Provider value={{ address, setAddress }}>
+    <Web3ReactProvider getLibrary={getLibrary}>
       <ChakraProvider theme={theme}>
-        <Component {...pageProps} />
+        <ThemeProvider theme={dark}>
+          <ModalProvider>
+            <Component {...pageProps} />
+          </ModalProvider>
+        </ThemeProvider>
       </ChakraProvider>
-    </WalletAddressContext.Provider>
+    </Web3ReactProvider>
   );
 }
 
