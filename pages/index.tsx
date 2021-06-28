@@ -136,85 +136,217 @@ export default function Home() {
                   onOpen={() => setConfirmSwapModal(true)}
                 />
               )}
-              <InfoCards>
-                <div
-                  style={{
-                    fontSize: "14px",
-                    display: "grid",
-                    gridTemplateColumns: "4fr 1fr 4fr",
-                  }}
-                >
-                  <Info>Buyer Fee</Info>
-                  <p style={{ textAlign: "center" }}>3.5%</p>
-                  <p style={{ textAlign: "right" }}>56,789 GAIN</p>
-                </div>
-                <div
-                  style={{
-                    width: "100%",
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
-                >
-                  <span
+              {state === 0 ? (
+                <InfoCards>
+                  <div
                     style={{
-                      textDecoration: "underline",
-                      fontSize: "10px",
-                      color: "#7a71a7",
-                      cursor: "pointer",
+                      fontSize: "14px",
+                      display: "grid",
+                      gridTemplateColumns: "4fr 1fr 4fr",
                     }}
-                    onClick={() => setSeeMoreDetails(!seeMoreDetails)}
                   >
-                    {seeMoreDetails ? "CLOSE" : "VIEW"} DETAILS
-                  </span>
-                </div>
-                <HidableBar isHidden={!seeMoreDetails}>
+                    <Info tooltip="The total fee you are set to pay when buying GAIN.">
+                      Buyer Fee
+                    </Info>
+                    <p style={{ textAlign: "center" }}>3.5%</p>
+                    <p style={{ textAlign: "right" }}>56,789 GAIN</p>
+                  </div>
+                  <div
+                    style={{
+                      width: "100%",
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <span
+                      style={{
+                        textDecoration: "underline",
+                        fontSize: "10px",
+                        color: "#7a71a7",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => setSeeMoreDetails(!seeMoreDetails)}
+                    >
+                      {seeMoreDetails ? "CLOSE" : "VIEW"} DETAILS
+                    </span>
+                  </div>
+                  <HidableBar isHidden={!seeMoreDetails}>
+                    <div
+                      style={{
+                        display: "grid",
+                        gridTemplateColumns: "4fr 1fr 4fr",
+                        width: "100%",
+                        fontSize: "11px",
+                      }}
+                    >
+                      <div>
+                        <Info tooltip="Estimated amount of GAIN added to the liquidity from this transaction.">
+                          Liquidity
+                        </Info>
+                        <Info tooltip="Estimated amount of GAIN added to the team wallet from this transaction.">
+                          Team
+                        </Info>
+                        <Info tooltip="Estimated amount of GAIN added to the sweepstakes pool from this transaction. ">
+                          Sweepstakes
+                        </Info>
+                      </div>
+                      <div style={{ textAlign: "center" }}>
+                        <p>3.5%</p>
+                        <p>3.5%</p>
+                        <p>3.5%</p>
+                      </div>
+                      <div style={{ textAlign: "right" }}>
+                        <p>56,789 GAIN</p>
+                        <p>56,789 GAIN</p>
+                        <p>56,789 GAIN</p>
+                      </div>
+                    </div>
+                  </HidableBar>
+                </InfoCards>
+              ) : (
+                <InfoCards>
+                  <div
+                    style={{
+                      fontSize: "14px",
+                      display: "grid",
+                      gridTemplateColumns: "4fr 1fr 4fr",
+                    }}
+                  >
+                    <Info tooltip="The total fee you are set to pay when selling GAIN. ">
+                      Seller Fee
+                    </Info>
+                    <p style={{ textAlign: "center" }}>3.5%</p>
+                    <p style={{ textAlign: "right" }}>56,789 GAIN</p>
+                  </div>
+                  <div
+                    style={{
+                      width: "100%",
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <span
+                      style={{
+                        textDecoration: "underline",
+                        fontSize: "10px",
+                        color: "#7a71a7",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => setSeeMoreDetails(!seeMoreDetails)}
+                    >
+                      {seeMoreDetails ? "CLOSE" : "VIEW"} DETAILS
+                    </span>
+                  </div>
+                  <HidableBar isHidden={!seeMoreDetails}>
+                    <div
+                      style={{
+                        display: "grid",
+                        gridTemplateColumns: "4fr 1fr 4fr",
+                        width: "100%",
+                        fontSize: "11px",
+                      }}
+                    >
+                      <div>
+                        <Info tooltip="Estimated amount of GAIN added to the static rewards pool from this transaction. ">
+                          Static Reward
+                        </Info>
+                        <Info tooltip="Estimated amount of GAIN added to the hodl rewards pool from this transaction.">
+                          Hodl Reward
+                        </Info>
+                        <Info tooltip="Estimated amount of GAIN added to the charity pool rewards from this transaction.">
+                          Charity
+                        </Info>
+                        <Info
+                          tooltip="The estimated amount of added fee from this transaction due to selling more
+than the daily sell limit. This amount will be added to the static rewards pool
+and will be distributed among all holders as a part of the static rewards
+distribution."
+                        >
+                          Whale Protection
+                        </Info>
+                      </div>
+                      <div style={{ textAlign: "center" }}>
+                        <p>3.5%</p>
+                        <p>3.5%</p>
+                        <p>3.5%</p>
+                      </div>
+                      <div style={{ textAlign: "right" }}>
+                        <p>56,789 GAIN</p>
+                        <p>56,789 GAIN</p>
+                        <p>56,789 GAIN</p>
+                      </div>
+                    </div>
+                  </HidableBar>
+                </InfoCards>
+              )}
+
+              {state === 0 ? (
+                <InfoCards>
                   <div
                     style={{
                       display: "grid",
-                      gridTemplateColumns: "4fr 1fr 4fr",
+                      gridTemplateColumns: "5fr 3fr",
                       width: "100%",
                       fontSize: "11px",
                     }}
                   >
                     <div>
-                      <Info>Liquidity</Info>
-                      <Info>Team</Info>
-                      <Info>Sweepstakes</Info>
-                    </div>
-                    <div style={{ textAlign: "center" }}>
-                      <p>3.5%</p>
-                      <p>3.5%</p>
-                      <p>3.5%</p>
+                      <Info tooltip="The minimum amount of GAIN you will receive. Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.">
+                        Minimum received
+                      </Info>
+                      <Info tooltip="The difference between the market price and estimated price due to trade size.">
+                        Price Impact
+                      </Info>
+                      <Info
+                        tooltip="For each trade a 0.25% fee is paid
+- 0.17% to LP token holders
+- 0.03% to the Treasury
+- 0.05% towards CAKE buyback and burn"
+                      >
+                        Liquidity Provider Fee
+                      </Info>
                     </div>
                     <div style={{ textAlign: "right" }}>
                       <p>56,789 GAIN</p>
-                      <p>56,789 GAIN</p>
-                      <p>56,789 GAIN</p>
+                      <p style={{ color: "#ECB42A" }}>{"<"}0.01%</p>
+                      <p>23.42 GAIN</p>
                     </div>
                   </div>
-                </HidableBar>
-              </InfoCards>
-              <InfoCards>
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "5fr 3fr",
-                    width: "100%",
-                    fontSize: "11px",
-                  }}
-                >
-                  <div>
-                    <Info>Minimum received</Info>
-                    <Info>Price Impact</Info>
-                    <Info>Liquidity Provider Fee</Info>
+                </InfoCards>
+              ) : (
+                <InfoCards>
+                  <div
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "5fr 3fr",
+                      width: "100%",
+                      fontSize: "11px",
+                    }}
+                  >
+                    <div>
+                      <Info tooltip="The minimum amount of GAIN you will receive. Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.">
+                        Maximum Sold
+                      </Info>
+                      <Info tooltip="The difference between the market price and estimated price due to trade size.">
+                        Price Impact
+                      </Info>
+                      <Info
+                        tooltip="For each trade a 0.25% fee is paid
+- 0.17% to LP token holders
+- 0.03% to the Treasury
+- 0.05% towards CAKE buyback and burn"
+                      >
+                        Liquidity Provider Fee
+                      </Info>
+                    </div>
+                    <div style={{ textAlign: "right" }}>
+                      <p>56,789 GAIN</p>
+                      <p style={{ color: "#ECB42A" }}>{"<"}0.01%</p>
+                      <p>23.42 GAIN</p>
+                    </div>
                   </div>
-                  <div style={{ textAlign: "right" }}>
-                    <p>56,789 GAIN</p>
-                    <p style={{ color: "#ECB42A" }}>{"<"}0.01%</p>
-                    <p>23.42 GAIN</p>
-                  </div>
-                </div>
-              </InfoCards>
+                </InfoCards>
+              )}
             </div>
           </>
         )}

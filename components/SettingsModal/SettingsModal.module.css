@@ -8,10 +8,26 @@
   font-size: 10px;
   color: #7a71a7;
 }
+.tolerance__button__1 {
+  grid-area: toleranceButton_1;
+  width: 100%;
+}
+.tolerance__button__2 {
+  grid-area: toleranceButton_2;
+  width: 100%;
+}
+.tolerance__button__3 {
+  grid-area: toleranceButton_3;
+  width: 100%;
+}
+.tolerance__input {
+  grid-area: toleranceInput;
+  width: 100%;
+}
 .tolerance {
   display: grid;
   gap: 11px;
-  grid-template-columns: 2fr 2fr 2fr 6fr;
+  grid-template-areas: "toleranceButton_1 toleranceButton_2 toleranceButton_3 toleranceInput toleranceInput toleranceInput";
   margin-top: 20px;
 }
 .deadline {
@@ -46,6 +62,7 @@
   background-color: #f0f4f5;
   box-shadow: none;
   color: #7a71a7;
+  height: 40px;
 }
 .button:hover {
   opacity: 0.65;
@@ -53,4 +70,11 @@
 .button__active {
   background-color: #7a71a7;
   color: #f0f4f5;
+}
+@media only screen and (max-width: 425px) {
+  .tolerance {
+    grid-template-areas:
+      "toleranceButton_1 toleranceButton_2 toleranceButton_3"
+      "toleranceInput toleranceInput toleranceInput";
+  }
 }

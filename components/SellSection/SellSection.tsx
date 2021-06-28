@@ -42,7 +42,15 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
   return (
     <div className={styles.container}>
       <div className={styles.dailySellingLimit}>
-        <Info style={{ marginBottom: "7px" }}>DAILY SELL LIMIT</Info>
+        <Info
+          tooltip="The total amount of GAIN you are allowed to sell within 24 hours without
+activating the whale protection protocol. Be aware, once whale protection is
+activated your transaction will accumulate additional fees depending on the
+total amount of GAIN being sold."
+          style={{ marginBottom: "7px" }}
+        >
+          DAILY SELL LIMIT
+        </Info>
         <ProgressBar percent={50} />
       </div>
       <span
@@ -57,7 +65,12 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
       >
         <div className={styles.GPInfo}>
           <div className={styles.label}>
-            <Info>Total Liquidity</Info>
+            <Info
+              tooltip="The total amount of available liquidity. Available liquidity sets the daily sell
+limit and price impact for all transactions. "
+            >
+              Total Liquidity
+            </Info>
           </div>
           <div className={styles.data}>
             <p>5,000,000 GAIN</p>
@@ -65,7 +78,14 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
         </div>
         <div className={styles.GPInfo}>
           <div className={styles.label}>
-            <Info>Daily Sell Limit</Info>
+            <Info
+              tooltip="The total amount of GAIN you are allowed to sell within 24 hours without
+activating the whale protection protocol. Be aware, once whale protection is
+activated your transaction will accumulate additional fees depending on the
+total amount of GAIN being sold."
+            >
+              Daily Sell Limit
+            </Info>
           </div>
           <div className={styles.data}>
             <p>5,000,000 GAIN</p>

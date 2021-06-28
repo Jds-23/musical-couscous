@@ -34,7 +34,7 @@ const SettingsModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
               <button
                 className={`${styles.button} ${
                   activeTolerance === "1" ? styles.button__active : ""
-                }`}
+                } ${styles.tolerance__button__1}`}
                 onClick={() => setActiveTolerance("1")}
               >
                 1
@@ -42,7 +42,7 @@ const SettingsModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
               <button
                 className={`${styles.button} ${
                   activeTolerance === "3.5" ? styles.button__active : ""
-                }`}
+                } ${styles.tolerance__button__2}`}
                 onClick={() => setActiveTolerance("3.5")}
               >
                 3.5
@@ -50,14 +50,15 @@ const SettingsModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
               <button
                 className={`${styles.button} ${
                   activeTolerance === "5.0" ? styles.button__active : ""
-                }`}
+                } ${styles.tolerance__button__3}`}
                 onClick={() => setActiveTolerance("5.0")}
               >
-                5.0
+                5
               </button>
               <Input
                 value={activeTolerance}
                 onChange={(e) => setActiveTolerance(e.target.value)}
+                className={styles.tolerance__input}
                 borderRadius="9px"
                 variant="filled"
                 color="#7a71a7"
