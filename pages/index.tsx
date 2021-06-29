@@ -74,6 +74,36 @@ export default function Home() {
             as="font"
             crossOrigin=""
           />
+          <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=UA-198458708-1"
+          ></script>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "UA-198458708-1");`,
+            }}
+          />
+          <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=AW-358031656"
+          ></script>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "AW-358031656");`,
+            }}
+          />
         </Head>
         <div className={styles.home__background} />
         <img
