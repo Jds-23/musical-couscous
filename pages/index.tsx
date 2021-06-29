@@ -269,8 +269,10 @@ distribution."
                         <p>3.5%</p>
                         <p>3.5%</p>
                         <p>3.5%</p>
+                        <p>3.5%</p>
                       </div>
                       <div style={{ textAlign: "right" }}>
+                        <p>56,789 GAIN</p>
                         <p>56,789 GAIN</p>
                         <p>56,789 GAIN</p>
                         <p>56,789 GAIN</p>

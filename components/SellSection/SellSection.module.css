@@ -56,7 +56,7 @@
 .approving {
   display: inline;
   vertical-align: middle;
-  height: 100%;
+  width: 25%;
   object-fit: contain;
   -webkit-animation: spin 4s linear infinite;
   -moz-animation: spin 4s linear infinite;
@@ -81,5 +81,10 @@
   100% {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
+  }
+}
+@media only screen and (max-width: 768px) {
+  .GPInfo {
+    font-size: 13px;
   }
 }
