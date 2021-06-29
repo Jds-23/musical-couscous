@@ -7,6 +7,7 @@ import { light, dark } from "@pancakeswap-libs/uikit";
 import { ThemeProvider } from "styled-components";
 import { ModalProvider } from "@pancakeswap-libs/uikit";
 import { Web3ReactProvider } from "@web3-react/core";
+import { ExternalStateProvider } from "../Context/ExternalState";
 import {
   ExternalProvider,
   JsonRpcFetchFunc,
@@ -34,13 +35,15 @@ function MyApp({ Component, pageProps }: AppProps) {
   });
   return (
     <Web3ReactProvider getLibrary={getLibrary}>
-      <ChakraProvider theme={theme}>
-        <ThemeProvider theme={dark}>
-          <ModalProvider>
-            <Component {...pageProps} />
-          </ModalProvider>
-        </ThemeProvider>
-      </ChakraProvider>
+      <ExternalStateProvider>
+        <ChakraProvider theme={theme}>
+          <ThemeProvider theme={dark}>
+            <ModalProvider>
+              <Component {...pageProps} />
+            </ModalProvider>
+          </ThemeProvider>
+        </ChakraProvider>
+      </ExternalStateProvider>
     </Web3ReactProvider>
   );
 }
