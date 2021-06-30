@@ -7,7 +7,7 @@ import { light, dark } from "@pancakeswap-libs/uikit";
 import { ThemeProvider } from "styled-components";
 import { ModalProvider } from "@pancakeswap-libs/uikit";
 import { Web3ReactProvider } from "@web3-react/core";
-import { ExternalStateProvider } from "../Context/ExternalState";
+import { ExternalStateProvider } from "../context/ExternalState";
 import {
   ExternalProvider,
   JsonRpcFetchFunc,

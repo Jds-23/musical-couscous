@@ -9,7 +9,7 @@ export const ExternalStateContext = React.createContext({
 
 export const ExternalStateProvider: React.FC = ({ children }) => {
   const { account } = useWeb3React<Web3Provider>();
-
+  console.log(account);
   const calls = [
     {
       target: process.env.NEXT_PUBLIC_ICO_ADDRESS,
