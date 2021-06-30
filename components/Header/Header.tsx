@@ -14,9 +14,9 @@ const Header: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
   const { account } = useWeb3React<Web3Provider>();
   const { state: swapState } = useContext(ExternalStateContext);
   useEffect(() => {
+    console.log(swapState.balance);
     // Here I am facing error
   }, [swapState]);
-  console.log(swapState);
   return (
     <header className={styles.header}>
       <img src={"./images/brand.svg"} className={styles.header__brand} />
