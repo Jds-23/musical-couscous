@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import styles from "./BuySection.module.css";
 import CustomButton from "../Button/Button";
 import SwapCurrencyInputBox from "../SwapCurrencyInputBox/SwapCurrencyInputBox";
 import Main from "../Main/Main";
-import { useWalletAddress } from "../../context/StateProvider";
+import { Web3Provider } from "@ethersproject/providers";
+import { useWeb3React } from "@web3-react/core";
+import { ExternalStateContext } from "../../context/ExternalState";
+
 interface MyProps {
   onOpen: () => void;
   state: number;
@@ -17,9 +20,11 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
   const [amount, setAmount] = useState("");
   const [balance, setBalance] = useState("");
 
+  const { account } = useWeb3React<Web3Provider>();
+  const { state: swapState } = useContext(ExternalStateContext);
+
   const [fromCurrency, setFromCurrency] = useState("BNB");
   const [toCurrency, setToCurrency] = useState("GAINPROTOCOL");
-  const { address, setAddress } = useWalletAddress();
   return (
     <div className={styles.container}>
       <Main type={"Buy"}>
@@ -27,8 +32,8 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
           type={"From"}
           amount={amount}
           currency={fromCurrency}
-          balance={balance}
-          currencyOptions={["bnb"]}
+          balance={swapState.balance}
+          currencyOptions={[]}
           setAmount={setAmount}
           setCurrency={setFromCurrency}
           style={{ marginTop: "15px", marginBottom: "15px" }}
@@ -48,8 +53,8 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
           type={"To"}
           amount={amount}
           currency={toCurrency}
-          balance={balance}
-          currencyOptions={["bnb"]}
+          balance={swapState.GPbalance}
+          currencyOptions={[]}
           setAmount={setAmount}
           setCurrency={setToCurrency}
           style={{ marginTop: "15px", marginBottom: "15px" }}
@@ -87,8 +92,8 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
             />
           </p>
         </div>
-        <CustomButton onClick={onOpen} block>
-          {address === "" ? "Unlock Wallet" : "Swap"}
+        <CustomButton disabled={!account} onClick={onOpen} block>
+          {account ? "Swap" : "Unlock Wallet"}
         </CustomButton>
       </Main>
     </div>

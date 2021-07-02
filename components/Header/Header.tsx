@@ -1,22 +1,12 @@
-import React, { useContext, useEffect } from "react";
+import React from "react";
 import ConnectButton from "../ConnectButton/ConnectButton";
 import styles from "./Header.module.css";
-import { Web3Provider } from "@ethersproject/providers";
-import { useWeb3React } from "@web3-react/core";
-import { ExternalStateContext } from "../../context/ExternalState";
-
 interface MyProps {
   openWalletInfoModal: () => void;
 }
 const Header: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
   openWalletInfoModal,
 }) => {
-  const { account } = useWeb3React<Web3Provider>();
-  const { state: swapState } = useContext(ExternalStateContext);
-  useEffect(() => {
-    console.log(swapState.balance);
-    // Here I am facing error
-  }, [swapState]);
   return (
     <header className={styles.header}>
       <img src={"./images/brand.svg"} className={styles.header__brand} />

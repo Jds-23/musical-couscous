@@ -1,5 +1,7 @@
+import { BigNumber } from "ethers";
 import React from "react";
 import styles from "./SwapCurrencyInputBox.module.css";
+import { ethers } from "ethers";
 // enum Type {
 //   from,
 //   to,
@@ -11,7 +13,7 @@ interface MyProps {
   currency: string | undefined;
   setCurrency: (arg0: string) => void;
   currencyOptions: string[];
-  balance: string;
+  balance: BigNumber | undefined;
 }
 const SwapCurrencyInputBox: React.FC<
   React.HTMLAttributes<HTMLDivElement> & MyProps
@@ -31,12 +33,23 @@ const SwapCurrencyInputBox: React.FC<
         <div className={styles.swapCurrencyOutput__container__row1}>
           <div className={styles.swapCurrencyOutput__container__row1__content}>
             <p>{type}</p>
-            <p>{balance !== "" ? `Balance: ${balance}` : "-"}</p>
+            <p>
+              {balance
+                ? `Balance: ${
+                    currency === "BNB"
+                      ? parseFloat(ethers.utils.formatEther(balance)).toFixed(2)
+                      : parseFloat(
+                          ethers.utils.formatUnits(balance, 6)
+                        ).toFixed(2)
+                  }`
+                : "-"}
+            </p>
           </div>
         </div>
         <div className={styles.swapCurrencyOutput__container__row2}>
           <input
             type="text"
+            inputMode={"decimal"}
             placeholder="-"
             minLength={1}
             maxLength={79}

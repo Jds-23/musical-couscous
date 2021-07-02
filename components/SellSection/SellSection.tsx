@@ -1,5 +1,5 @@
 import styles from "./SellSection.module.css";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import CustomButton from "../Button/Button";
 import SwapCurrencyInputBox from "../SwapCurrencyInputBox/SwapCurrencyInputBox";
 import Main from "../Main/Main";
@@ -8,6 +8,9 @@ import ProgressStepper from "../ProgressStepper/ProgressStepper";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import Info from "../Info/Info";
 import HidableBar from "../HidableBar/HidableBar";
+import { Web3Provider } from "@ethersproject/providers";
+import { useWeb3React } from "@web3-react/core";
+import { ExternalStateContext } from "../../context/ExternalState";
 
 interface MyProps {
   onOpen: () => void;
@@ -24,6 +27,9 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
   const [currency, setCurrency] = useState("bnb");
   const [state2, setState2] = useState(0);
   const [seeMoreDetails, setSeeMoreDetails] = useState(false);
+
+  const { account } = useWeb3React<Web3Provider>();
+  const { state: swapState } = useContext(ExternalStateContext);
 
   const [approving, setApproving] = useState(false);
 
@@ -97,7 +103,7 @@ total amount of GAIN being sold."
           type={"From"}
           amount={amount}
           currency={fromCurrency}
-          balance={balance}
+          balance={swapState.GPbalance}
           currencyOptions={["bnb"]}
           setAmount={setAmount}
           setCurrency={setCurrency}
@@ -118,7 +124,7 @@ total amount of GAIN being sold."
           type={"To"}
           amount={amount}
           currency={toCurrency}
-          balance={balance}
+          balance={swapState.balance}
           currencyOptions={["bnb"]}
           setAmount={setAmount}
           setCurrency={setCurrency}

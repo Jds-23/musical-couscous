@@ -88,6 +88,11 @@ export const ExternalStateProvider: React.FC = ({ children }) => {
       call: ["getEthBalance(address)(uint256)", account],
       returns: [["balance"]],
     });
+    calls.push({
+      target: process.env.NEXT_PUBLIC_GP_ADDRESS,
+      call: ["balanceOf(address)(uint256)", account],
+      returns: [["GPbalance"]],
+    });
   }
 
   const watcher = useWatcher(calls);
