@@ -12,7 +12,7 @@ const ConnectButton = (props: ButtonProps) => {
   const { onPresentConnectModal, onPresentAccountModal } = useWalletModal(
     login,
     logout,
-    account
+    account || undefined
   );
 
   //   const { state: icoState } = useContext(ExternalStateContext);
