@@ -1,3 +1,4 @@
+//@ts-ignore
 import { createWatcher } from "@makerdao/multicall";
 import { useEffect, useMemo, useRef, useState } from "react";
 import _ from "lodash";
