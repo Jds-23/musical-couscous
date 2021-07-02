@@ -9,7 +9,6 @@ export const ExternalStateContext = React.createContext({
 
 export const ExternalStateProvider: React.FC = ({ children }) => {
   const { account } = useWeb3React<Web3Provider>();
-  console.log(account);
   const calls = [
     // {
     //   target: process.env.NEXT_PUBLIC_ICO_ADDRESS,
@@ -71,11 +70,11 @@ export const ExternalStateProvider: React.FC = ({ children }) => {
     //   call: ["salePerBNB()(uint256)"],
     //   returns: [["salePerBNB"]],
     // },
-    // {
-    //   target: process.env.NEXT_PUBLIC_GP_ADDRESS,
-    //   call: ["totalSupply()(uint256)"],
-    //   returns: [["totalSupply"]],
-    // },
+    {
+      target: process.env.NEXT_PUBLIC_PAIR_ADDRESS,
+      call: ["getReserves()(uint256,uint256,uint256)"],
+      returns: [["reserves1"]],
+    },
   ];
   if (account) {
     // calls.push({
@@ -88,6 +87,14 @@ export const ExternalStateProvider: React.FC = ({ children }) => {
       call: ["getEthBalance(address)(uint256)", account],
       returns: [["balance"]],
     });
+    // calls.push({
+    //   target: undefined,
+    //   call: [
+    //     "calculateFees(address,address,unit256)(uint256,uint256,uint256,uint256,uint256,uint256)",
+    //     account,
+    //   ],
+    //   returns: [["balance"]],
+    // });
     calls.push({
       target: process.env.NEXT_PUBLIC_GP_ADDRESS,
       call: ["balanceOf(address)(uint256)", account],

@@ -30,12 +30,12 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
 
   const { account } = useWeb3React<Web3Provider>();
   const { state: swapState } = useContext(ExternalStateContext);
-
   const [approving, setApproving] = useState(false);
 
   const [fromCurrency, setFromCurrency] = useState("GAINPROTOCOL");
   const [toCurrency, setToCurrency] = useState("BNB");
   const { address, setAddress } = useWalletAddress();
+  console.log(swapState.balance);
   const approve = () => {
     setApproving(true);
     setTimeout(() => {
