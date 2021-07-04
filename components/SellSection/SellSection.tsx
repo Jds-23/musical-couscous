@@ -3,7 +3,6 @@ import React, { useState, useContext } from "react";
 import CustomButton from "../Button/Button";
 import SwapCurrencyInputBox from "../SwapCurrencyInputBox/SwapCurrencyInputBox";
 import Main from "../Main/Main";
-import { useWalletAddress } from "../../context/StateProvider";
 import ProgressStepper from "../ProgressStepper/ProgressStepper";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import Info from "../Info/Info";
@@ -11,7 +10,6 @@ import HidableBar from "../HidableBar/HidableBar";
 import { Web3Provider } from "@ethersproject/providers";
 import { useWeb3React } from "@web3-react/core";
 import { ExternalStateContext } from "../../context/ExternalState";
-import { ethers } from "ethers";
 
 interface MyProps {
   onOpen: () => void;
@@ -19,7 +17,6 @@ interface MyProps {
   setState: (arg0: number) => void;
 }
 const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
-  onOpen,
   setState,
   state,
 }) => {
@@ -35,24 +32,6 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
 
   const [fromCurrency, setFromCurrency] = useState("GAINPROTOCOL");
   const [toCurrency, setToCurrency] = useState("BNB");
-  const { address, setAddress } = useWalletAddress();
-  // console.log(swapState.liquidityFee);
-  // console.log(
-  //   parseFloat(ethers.utils.formatEther(swapState.liquidityFee)).toFixed(2),
-  //   parseFloat(ethers.utils.formatEther(swapState.teamFee)).toFixed(2),
-  //   parseFloat(ethers.utils.formatEther(swapState.charityFee)).toFixed(2),
-  //   parseFloat(ethers.utils.formatEther(swapState.rewardFee)).toFixed(2),
-  //   parseFloat(ethers.utils.formatEther(swapState.hodlFee)).toFixed(2),
-  //   parseFloat(ethers.utils.formatEther(swapState.whaleProtectionFee)).toFixed(
-  //     2
-  //   )
-  // );
-
-  // console.log(swapState.token0);
-  // console.log(swapState.whaleProtectionPercentFromLP);
-  // console.log(
-  //   parseFloat(ethers.utils.formatUnits(swapState.reserves2, 6)).toFixed(2)
-  // );
   const approve = () => {
     setApproving(true);
     setTimeout(() => {
@@ -61,7 +40,6 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
       setApproving(false);
     }, 40500);
   };
-
   return (
     <div className={styles.container}>
       <div className={styles.dailySellingLimit}>

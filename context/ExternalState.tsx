@@ -10,98 +10,28 @@ export const ExternalStateContext = React.createContext({
 export const ExternalStateProvider: React.FC = ({ children }) => {
   const { account } = useWeb3React<Web3Provider>();
   const calls = [
-    // {
-    //   target: process.env.NEXT_PUBLIC_ICO_ADDRESS,
-    //   call: ["collectedInRound(uint256)(uint256)", 0],
-    //   returns: [["collected"]],
-    // },
-    // {
-    //   target: process.env.NEXT_PUBLIC_ICO_ADDRESS,
-    //   call: ["hardCapBNBJager()(uint256)"],
-    //   returns: [["hardCap"]],
-    // },
-    // {
-    //   target: process.env.NEXT_PUBLIC_ICO_ADDRESS,
-    //   call: ["softCapBNBJager()(uint256)"],
-    //   returns: [["softCap"]],
-    // },
-    // {
-    //   target: process.env.NEXT_PUBLIC_ICO_ADDRESS,
-    //   call: ["endTime()(uint256)"],
-    //   returns: [["endTime"]],
-    // },
-    // {
-    //   target: process.env.NEXT_PUBLIC_ICO_ADDRESS,
-    //   call: ["startTime()(uint256)"],
-    //   returns: [["startTime"]],
-    // },
-    // {
-    //   target: process.env.NEXT_PUBLIC_ICO_ADDRESS,
-    //   call: ["salePerBNB()(uint256)"],
-    //   returns: [["salePerBNB"]],
-    // },
-    // {
-    //   target: process.env.NEXT_PUBLIC_ICO_ADDRESS,
-    //   call: ["isAcceptingContribution()(bool)"],
-    //   returns: [["isAcceptingContribution"]],
-    // },
-    // {
-    //   target: process.env.NEXT_PUBLIC_ICO_ADDRESS,
-    //   call: ["minBuyBNBJager()(uint256)"],
-    //   returns: [["minBuy"]],
-    // },
-    // {
-    //   target: process.env.NEXT_PUBLIC_ICO_ADDRESS,
-    //   call: ["maxBuyBNBJager()(uint256)"],
-    //   returns: [["maxBuy"]],
-    // },
-    // {
-    //   target: process.env.NEXT_PUBLIC_ICO_ADDRESS,
-    //   call: ["offeredTokens()(uint256)"],
-    //   returns: [["offeredTokens"]],
-    // },
-    // {
-    //   target: process.env.NEXT_PUBLIC_ICO_ADDRESS,
-    //   call: ["liquidityRatePerBNB()(uint256)"],
-    //   returns: [["liquidityRatePerBNB"]],
-    // },
-    // {
-    //   target: process.env.NEXT_PUBLIC_ICO_ADDRESS,
-    //   call: ["salePerBNB()(uint256)"],
-    //   returns: [["salePerBNB"]],
-    // },
-    // {
-    //   target: process.env.NEXT_PUBLIC_PAIR_ADDRESS,
-    //   call: ["getReserves()(uint256,uint256,uint256)"],
-    //   returns: [["reserves1"], ["reserves3"], ["reserves2"]],
-    // },
-    // {
-    //   target: process.env.NEXT_PUBLIC_PAIR_ADDRESS,
-    //   call: [" token0()(uin256)"],
-    //   returns: [["token0"]],
-    // },
-    // {
-    //   target: process.env.NEXT_PUBLIC_GP_ADDRESS,
-    //   call: ["  whaleProtectionPercentFromLP()(uint256)"],
-    //   returns: [["whaleProtectionPercentFromLP"]],
-    // },
-    // {
-    //   target: process.env.NEXT_PUBLIC_GP_ADDRESS,
-    //   call: [" dailyTransfersOf(address)(uint256)"],
-    //   returns: [["dailyTransfersOf"]],
-    // },
+    {
+      target: process.env.NEXT_PUBLIC_PAIR_ADDRESS,
+      call: ["getReserves()(uint256,uint256,uint256)"],
+      returns: [["reserves1"], ["reserves3"], ["timeStamp"]],
+    },
+    {
+      target: process.env.NEXT_PUBLIC_PAIR_ADDRESS,
+      call: ["token0()(uint256)"],
+      returns: [["token0"]],
+    },
+    {
+      target: process.env.NEXT_PUBLIC_GP_ADDRESS,
+      call: ["whaleProtectionPercentFromLP()(uint256)"],
+      returns: [["whaleProtectionPercentFromLP"]],
+    },
   ];
   if (account) {
-    // calls.push({
-    //   target: process.env.NEXT_PUBLIC_ICO_ADDRESS,
-    //   call: ["contributionOf(uint256,address)(uint256)", 0, account],
-    //   returns: [["contribution"]],
-    // });
-    // calls.push({
-    //   target: process.env.NEXT_PUBLIC_GP_ADDRESS,
-    //   call: [" dailyTransfersOf(address)(uint256)", account],
-    //   returns: [["dailyTransfersOf"]],
-    // });
+    calls.push({
+      target: process.env.NEXT_PUBLIC_GP_ADDRESS,
+      call: ["dailyTransfersOf(address)(uint256)", account],
+      returns: [["dailyTransfersOf"]],
+    });
     calls.push({
       target: undefined,
       call: ["getEthBalance(address)(uint256)", account],
@@ -117,13 +47,31 @@ export const ExternalStateProvider: React.FC = ({ children }) => {
           "0x01e0390d36804cc8dd6b",
         ],
         returns: [
-          ["liquidityFee"],
-          ["sweepstakeFee"],
-          ["teamFee"],
-          ["charityFee"],
-          ["rewardFee"],
-          ["hodlFee"],
-          ["whaleProtectionFee"],
+          ["buyliquidityFee"],
+          ["buysweepstakeFee"],
+          ["buyteamFee"],
+          ["buycharityFee"],
+          ["buyrewardFee"],
+          ["buyhodlFee"],
+          ["buywhaleProtectionFee"],
+        ],
+      });
+      calls.push({
+        target: process.env.NEXT_PUBLIC_GP_ADDRESS,
+        call: [
+          "calculateFees(address,address,uint256)(uint256,uint256,uint256,uint256,uint256,uint256,uint256)",
+          account,
+          process.env.NEXT_PUBLIC_PAIR_ADDRESS,
+          "0x01e0390d36804cc8dd6b",
+        ],
+        returns: [
+          ["sellliquidityFee"],
+          ["sellsweepstakeFee"],
+          ["sellteamFee"],
+          ["sellcharityFee"],
+          ["sellrewardFee"],
+          ["sellhodlFee"],
+          ["sellwhaleProtectionFee"],
         ],
       });
     }
