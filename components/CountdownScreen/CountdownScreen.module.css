@@ -6,7 +6,7 @@
   justify-content: center;
   /* width: calc(61vw + 32px); */
   padding: 16px 16px 30px;
-  min-height: calc(100vh - 64px);
+  min-height: calc(100vh - 75px);
   color: #7a71a7;
 }
 .countdown__content > h1 {
