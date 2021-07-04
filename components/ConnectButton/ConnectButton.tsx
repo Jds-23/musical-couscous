@@ -32,7 +32,7 @@ const ConnectButton = (props: ButtonProps) => {
     >
       {account
         ? account.substr(0, 3) + "..." + account.substr(account.length - 3, 3)
-        : "CONNECT"}
+        : "Connect"}
     </Button>
   );
 };
