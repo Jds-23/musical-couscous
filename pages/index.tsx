@@ -15,7 +15,7 @@ import SuccessModal from "../components/SuccessModal/SuccessModal";
 import HidableBar from "../components/HidableBar/HidableBar";
 import { useToast, Box } from "@chakra-ui/react";
 import CountdownScreen from "../components/CountdownScreen/CountdownScreen";
-const opensDate = "Jun 23, 2021 18:29:00";
+const opensDate = "Jul 25, 2021 16:00:00";
 export default function Home() {
   const [state, setState] = useState(0);
   const [walletInfoModal, setWalletInfoModal] = useState(false);
@@ -25,7 +25,9 @@ export default function Home() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [seeMoreDetails, setSeeMoreDetails] = useState(false);
   const [time, setTime] = useState(
-    new Date(opensDate).getTime() - new Date().getTime()
+    new Date(opensDate).getTime() -
+      new Date().getTime() -
+      new Date().getTimezoneOffset() * 60000
   );
   const toast = useToast();
 
@@ -47,7 +49,12 @@ export default function Home() {
   };
   useEffect(() => {
     setInterval(
-      () => setTime(new Date(opensDate).getTime() - new Date().getTime()),
+      () =>
+        setTime(
+          new Date(opensDate).getTime() -
+            new Date().getTimezoneOffset() * 60000 -
+            new Date().getTime()
+        ),
       1000
     );
   }, []);

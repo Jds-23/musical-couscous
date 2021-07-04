@@ -9,7 +9,16 @@ const CountdownTimer: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
   ({ opensDate }) => {
     const [state, setState] = useState([0, 0, 0, 0]);
     useEffect(() => {
-      setInterval(() => setState(timer(new Date(opensDate).getTime())), 1000);
+      setInterval(
+        () =>
+          setState(
+            timer(
+              new Date(opensDate).getTime() -
+                new Date().getTimezoneOffset() * 60000
+            )
+          ),
+        1000
+      );
     }, []);
     return (
       <div className={styles.timer}>
