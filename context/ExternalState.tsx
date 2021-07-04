@@ -70,11 +70,26 @@ export const ExternalStateProvider: React.FC = ({ children }) => {
     //   call: ["salePerBNB()(uint256)"],
     //   returns: [["salePerBNB"]],
     // },
-    {
-      target: process.env.NEXT_PUBLIC_PAIR_ADDRESS,
-      call: ["getReserves()(uint256,uint256,uint256)"],
-      returns: [["reserves1"]],
-    },
+    // {
+    //   target: process.env.NEXT_PUBLIC_PAIR_ADDRESS,
+    //   call: ["getReserves()(uint256,uint256,uint256)"],
+    //   returns: [["reserves1"], ["reserves3"], ["reserves2"]],
+    // },
+    // {
+    //   target: process.env.NEXT_PUBLIC_PAIR_ADDRESS,
+    //   call: [" token0()(uin256)"],
+    //   returns: [["token0"]],
+    // },
+    // {
+    //   target: process.env.NEXT_PUBLIC_GP_ADDRESS,
+    //   call: ["  whaleProtectionPercentFromLP()(uint256)"],
+    //   returns: [["whaleProtectionPercentFromLP"]],
+    // },
+    // {
+    //   target: process.env.NEXT_PUBLIC_GP_ADDRESS,
+    //   call: [" dailyTransfersOf(address)(uint256)"],
+    //   returns: [["dailyTransfersOf"]],
+    // },
   ];
   if (account) {
     // calls.push({
@@ -82,19 +97,34 @@ export const ExternalStateProvider: React.FC = ({ children }) => {
     //   call: ["contributionOf(uint256,address)(uint256)", 0, account],
     //   returns: [["contribution"]],
     // });
+    // calls.push({
+    //   target: process.env.NEXT_PUBLIC_GP_ADDRESS,
+    //   call: [" dailyTransfersOf(address)(uint256)", account],
+    //   returns: [["dailyTransfersOf"]],
+    // });
     calls.push({
       target: undefined,
       call: ["getEthBalance(address)(uint256)", account],
       returns: [["balance"]],
     });
-    // calls.push({
-    //   target: undefined,
-    //   call: [
-    //     "calculateFees(address,address,unit256)(uint256,uint256,uint256,uint256,uint256,uint256)",
-    //     account,
-    //   ],
-    //   returns: [["balance"]],
-    // });
+    if (process.env.NEXT_PUBLIC_PAIR_ADDRESS) {
+      calls.push({
+        target: process.env.NEXT_PUBLIC_GP_ADDRESS,
+        call: [
+          "calculateFees(address,address,unit256)(uint256,uint256,uint256,uint256,uint256)",
+          account,
+          process.env.NEXT_PUBLIC_PAIR_ADDRESS,
+          "0x01e0390d36804cc8dd6b",
+        ],
+        returns: [
+          ["liquidityFee"],
+          ["charityFee"],
+          ["rewardFee"],
+          ["hodlFee"],
+          ["whaleProtectionFee"],
+        ],
+      });
+    }
     calls.push({
       target: process.env.NEXT_PUBLIC_GP_ADDRESS,
       call: ["balanceOf(address)(uint256)", account],
