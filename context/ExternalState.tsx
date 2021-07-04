@@ -13,7 +13,7 @@ export const ExternalStateProvider: React.FC = ({ children }) => {
     {
       target: process.env.NEXT_PUBLIC_PAIR_ADDRESS,
       call: ["getReserves()(uint256,uint256,uint256)"],
-      returns: [["reserves1"], ["reserves3"], ["timeStamp"]],
+      returns: [["reserves1"], ["reserves2"], ["timeStamp"]],
     },
     {
       target: process.env.NEXT_PUBLIC_PAIR_ADDRESS,

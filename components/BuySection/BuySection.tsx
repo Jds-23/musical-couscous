@@ -6,7 +6,7 @@ import Main from "../Main/Main";
 import { Web3Provider } from "@ethersproject/providers";
 import { useWeb3React } from "@web3-react/core";
 import { ExternalStateContext } from "../../context/ExternalState";
-
+import { ethers } from "ethers";
 interface MyProps {
   onOpen: () => void;
   state: number;
@@ -25,6 +25,22 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
 
   const [fromCurrency, setFromCurrency] = useState("BNB");
   const [toCurrency, setToCurrency] = useState("GAINPROTOCOL");
+
+  console.log(
+    swapState.reserves2
+      ? parseFloat(ethers.utils.formatUnits(swapState.reserves2, 6)).toFixed(2)
+      : ""
+  );
+  console.log(
+    swapState.reserves1
+      ? parseFloat(ethers.utils.formatUnits(swapState.reserves1, 6)).toFixed(2)
+      : ""
+  );
+  console.log(
+    swapState.token0
+      ? parseFloat(ethers.utils.formatUnits(swapState.token0, 6)).toFixed(2)
+      : ""
+  );
   return (
     <div className={styles.container}>
       <Main type={"Buy"}>
