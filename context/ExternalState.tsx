@@ -111,13 +111,15 @@ export const ExternalStateProvider: React.FC = ({ children }) => {
       calls.push({
         target: process.env.NEXT_PUBLIC_GP_ADDRESS,
         call: [
-          "calculateFees(address,address,unit256)(uint256,uint256,uint256,uint256,uint256)",
+          "calculateFees(address,address,uint256)(uint256,uint256,uint256,uint256,uint256,uint256,uint256)",
           account,
           process.env.NEXT_PUBLIC_PAIR_ADDRESS,
           "0x01e0390d36804cc8dd6b",
         ],
         returns: [
           ["liquidityFee"],
+          ["sweepstakeFee"],
+          ["teamFee"],
           ["charityFee"],
           ["rewardFee"],
           ["hodlFee"],
