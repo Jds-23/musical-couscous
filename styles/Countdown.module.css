@@ -1,5 +1,5 @@
 .countdown__container {
-  background: linear-gradient(90deg, #f2f2f2 0%, #cfc5f7 100%) 0% 0% no-repeat;
+  background: linear-gradient(90deg, #f5dddd 0%, #cfc5f7 100%) 0% 0% no-repeat;
   /* background-size: 19.2vw 25.18vh, 27.66vw 32vh, 50vw 62.5vh, 25.625vw 33.7vh, cover; */
   background-image: url("./background.svg");
   background-repeat: no-repeat;
