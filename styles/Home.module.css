@@ -52,10 +52,6 @@
   background-size: cover;
 }
 
-.home__container {
-  min-height: 100vh;
-}
-
 .home__content {
   margin-top: 75px;
   display: flex;
