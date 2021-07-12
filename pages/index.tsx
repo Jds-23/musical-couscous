@@ -15,7 +15,7 @@ import SuccessModal from "../components/SuccessModal/SuccessModal";
 import HidableBar from "../components/HidableBar/HidableBar";
 import { useToast, Box } from "@chakra-ui/react";
 import CountdownScreen from "../components/CountdownScreen/CountdownScreen";
-const opensDate = "Jul 1, 2021 16:00:00";
+const opensDate = "Jul 25, 2021 16:00:00";
 export default function Home() {
   const [state, setState] = useState(0);
   const [walletInfoModal, setWalletInfoModal] = useState(false);
