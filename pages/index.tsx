@@ -81,6 +81,26 @@ export default function Home() {
             as="font"
             crossOrigin=""
           />
+          {/* <!-- Criteo Loader File --> */}
+          <script
+            type="text/javascript"
+            src="//dynamic.criteo.com/js/ld/ld.js?a=87595"
+            async={true}
+          ></script>
+          {/* <!-- END Criteo Loader File --> */}
+          <script
+            type="text/javascript"
+            dangerouslySetInnerHTML={{
+              __html: `
+window.criteo_q = window.criteo_q || [];
+var deviceType = /iPad/.test(navigator.userAgent) ? "t" : /Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Silk/.test(navigator.userAgent) ? "m"
+ : "d";
+window.criteo_q.push(
+{ event: "setAccount", account: 87595},
+{ event: "setSiteType", type: deviceType }, { event: "viewItem", item: "1" }
+);`,
+            }}
+          />
           <script
             async
             src="https://www.googletagmanager.com/gtag/js?id=UA-198458708-1"
