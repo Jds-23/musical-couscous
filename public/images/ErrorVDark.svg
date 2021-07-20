@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="33.818" height="33.819" viewBox="0 0 33.818 33.819">
+  <defs>
+    <clipPath id="clip-path">
+      <path id="Path_210" data-name="Path 210" d="M793.251,182.875a15.089,15.089,0,1,1,15.089,15.089A15.1,15.1,0,0,1,793.251,182.875Zm13.835,8.829H810.1v-3.236h-3.014Zm3.159-17.958H806.89l.211,11.959h2.894Zm-18.814,9.129a16.909,16.909,0,1,0,16.909-16.909A16.929,16.929,0,0,0,791.431,182.875Z" fill="none" clip-rule="evenodd"/>
+    </clipPath>
+    <linearGradient id="linear-gradient" x1="0.5" y1="1" x2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#ffa7b3"/>
+      <stop offset="0.131" stop-color="#faa2b9"/>
+      <stop offset="0.316" stop-color="#ec94cb"/>
+      <stop offset="0.48" stop-color="#dd85e2"/>
+      <stop offset="0.825" stop-color="#c57ef4"/>
+      <stop offset="1" stop-color="#b77bff"/>
+    </linearGradient>
+  </defs>
+  <g id="ErrorVDark" transform="translate(-791.431 -165.966)">
+    <g id="Group_37" data-name="Group 37" clip-path="url(#clip-path)">
+      <rect id="Rectangle_23" data-name="Rectangle 23" width="33.819" height="33.819" transform="translate(791.431 165.966)" fill="url(#linear-gradient)"/>
+    </g>
+  </g>
+</svg>

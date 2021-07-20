@@ -6,6 +6,9 @@
   margin-bottom: 5px;
   justify-content: space-between;
 }
+.dark.row1__currency {
+  color: #cfc5f7;
+}
 .row1__currency > p {
   text-align: right;
 }
@@ -23,6 +26,9 @@
   margin-top: 40px;
   font-size: 12px;
 }
+.dark.row1 > p {
+  color: #cfc5f7;
+}
 .row1 {
   margin-bottom: 50px;
 }
@@ -34,6 +40,9 @@
   align-items: center;
   color: #7a71a7;
 }
+.dark.label {
+  color: #cfc5f7;
+}
 .row2 > div {
   display: flex;
   justify-content: space-between;
@@ -42,6 +51,15 @@
 .row2 > div > p {
   color: #615c87;
   text-align: right;
+}
+.dark.row2 > div > p {
+  color: #cfc5f7;
+}
+.row2 > div h4 {
+  color: #615c87;
+}
+.dark.row2 > div h4 {
+  color: #cfc5f7;
 }
 @media only screen and (max-width: 350px) {
   .row1__currency {

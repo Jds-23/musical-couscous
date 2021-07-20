@@ -3,6 +3,9 @@
   color: #24135b;
   font-size: 20px;
 }
+.dark.text {
+  color: #cfc5f7;
+}
 .image {
   height: 77px;
   object-fit: contain;

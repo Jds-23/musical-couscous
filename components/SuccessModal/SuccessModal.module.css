@@ -8,11 +8,17 @@
   color: #24135b;
   font-size: 20px;
 }
+.dark.text {
+  color: #cfc5f7;
+}
 .addInfo {
   padding: 4px 30px;
   color: #24135b;
   background-color: #f0f4f5;
   border-radius: 10px;
+}
+.dark.addInfo {
+  background-color: #cfc5f7;
 }
 .addInfo > p > img {
   display: inline;

@@ -2,8 +2,10 @@ import CustomModal from "../Modal/Modal";
 import styles from "./ConfirmSwapModal.module.css";
 import { ModalBody, ModalFooter } from "@chakra-ui/react";
 import React from "react";
-import { QuestionOutlineIcon } from "@chakra-ui/icons";
 import CustomButton from "../Button/Button";
+import { useTheme } from "../../context/StateProvider";
+import Info from "../Info/Info";
+
 interface MyProps {
   isOpen: boolean;
   onClose: () => void;
@@ -14,6 +16,7 @@ interface MyProps {
 const ConfirmSwapModal: React.FC<
   React.HTMLAttributes<HTMLDivElement> & MyProps
 > = ({ isOpen, onClose, successToast, onSuccessOpen, ...props }) => {
+  const { theme } = useTheme();
   return (
     <>
       <CustomModal
@@ -23,9 +26,15 @@ const ConfirmSwapModal: React.FC<
         maxWidth={"553px"}
         {...props}
       >
-        <ModalBody>
-          <div className={styles.row1}>
-            <div className={styles.row1__currency}>
+        <ModalBody background={theme === "Dark" ? "#000" : "#fff"}>
+          <div
+            className={`${styles.row1} ${theme === "Dark" ? styles.dark : ""}`}
+          >
+            <div
+              className={`${styles.row1__currency} ${
+                theme === "Dark" ? styles.dark : ""
+              }`}
+            >
               <div>
                 <img src={"./images/BNB.svg"} />
                 <p>0.004454</p>
@@ -67,7 +76,11 @@ const ConfirmSwapModal: React.FC<
                 />
               </svg>
             </div>
-            <div className={styles.row1__currency}>
+            <div
+              className={`${theme === "Dark" ? styles.dark : ""} ${
+                styles.row1__currency
+              }`}
+            >
               <div>
                 <img src={"./images/GP.svg"} />
 
@@ -81,35 +94,44 @@ const ConfirmSwapModal: React.FC<
             </p>
           </div>
 
-          <div className={styles.row2}>
+          <div
+            className={`${styles.row2} ${theme === "Dark" ? styles.dark : ""}`}
+          >
             <div>
-              <div className={styles.label}>Price</div>
-              <p>0.04989897 BNB per Gain Protocol</p>
+              <h4 className={styles.label}>Price</h4>
+              <p style={{ fontSize: "10px" }}>
+                0.04989897 BNB per Gain Protocol
+              </p>
             </div>
             <div>
-              <div className={styles.label}>
+              <Info
+                tooltip="Bypasses confirmation modals and allows high slippage trades. Use at your own risk."
+                style={{ fontSize: "10px" }}
+              >
                 <h4>Toggle Expert Mode</h4>
-                <QuestionOutlineIcon />
-              </div>
-              <p>23.42 GAIN PROTOCOL</p>
+              </Info>{" "}
+              <p style={{ fontSize: "10px" }}>23.42 GAIN PROTOCOL</p>
             </div>
             <div>
-              <div className={styles.label}>
-                <h4>Price Impact</h4>
-                <QuestionOutlineIcon />
-              </div>
-              <p style={{ color: "#ECB42A" }}>{"<"}0.99%</p>
+              <Info tooltip="The difference between the market price and estimated price due to trade size.">
+                Price Impact
+              </Info>
+              <p style={{ color: "#ECB42A", fontSize: "10px" }}>{"<"}0.99%</p>
             </div>
             <div>
-              <div className={styles.label}>
-                <h4>Liquidity Provider Fee</h4>
-                <QuestionOutlineIcon />
-              </div>
-              <p>23.0004</p>
+              <Info
+                tooltip="For each trade a 0.25% fee is paid
+- 0.17% to LP token holders
+- 0.03% to the Treasury
+- 0.05% towards GAIN buyback and burn"
+              >
+                Liquidity Provider Fee
+              </Info>
+              <p style={{ fontSize: "10px" }}>23.0004</p>
             </div>
           </div>
         </ModalBody>
-        <ModalFooter>
+        <ModalFooter background={theme === "Dark" ? "#000" : "#fff"}>
           <CustomButton
             block
             onClick={() => {

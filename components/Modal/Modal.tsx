@@ -6,6 +6,8 @@ import {
   ModalHeader,
   ModalCloseButton,
 } from "@chakra-ui/react";
+import { useTheme } from "../../context/StateProvider";
+
 interface MyProps {
   isOpen: boolean;
   onClose: () => void;
@@ -19,6 +21,7 @@ const CustomModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
   children,
   maxWidth = "600px",
 }) => {
+  const { theme } = useTheme();
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose} colorScheme={"brand.100"}>
@@ -34,8 +37,12 @@ const CustomModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
           <ModalHeader
             fontWeight="400"
             fontSize="16px"
-            color=""
-            backgroundColor="#cfc5f7"
+            color={theme === "Dark" ? "#CFC5F7" : "#24135B"}
+            background={
+              theme === "Dark"
+                ? "linear-gradient(90deg, #1A1A1A 0%, #786FA6 100%)"
+                : "#cfc5f7"
+            }
           >
             {title}
           </ModalHeader>

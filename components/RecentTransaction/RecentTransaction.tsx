@@ -1,6 +1,8 @@
 import CustomModal from "../Modal/Modal";
 import { ModalBody } from "@chakra-ui/react";
 import styles from "./RecentTransaction.module.css";
+import { useTheme } from "../../context/StateProvider";
+
 interface MyProps {
   isOpen: boolean;
   onClose: () => void;
@@ -8,6 +10,7 @@ interface MyProps {
 const RecentTransaction: React.FC<
   React.HTMLAttributes<HTMLDivElement> & MyProps
 > = ({ isOpen, onClose, ...props }) => {
+  const { theme } = useTheme();
   return (
     <>
       <CustomModal
@@ -17,8 +20,10 @@ const RecentTransaction: React.FC<
         maxWidth={"600px"}
         {...props}
       >
-        <ModalBody>
-          <div className={styles.top}>
+        <ModalBody backgroundColor={theme === "Dark" ? "#000" : "#fff"}>
+          <div
+            className={`${theme === "Dark" ? styles.dark : ""} ${styles.top}`}
+          >
             <h1>No Transactions History</h1>
             <button>clear all</button>
           </div>

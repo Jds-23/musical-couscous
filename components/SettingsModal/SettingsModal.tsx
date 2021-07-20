@@ -1,11 +1,12 @@
 import styles from "./SettingsModal.module.css";
 import CustomModal from "../Modal/Modal";
 import { ModalBody } from "@chakra-ui/react";
-import { QuestionOutlineIcon } from "@chakra-ui/icons";
 import { Input } from "@chakra-ui/react";
 import { Switch } from "@chakra-ui/react";
 import Info from "../Info/Info";
 import { useState } from "react";
+import { useTheme } from "../../context/StateProvider";
+
 interface MyProps {
   isOpen: boolean;
   onClose: () => void;
@@ -13,6 +14,8 @@ interface MyProps {
 const SettingsModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
   ({ isOpen, onClose, ...props }) => {
     const [activeTolerance, setActiveTolerance] = useState("3.5");
+    const { theme } = useTheme();
+
     return (
       <>
         <CustomModal
@@ -22,8 +25,17 @@ const SettingsModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
           maxWidth={"650px"}
           {...props}
         >
-          <ModalBody paddingBottom={"20px"}>
-            <h3 className={styles.heading}>Transactions Settings</h3>
+          <ModalBody
+            backgroundColor={theme === "Dark" ? "#000" : "#fff"}
+            paddingBottom={"20px"}
+          >
+            <h3
+              className={`${theme === "Dark" ? styles.dark : ""} ${
+                styles.heading
+              }`}
+            >
+              Transactions Settings
+            </h3>
             <Info
               tooltip="Your transaction will revert if the price changes unfavorably by more than this percentage."
               style={{ marginTop: "20px", fontSize: "10px" }}
@@ -70,7 +82,11 @@ const SettingsModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
             >
               <h4>Transaction deadline</h4>
             </Info>
-            <div className={styles.deadline}>
+            <div
+              className={`${theme === "Dark" ? styles.dark : ""} ${
+                styles.deadline
+              }`}
+            >
               <Input
                 width="90px"
                 marginRight="10px"
@@ -80,7 +96,12 @@ const SettingsModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
               />
               <p>minutes</p>
             </div>
-            <h3 className={styles.heading} style={{ marginTop: "30px" }}>
+            <h3
+              className={`${theme === "Dark" ? styles.dark : ""} ${
+                styles.heading
+              }`}
+              style={{ marginTop: "30px" }}
+            >
               Interface Settings
             </h3>
             <div className={styles.switches}>
