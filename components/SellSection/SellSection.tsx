@@ -30,7 +30,7 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
   const { state: swapState } = useContext(ExternalStateContext);
   const [approving, setApproving] = useState(false);
 
-  const [fromCurrency, setFromCurrency] = useState("GAINPROTOCOL");
+  const [fromCurrency, setFromCurrency] = useState("GAIN");
   const [toCurrency, setToCurrency] = useState("BNB");
   const approve = () => {
     setApproving(true);

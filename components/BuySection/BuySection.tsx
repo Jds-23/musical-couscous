@@ -24,7 +24,7 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
   const { state: swapState } = useContext(ExternalStateContext);
 
   const [fromCurrency, setFromCurrency] = useState("BNB");
-  const [toCurrency, setToCurrency] = useState("GAINPROTOCOL");
+  const [toCurrency, setToCurrency] = useState("GAIN");
 
   console.log(
     swapState.reserves2

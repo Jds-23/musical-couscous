@@ -15,6 +15,7 @@ interface MyProps {
   currencyOptions: string[];
   balance: BigNumber | undefined;
 }
+const re = /^\d*\.?\d*$/;
 const SwapCurrencyInputBox: React.FC<
   React.HTMLAttributes<HTMLDivElement> & MyProps
 > = ({
@@ -54,21 +55,34 @@ const SwapCurrencyInputBox: React.FC<
             minLength={1}
             maxLength={79}
             spellCheck={false}
-            pattern="^[0-9]*[.,]?[0-9]*$"
             value={amount}
-            onChange={(e) => setAmount(e.target.value)}
+            onChange={(e) => {
+              if (e.target.value === "" || re.test(e.target.value)) {
+                setAmount(e.target.value);
+              }
+            }}
           />
           <button>
             <span>
               {(currency || currency !== "") && (
-                <img src={`./images/${currency}.svg`} alt={`${currency}`} />
+                <img
+                  style={currency === "GAIN" ? { marginRight: "2px" } : {}}
+                  src={`./images/${currency}.svg`}
+                  alt={`${currency}`}
+                />
               )}
-              <div style={{ marginRight: "4px" }}>
-                {currency || currency !== ""
-                  ? currency === "GAINPROTOCOL"
-                    ? ""
-                    : currency
-                  : "Select a currency"}
+              <div
+                style={
+                  currency === "GAIN"
+                    ? {
+                        marginRight: "0",
+                        fontFamily: "Eurostile Bold",
+                        fontSize: "14px",
+                      }
+                    : { marginRight: "4px" }
+                }
+              >
+                {currency || currency !== "" ? currency : "Select a currency"}
               </div>
             </span>
           </button>
