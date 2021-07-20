@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW 2019 (64-Bit) -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="4.63763in" height="4.63763in" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 211.27 211.27"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .fil1 {fill:white}
+    .fil0 {fill:url(#id0)}
+   ]]>
+  </style>
+  <linearGradient id="id0" gradientUnits="userSpaceOnUse" x1="185.47" y1="229.05" x2="60.02" y2="64.2">
+   <stop offset="0" style="stop-opacity:1; stop-color:#ECB42A"/>
+   <stop offset="0.478431" style="stop-opacity:1; stop-color:#E8A839"/>
+   <stop offset="0.811765" style="stop-opacity:1; stop-color:#C637C1"/>
+   <stop offset="1" style="stop-opacity:1; stop-color:#BB12EE"/>
+  </linearGradient>
+ </defs>
+ <g id="Layer_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <g id="_1095403088">
+   <path class="fil0" d="M113.08 54.36c25.09,3.61 44.37,25.19 44.37,51.28 0,28.62 -23.2,51.81 -51.81,51.81 -12.81,0 -24.54,-4.66 -33.58,-12.36 2.43,0.34 4.91,0.54 7.44,0.54 28.62,0 51.81,-23.2 51.81,-51.81 0,-15.81 -7.07,-29.94 -18.23,-39.45zm-12.4 44.31c4.14,13.49 1.52,10.86 15.01,15.01 -13.49,4.14 -10.86,1.52 -15.01,15.01 -4.14,-13.49 -1.52,-10.86 -15.01,-15.01 13.49,-4.14 10.86,-1.52 15.01,-15.01zm-12.78 -12.55c2.07,6.74 0.76,5.43 7.5,7.5 -6.74,2.07 -5.43,0.76 -7.5,7.5 -2.07,-6.74 -0.76,-5.43 -7.5,-7.5 6.74,-2.07 5.43,-0.76 7.5,-7.5z"/>
+   <path class="fil1" d="M-0 105.64c0,58.34 47.3,105.64 105.64,105.64 58.34,0 105.64,-47.29 105.64,-105.64 0,-58.34 -47.3,-105.64 -105.64,-105.64 -58.34,0 -105.64,47.3 -105.64,105.64zm105.64 98.55c-54.43,0 -98.55,-44.12 -98.55,-98.55 0,-54.43 44.12,-98.55 98.55,-98.55 54.43,0 98.55,44.12 98.55,98.55 0,54.43 -44.12,98.55 -98.55,98.55z"/>
+  </g>
+ </g>
+</svg>

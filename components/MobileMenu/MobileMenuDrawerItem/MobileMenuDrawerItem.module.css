@@ -1,0 +1,51 @@
+.wrapper__nav__box__item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    width: 25%;
+    max-width: 100px;
+    cursor: pointer;
+    transition: all 200ms;
+    transform: scale(1);
+  }
+  .wrapper__nav__box__item:hover {
+    transform: scale(1.1);
+  }
+  .wrapper__nav__box__item > div {
+    width: 60%;
+    object-fit: contain;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  
+  .wrapper__nav__box__item > div > img {
+    width: 100%;
+    object-fit: contain;
+    border-radius: 50%;
+  }
+  .wrapper__nav__box__item > p {
+    text-transform: uppercase;
+    font-size: 12px;
+  }
+  
+  .wrapper__nav__box__item:hover > div > img {
+    background: hsla(343, 64%, 58%, 1);
+    background: radial-gradient(
+      circle,
+      hsla(343, 64%, 58%, 1) 0%,
+      hsla(0, 0%, 100%, 0) 90%
+    );
+    background: -moz-radial-gradient(
+      circle,
+      hsla(343, 64%, 58%, 1) 0%,
+      hsla(0, 0%, 100%, 0) 90%
+    );
+    background: -webkit-radial-gradient(
+      circle,
+      hsla(343, 64%, 58%, 1) 0%,
+      hsla(0, 0%, 100%, 0) 90%
+    );
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#D94F77", endColorstr="#FFFFFF", GradientType=1 );
+  }

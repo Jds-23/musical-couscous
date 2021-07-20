@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW 2019 (64-Bit) -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="4.63763in" height="4.63759in" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 268.45 268.44"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .fil1 {fill:#181822}
+    .fil0 {fill:url(#id0)}
+   ]]>
+  </style>
+  <linearGradient id="id0" gradientUnits="userSpaceOnUse" x1="208.99" y1="270.41" x2="97.44" y2="39.52">
+   <stop offset="0" style="stop-opacity:1; stop-color:#ECB42A"/>
+   <stop offset="0.478431" style="stop-opacity:1; stop-color:#E8A839"/>
+   <stop offset="0.811765" style="stop-opacity:1; stop-color:#C637C1"/>
+   <stop offset="1" style="stop-opacity:1; stop-color:#BB12EE"/>
+  </linearGradient>
+ </defs>
+ <g id="Layer_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <g id="_1091923776">
+   <path class="fil0" d="M171.1 204.19l-36.88 -36.88 -36.88 36.88 -15.69 0 44.72 -44.72 7.84 -7.84 7.84 7.84 44.73 44.72 -15.69 0zm33.08 -122.53l0 15.69 -36.88 36.88 36.88 36.88 0 15.69 -44.73 -44.73 -7.84 -7.84 7.84 -7.84 44.73 -44.73zm-139.93 105.14l0 -15.69 36.88 -36.88 -36.88 -36.88 0 -15.69 44.72 44.72 7.84 7.84 -7.84 7.84 -44.72 44.72zm17.39 -122.53l15.69 0 36.88 36.88 36.88 -36.88 15.69 0 -44.73 44.73 -7.84 7.84 -7.84 -7.84 -44.73 -44.73zm69.33 60.11l2.56 2.56 -19.58 19.58 -2.56 -2.56 19.57 -19.57zm-28.89 -4.13l2.56 2.56 -7.19 7.19 -2.56 -2.56 7.19 -7.19zm8.26 0l2.56 2.56 -11.32 11.32 -2.56 -2.56 11.32 -11.32zm8.26 0l2.56 2.56 -15.45 15.45 -2.56 -2.56 15.45 -15.45zm8.26 0l2.56 2.56 -19.58 19.58 -2.56 -2.56 19.58 -19.58z"/>
+   <path class="fil1" d="M268.45 134.22c0,-74.13 -60.1,-134.22 -134.22,-134.22 -74.13,0 -134.22,60.09 -134.22,134.22 0,74.13 60.09,134.22 134.22,134.22 74.13,0 134.22,-60.09 134.22,-134.22zm-134.22 -125.22c69.16,0 125.22,56.06 125.22,125.22 0,69.16 -56.06,125.22 -125.22,125.22 -69.16,0 -125.22,-56.06 -125.22,-125.22 0,-69.16 56.06,-125.22 125.22,-125.22z"/>
+  </g>
+ </g>
+</svg>

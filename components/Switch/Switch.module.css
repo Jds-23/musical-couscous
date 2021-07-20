@@ -11,7 +11,7 @@
   border-radius: 23px;
   padding: 6.48px 38px 9.52px 36px;
   transition: 1s all linear;
-  z-index: 10;
+  z-index: 6;
 }
 .switch__option__active {
   color: #fff;

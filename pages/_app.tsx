@@ -1,6 +1,6 @@
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import "../styles/globals.css";
-import { WalletAddressContext } from "../context/StateProvider";
+import { Theme, ThemeContext } from "../context/StateProvider";
 import type { AppProps } from "next/app";
 import { useState } from "react";
 import { light, dark } from "@pancakeswap-libs/uikit";
@@ -20,6 +20,7 @@ function getLibrary(
   return new Web3Provider(provider); // this will vary according to whether you use e.g. ethers or web3.js
 }
 function MyApp({ Component, pageProps }: AppProps) {
+  const [themeState, setTheme] = useState(Theme.Dark);
   const [address, setAddress] = useState("");
   const theme = extendTheme({
     fonts: {
@@ -36,13 +37,15 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Web3ReactProvider getLibrary={getLibrary}>
       <ExternalStateProvider>
-        <ChakraProvider theme={theme}>
-          <ThemeProvider theme={dark}>
-            <ModalProvider>
-              <Component {...pageProps} />
-            </ModalProvider>
-          </ThemeProvider>
-        </ChakraProvider>
+        <ThemeContext.Provider value={{ theme: themeState, setTheme }}>
+          <ChakraProvider theme={theme}>
+            <ThemeProvider theme={themeState === "Dark" ? dark : light}>
+              <ModalProvider>
+                <Component {...pageProps} />
+              </ModalProvider>
+            </ThemeProvider>
+          </ChakraProvider>
+        </ThemeContext.Provider>
       </ExternalStateProvider>
     </Web3ReactProvider>
   );

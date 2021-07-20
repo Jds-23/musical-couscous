@@ -7,7 +7,7 @@
   align-items: center;
   width: 100%;
   height: 75px;
-  z-index: 200;
+  z-index: 10;
 }
 .header__brand {
   width: 240px;

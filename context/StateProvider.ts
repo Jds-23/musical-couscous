@@ -1,14 +1,17 @@
 import { createContext, useContext } from "react";
 
-export type WalletAddressContextType = {
-  address: string;
-  setAddress: (arg0: string) => void;
+export enum Theme {
+  Dark = "Dark",
+  Light = "Light",
+}
+
+export type ThemeContextType = {
+  theme: Theme;
+  setTheme: (Theme: Theme) => void;
 };
 
-export const WalletAddressContext = createContext<WalletAddressContextType>({
-  address: "",
-  setAddress: (arg0) => {
-    console.log("hello");
-  },
+export const ThemeContext = createContext<ThemeContextType>({
+  theme: Theme.Dark,
+  setTheme: (theme) => console.warn("no theme provider"),
 });
-export const useWalletAddress = () => useContext(WalletAddressContext);
+export const useTheme = () => useContext(ThemeContext);

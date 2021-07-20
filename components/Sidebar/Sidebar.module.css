@@ -1,0 +1,169 @@
+.sidebar {
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 10;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+  transition: 0.5s all ease-in-out;
+}
+.sidebar > .sidebar__button {
+  background: none;
+  border: none;
+  outline: none;
+  pointer-events: all;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  margin: 10px 5px;
+  transform: scale(1);
+  transition: all 0.25s ease-in-out;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.sidebar > .sidebar__button > img {
+  width: 50px;
+  object-fit: contain;
+  transform: translateX(-20px);
+}
+.background {
+  position: absolute;
+}
+.sidebar__dark .background {
+  width: 85px;
+  height: 360px;
+  right: 0;
+  top: calc(50% - 180px);
+  border-radius: 10px 0 0 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.button__text {
+  /* writing-mode: vertical-lr; */
+  position: absolute;
+  transform: translateX(0) rotate(-90deg);
+  opacity: 1;
+  height: max-content;
+  transition: all 0.25s ease-in-out;
+  font-family: Eurostile;
+  font-size: 12px;
+}
+.button__text__mood {
+  transform: translateX(11px) rotate(-90deg);
+}
+.button__text__buy {
+  transform: translateX(3.5px) rotate(-90deg);
+}
+.button__text__home {
+  transform: translateX(10.5px) rotate(-90deg);
+}
+.button__text__play {
+  transform: translateX(5px) rotate(-90deg);
+}
+.button__text__pledge {
+  transform: translateX(14px) rotate(-90deg);
+}
+
+.image__hover {
+  position: absolute;
+  left: 0;
+  opacity: 0;
+  transition: all 0.25s ease;
+}
+.image__normal {
+  opacity: 1;
+  transition: all 0.25s ease;
+}
+
+.sidebar > .sidebar__button:hover .image__hover {
+  opacity: 1;
+}
+.sidebar > .sidebar__button:hover .image__normal {
+  opacity: 0;
+}
+.sidebar > .sidebar__button:active {
+  transition: all 0.1s ease-in-out;
+}
+.mid__line {
+  display: none;
+}
+@media only screen and (max-width: 1100px) {
+  .sound {
+    position: fixed;
+    top: 50px;
+    right: 50px;
+  }
+  .sidebar__dark {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  .sidebar__dark .background {
+    display: none;
+  }
+  .right__line,
+  .left__line {
+    border-top: 0.6px solid;
+    position: absolute;
+    display: block;
+    width: 35vw;
+    top: -0.4px;
+    border-color: #181823;
+  }
+  .left__line {
+    left: 0;
+  }
+  .right__line {
+    right: 0;
+  }
+  .sidebar__dark .left__line,
+  .sidebar__dark .right__line {
+    border-color: #fff;
+    border-top: 0.5px solid;
+    top: -0.5px;
+  }
+
+  .sidebar {
+    align-items: center;
+    bottom: 0;
+    top: auto;
+    flex-direction: row;
+    height: fit-content;
+    width: 100%;
+    height: 90px;
+    /* background: linear-gradient(90deg, #f1f1f1 0%, #ccc5f2 100%); */
+    justify-content: space-evenly;
+  }
+  .sidebar > .sidebar__button {
+    margin: 0;
+    position: static;
+    flex-direction: column;
+  }
+  .button__text {
+    writing-mode: initial;
+    transform: rotate(0deg);
+  }
+  .button__text__mood {
+    transform: translateX(0) rotate(-0deg);
+  }
+  .button__text__buy {
+    transform: translateX(0) rotate(-0deg);
+  }
+  .button__text__play {
+    transform: translateX(0) rotate(-0deg);
+  }
+  .button__text__pledge {
+    transform: translateX(0) rotate(-0deg);
+  }
+  .sidebar > .sidebar__button > img {
+    transform: translateY(-15px);
+  }
+  .goingUp {
+    transform: translateY(90px);
+  }
+  .sidebar__button__hide__on__mobile {
+    display: none !important;
+  }
+}

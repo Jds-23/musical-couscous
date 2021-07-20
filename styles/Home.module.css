@@ -51,6 +51,9 @@
   background-attachment: fixed;
   background-size: cover;
 }
+.home__background__dark {
+  background: #000;
+}
 
 .home__content {
   margin-top: 75px;

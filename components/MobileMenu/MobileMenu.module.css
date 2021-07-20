@@ -1,0 +1,68 @@
+.hamburger {
+  height: fit-content;
+  background: none;
+  border: none;
+  display: none;
+  transform: translateY(-3.5px);
+  z-index: 30;
+  pointer-events: all;
+}
+.hamburger .line {
+  width: 40px;
+  height: 5px;
+  background: linear-gradient(91.15deg, #99238c -0.04%, #f0a424 100.47%);
+  display: block;
+  margin: 6.4px auto;
+  border-radius: 20px;
+  transform: translateY(-2px);
+  -webkit-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+.hamburger .line:nth-child(3) {
+  width: 32px;
+}
+.hamburger:hover {
+  cursor: pointer;
+}
+
+.hamburger__is__active .line:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger__is__active .line:nth-child(1) {
+  -webkit-transform: translateY(9px) rotate(45deg);
+  -ms-transform: translateY(9px) rotate(45deg);
+  -o-transform: translateY(9px) rotate(45deg);
+  transform: translateY(9px) rotate(45deg);
+}
+
+.hamburger__is__active .line:nth-child(3) {
+  width: 40px;
+  -webkit-transform: translateY(-14px) rotate(-45deg);
+  -ms-transform: translateY(-14px) rotate(-45deg);
+  -o-transform: translateY(-14px) rotate(-45deg);
+  transform: translateY(-14px) rotate(-45deg);
+}
+
+.hamburger__is__active .line {
+  background: transparent;
+  background-color: #fff;
+}
+.hamburger__dark.hamburger__is__active .line {
+  background-color: #181823;
+}
+.text {
+  transition: all 0.25s ease-in-out;
+  font-family: Eurostile;
+  font-size: 12px;
+  color: #fff;
+}
+.hamburger__dark .text {
+  color: #181823;
+}
+@media only screen and (max-width: 1100px) {
+  .hamburger {
+    display: block;
+  }
+}
