@@ -1,6 +1,7 @@
 import { createContext, useContext, useReducer } from "react";
 import { reducer, Actions } from "../reducer/reducer";
 import React from "react";
+import { BigNumber } from "ethers";
 
 export enum Theme {
   Dark = "Dark",
@@ -23,8 +24,8 @@ export const ThemeContext = createContext<ThemeContextType>({
 export const useTheme = () => useContext(ThemeContext);
 
 export type InitialStateType = {
-  gainInString: string;
-  bnbInString: string;
+  gainInString: BigNumber | undefined;
+  bnbInString: BigNumber | undefined;
   swapState: SwapState;
   slippageTolerance: string;
   transactionDeadline: string;
@@ -34,10 +35,10 @@ export type InitialStateType = {
 };
 
 const initialState = {
-  gainInString: "",
-  bnbInString: "",
+  gainInString: undefined,
+  bnbInString: undefined,
   swapState: SwapState.Buy,
-  slippageTolerance: "3.5",
+  slippageTolerance: "3",
   transactionDeadline: "20",
   toggleExpertMode: false,
   gainPerBNB: "",

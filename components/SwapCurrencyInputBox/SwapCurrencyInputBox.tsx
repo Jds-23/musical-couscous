@@ -8,7 +8,7 @@ import { ethers } from "ethers";
 // }
 interface MyProps {
   type: string;
-  amount: string;
+  amount: BigNumber | undefined;
   setAmount: (arg0: string) => void;
   currency: string | undefined;
   setCurrency: (arg0: string) => void;
@@ -29,6 +29,7 @@ const SwapCurrencyInputBox: React.FC<
   ...props
 }) => {
   const [activate, setActivate] = useState(false);
+  const [activeState, setActiveState] = useState("");
   return (
     <div className={styles.swapCurrencyOutput} {...props}>
       <div className={styles.swapCurrencyOutput__container}>
@@ -60,14 +61,36 @@ const SwapCurrencyInputBox: React.FC<
             minLength={1}
             maxLength={79}
             spellCheck={false}
-            value={amount}
-            onFocus={() => setActivate(true)}
+            value={
+              activate
+                ? activeState
+                : currency === "BNB"
+                ? amount
+                  ? ethers.utils.formatEther(amount)
+                  : ""
+                : amount
+                ? ethers.utils.formatUnits(amount, 9)
+                : ""
+            }
+            onFocus={() => {
+              setActiveState(
+                currency === "BNB"
+                  ? amount
+                    ? ethers.utils.formatEther(amount)
+                    : ""
+                  : amount
+                  ? ethers.utils.formatUnits(amount, 9)
+                  : ""
+              );
+              setActivate(true);
+            }}
             onBlur={() => setActivate(false)}
             onChange={(e) => {
               if (
                 (e.target.value === "" || re.test(e.target.value)) &&
                 activate
               ) {
+                setActiveState(e.target.value);
                 setAmount(e.target.value);
               }
             }}

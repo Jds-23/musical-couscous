@@ -28,32 +28,27 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
 
   const getGain = (amount: string) => {
     return swapState.reserves0
-      ? ethers.utils.formatUnits(
-          swapState.reserves0
-            .mul(998)
-            .mul(BigNumber.from(10).pow(18).mul(amount))
-            .div(
-              swapState.reserves1
-                .mul(1000)
-                .add(BigNumber.from(10).pow(18).mul(998))
-            ),
-          9
-        )
-      : "";
+      ? swapState.reserves0
+          .mul(998)
+          .mul(BigNumber.from(10).pow(18).mul(amount))
+          .div(
+            swapState.reserves1
+              .mul(1000)
+              .add(BigNumber.from(10).pow(18).mul(998))
+          )
+      : undefined;
   };
   const getBnb = (amount: string) => {
     return swapState.reserves1
-      ? ethers.utils.formatEther(
-          swapState.reserves1
-            .mul(BigNumber.from(10).pow(9).mul(amount))
-            .mul(998)
-            .div(
-              swapState.reserves0
-                .mul(1000)
-                .add(BigNumber.from(10).pow(9).mul(998))
-            )
-        )
-      : "";
+      ? swapState.reserves1
+          .mul(BigNumber.from(10).pow(9).mul(amount))
+          .mul(998)
+          .div(
+            swapState.reserves0
+              .mul(1000)
+              .add(BigNumber.from(10).pow(9).mul(998))
+          )
+      : undefined;
   };
 
   return (
@@ -70,7 +65,7 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
               type: Types.gain,
               payload: {
                 gain: amount === "" ? "" : getGain(amount),
-                bnb: amount,
+                bnb: BigNumber.from(10).pow(18).mul(amount),
               },
             });
           }}
@@ -101,7 +96,7 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
             dispatch({
               type: Types.gain,
               payload: {
-                gain: amount,
+                gain: BigNumber.from(10).pow(9).mul(amount),
                 bnb: amount === "" ? "" : getBnb(amount),
               },
             });

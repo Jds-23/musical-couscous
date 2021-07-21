@@ -1,5 +1,5 @@
 import Head from "next/head";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Switch from "../components/Switch/Switch";
 import Header from "../components/Header/Header";
 import styles from "../styles/Home.module.css";
@@ -22,6 +22,9 @@ import {
   useAppContext,
   SwapState,
 } from "../context/StateProvider";
+import { ExternalStateContext } from "../context/ExternalState";
+import { ethers } from "ethers";
+
 const opensDate = "Jul 2, 2021 16:00:00";
 export default function Home() {
   const [state, setState] = useState(0);
@@ -29,6 +32,7 @@ export default function Home() {
   const [confirmSwapModal, setConfirmSwapModal] = useState(false);
   const [errorModal, setErrorModal] = useState(false);
   const [successModal, setSuccessModal] = useState(false);
+  const { state: swapState } = useContext(ExternalStateContext);
   const [seeMoreDetails, setSeeMoreDetails] = useState(false);
   const { theme, setTheme } = useTheme();
   const { state: AppState, dispatch } = useAppContext();
@@ -66,6 +70,24 @@ export default function Home() {
       1000
     );
   }, []);
+  // console.log(
+  //   swapState.sellliquidityFee,
+  //   swapState.sellsweepstakeFee,
+  //   swapState.sellteamFee,
+  //   swapState.sellcharityFee,
+  //   swapState.sellrewardFee,
+  //   swapState.sellhodlFee,
+  //   swapState.sellwhaleProtectionFee
+  // );
+  // console.log(
+  //   swapState.buyliquidityFee,
+  //   swapState.buysweepstakeFee,
+  //   swapState.buyteamFee,
+  //   swapState.buycharityFee,
+  //   swapState.buyrewardFee,
+  //   swapState.buyhodlFee,
+  //   swapState.buywhaleProtectionFee
+  // );
   return (
     <>
       <WalletInfoModal
@@ -194,7 +216,7 @@ window.criteo_q.push(
               ) : (
                 <SellSection onOpen={() => setConfirmSwapModal(true)} />
               )}
-              {state === 0 ? (
+              {AppState.swapState === SwapState.Buy ? (
                 <InfoCards>
                   <div
                     style={{
@@ -229,36 +251,57 @@ window.criteo_q.push(
                     </span>
                   </div>
                   <HidableBar isHidden={!seeMoreDetails}>
-                    <div
-                      style={{
-                        display: "grid",
-                        gridTemplateColumns: "4fr 1fr 4fr",
-                        width: "100%",
-                        fontSize: "11px",
-                      }}
-                    >
-                      <div>
-                        <Info tooltip="Estimated amount of GAIN added to the liquidity from this transaction.">
-                          Liquidity
-                        </Info>
-                        <Info tooltip="Estimated amount of GAIN added to the team wallet from this transaction.">
-                          Team
-                        </Info>
-                        <Info tooltip="Estimated amount of GAIN added to the sweepstakes pool from this transaction. ">
-                          Sweepstakes
-                        </Info>
+                    {!swapState.buyliquidityFee ||
+                    !swapState.buyteamFee ||
+                    !swapState.buysweepstakeFee ? (
+                      <></>
+                    ) : (
+                      <div
+                        style={{
+                          display: "grid",
+                          gridTemplateColumns: "4fr 1fr 4fr",
+                          width: "100%",
+                          fontSize: "11px",
+                        }}
+                      >
+                        <div>
+                          <Info tooltip="Estimated amount of GAIN added to the liquidity from this transaction.">
+                            Liquidity
+                          </Info>
+                          <Info tooltip="Estimated amount of GAIN added to the team wallet from this transaction.">
+                            Team
+                          </Info>
+                          <Info tooltip="Estimated amount of GAIN added to the sweepstakes pool from this transaction. ">
+                            Sweepstakes
+                          </Info>
+                        </div>
+                        <div style={{ textAlign: "center" }}>
+                          <p>3.5%</p>
+                          <p>3.5%</p>
+                          <p>3.5%</p>
+                        </div>
+                        <div style={{ textAlign: "right" }}>
+                          <p>
+                            {ethers.utils.formatUnits(
+                              swapState.buyliquidityFee,
+                              9
+                            )}{" "}
+                            GAIN
+                          </p>
+                          <p>
+                            {ethers.utils.formatUnits(swapState.buyteamFee, 9)}{" "}
+                            GAIN
+                          </p>
+                          <p>
+                            {ethers.utils.formatUnits(
+                              swapState.buysweepstakeFee,
+                              9
+                            )}{" "}
+                            GAIN
+                          </p>
+                        </div>
                       </div>
-                      <div style={{ textAlign: "center" }}>
-                        <p>3.5%</p>
-                        <p>3.5%</p>
-                        <p>3.5%</p>
-                      </div>
-                      <div style={{ textAlign: "right" }}>
-                        <p>56,789 GAIN</p>
-                        <p>56,789 GAIN</p>
-                        <p>56,789 GAIN</p>
-                      </div>
-                    </div>
+                    )}
                   </HidableBar>
                 </InfoCards>
               ) : (
@@ -296,46 +339,74 @@ window.criteo_q.push(
                     </span>
                   </div>
                   <HidableBar isHidden={!seeMoreDetails}>
-                    <div
-                      style={{
-                        display: "grid",
-                        gridTemplateColumns: "4fr 1fr 4fr",
-                        width: "100%",
-                        fontSize: "11px",
-                      }}
-                    >
-                      <div>
-                        <Info tooltip="Estimated amount of GAIN added to the static rewards pool from this transaction. ">
-                          Static Reward
-                        </Info>
-                        <Info tooltip="Estimated amount of GAIN added to the hodl rewards pool from this transaction.">
-                          Hodl Reward
-                        </Info>
-                        <Info tooltip="Estimated amount of GAIN added to the charity pool rewards from this transaction.">
-                          Charity
-                        </Info>
-                        <Info
-                          tooltip="The estimated amount of added fee from this transaction due to selling more
+                    {!swapState.sellrewardFee ||
+                    !swapState.sellhodlFee ||
+                    !swapState.sellcharityFee ||
+                    !swapState.sellwhaleProtectionFee ? (
+                      <></>
+                    ) : (
+                      <div
+                        style={{
+                          display: "grid",
+                          gridTemplateColumns: "4fr 1fr 4fr",
+                          width: "100%",
+                          fontSize: "11px",
+                        }}
+                      >
+                        <div>
+                          <Info tooltip="Estimated amount of GAIN added to the static rewards pool from this transaction. ">
+                            Static Reward
+                          </Info>
+                          <Info tooltip="Estimated amount of GAIN added to the hodl rewards pool from this transaction.">
+                            Hodl Reward
+                          </Info>
+                          <Info tooltip="Estimated amount of GAIN added to the charity pool rewards from this transaction.">
+                            Charity
+                          </Info>
+                          <Info
+                            tooltip="The estimated amount of added fee from this transaction due to selling more
 than the daily sell limit. This amount will be added to the static rewards pool
 and will be distributed among all holders as a part of the static rewards
 distribution."
-                        >
-                          Whale Protection
-                        </Info>
+                          >
+                            Whale Protection
+                          </Info>
+                        </div>
+                        <div style={{ textAlign: "center" }}>
+                          <p>3.5%</p>
+                          <p>3.5%</p>
+                          <p>3.5%</p>
+                          <p>3.5%</p>
+                        </div>
+                        <div style={{ textAlign: "right" }}>
+                          <p>
+                            {ethers.utils.formatUnits(
+                              swapState.sellrewardFee,
+                              9
+                            )}{" "}
+                            GAIN
+                          </p>
+                          <p>
+                            {ethers.utils.formatUnits(swapState.sellhodlFee, 9)}{" "}
+                            GAIN
+                          </p>
+                          <p>
+                            {ethers.utils.formatUnits(
+                              swapState.sellcharityFee,
+                              9
+                            )}{" "}
+                            GAIN
+                          </p>
+                          <p>
+                            {ethers.utils.formatUnits(
+                              swapState.sellwhaleProtectionFee,
+                              9
+                            )}{" "}
+                            GAIN
+                          </p>
+                        </div>
                       </div>
-                      <div style={{ textAlign: "center" }}>
-                        <p>3.5%</p>
-                        <p>3.5%</p>
-                        <p>3.5%</p>
-                        <p>3.5%</p>
-                      </div>
-                      <div style={{ textAlign: "right" }}>
-                        <p>56,789 GAIN</p>
-                        <p>56,789 GAIN</p>
-                        <p>56,789 GAIN</p>
-                        <p>56,789 GAIN</p>
-                      </div>
-                    </div>
+                    )}
                   </HidableBar>
                 </InfoCards>
               )}

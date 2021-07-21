@@ -1,3 +1,4 @@
+import { BigNumber } from "ethers";
 import { SwapState, InitialStateType } from "../context/StateProvider";
 type ActionMap<M extends { [index: string]: any }> = {
   [Key in keyof M]: M[Key] extends undefined
@@ -22,12 +23,12 @@ export enum Types {
 
 type Payload = {
   [Types.gain]: {
-    bnb: string;
-    gain: string;
+    bnb: BigNumber | undefined;
+    gain: BigNumber | undefined;
   };
   [Types.bnb]: {
-    bnb: string;
-    gain: string;
+    bnb: BigNumber | undefined;
+    gain: BigNumber | undefined;
   };
   [Types.tolerance]: {
     tolerance: string;

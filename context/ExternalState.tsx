@@ -1,7 +1,9 @@
 import { Web3Provider } from "@ethersproject/providers";
 import { useWeb3React } from "@web3-react/core";
+import { BigNumber } from "ethers";
 import React from "react";
 import useWatcher from "../hooks/useWatcher";
+import { useAppContext } from "./StateProvider";
 
 export const ExternalStateContext = React.createContext({
   state: {} as any,
@@ -9,6 +11,7 @@ export const ExternalStateContext = React.createContext({
 
 export const ExternalStateProvider: React.FC = ({ children }) => {
   const { account } = useWeb3React<Web3Provider>();
+  const { state: AppState, dispatch } = useAppContext();
   const calls = [
     {
       target: process.env.NEXT_PUBLIC_PAIR_ADDRESS,
@@ -42,9 +45,9 @@ export const ExternalStateProvider: React.FC = ({ children }) => {
         target: process.env.NEXT_PUBLIC_GP_ADDRESS,
         call: [
           "calculateFees(address,address,uint256)(uint256,uint256,uint256,uint256,uint256,uint256,uint256)",
-          account,
           process.env.NEXT_PUBLIC_PAIR_ADDRESS,
-          "0x01e0390d36804cc8dd6b",
+          account,
+          AppState.gainInString !== "" ? AppState.gainInString : "0",
         ],
         returns: [
           ["buyliquidityFee"],
@@ -62,7 +65,7 @@ export const ExternalStateProvider: React.FC = ({ children }) => {
           "calculateFees(address,address,uint256)(uint256,uint256,uint256,uint256,uint256,uint256,uint256)",
           account,
           process.env.NEXT_PUBLIC_PAIR_ADDRESS,
-          "0x01e0390d36804cc8dd6b",
+          AppState.gainInString !== "" ? AppState.gainInString : "0",
         ],
         returns: [
           ["sellliquidityFee"],
