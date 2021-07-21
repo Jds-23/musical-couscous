@@ -27,26 +27,38 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
   const { state: appState, dispatch } = useAppContext();
 
   const getGain = (amount: string) => {
-    return swapState.reserves0
+    return swapState.reserves0 &&
+      process.env.NEXT_PUBLIC_VARIABLE_1 &&
+      process.env.NEXT_PUBLIC_VARIABLE_2
       ? swapState.reserves0
-          .mul(998)
+          .mul(process.env.NEXT_PUBLIC_VARIABLE_1)
           .mul(parseEther(amount === "" || amount === "." ? "0" : amount))
           .div(
             swapState.reserves1
-              .mul(1000)
-              .add(BigNumber.from(10).pow(18).mul(998))
+              .mul(process.env.NEXT_PUBLIC_VARIABLE_2)
+              .add(
+                BigNumber.from(10)
+                  .pow(18)
+                  .mul(process.env.NEXT_PUBLIC_VARIABLE_1)
+              )
           )
       : undefined;
   };
   const getBnb = (amount: string) => {
-    return swapState.reserves1
+    return swapState.reserves1 &&
+      process.env.NEXT_PUBLIC_VARIABLE_1 &&
+      process.env.NEXT_PUBLIC_VARIABLE_2
       ? swapState.reserves1
           .mul(parseUnits(amount === "" || amount === "." ? "0" : amount, 9))
-          .mul(998)
+          .mul(process.env.NEXT_PUBLIC_VARIABLE_1)
           .div(
             swapState.reserves0
-              .mul(1000)
-              .add(BigNumber.from(10).pow(9).mul(998))
+              .mul(process.env.NEXT_PUBLIC_VARIABLE_2)
+              .add(
+                BigNumber.from(10)
+                  .pow(9)
+                  .mul(process.env.NEXT_PUBLIC_VARIABLE_1)
+              )
           )
       : undefined;
   };
