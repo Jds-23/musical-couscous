@@ -1,5 +1,5 @@
 import { BigNumber } from "ethers";
-import { SwapState, InitialStateType } from "../context/StateProvider";
+import { BuyOrSell, InitialStateType } from "../context/StateProvider";
 type ActionMap<M extends { [index: string]: any }> = {
   [Key in keyof M]: M[Key] extends undefined
     ? {
@@ -18,7 +18,7 @@ export enum Types {
   transactionDeadline = "TRANSACTION_DEADLINE",
   toggleExpertMode = "TOGGLE_EXPERT_MODE",
   updatePrice = "UPDATE_PRICE",
-  swapState = "TOGGLE_SWAP_STATE",
+  toggleBuyOrSell = "TOGGLE_BUY_OR_SELL",
 }
 
 type Payload = {
@@ -43,8 +43,8 @@ type Payload = {
     gainPerBNB: string;
     bnbPerGAIN: string;
   };
-  [Types.swapState]: {
-    swapState: SwapState;
+  [Types.toggleBuyOrSell]: {
+    toggleBuyOrSell: BuyOrSell;
   };
 };
 
@@ -53,14 +53,12 @@ export type Actions = ActionMap<Payload>[keyof ActionMap<Payload>];
 export const reducer = (state: InitialStateType, action: Actions) => {
   switch (action.type) {
     case "GAIN":
-      console.log(action.payload.gain);
       return {
         ...state,
         gainInString: action.payload.gain,
         bnbInString: action.payload.bnb,
       };
     case "BNB":
-      console.log("BNB");
       return {
         ...state,
         gain: action.payload.gain,
@@ -81,10 +79,10 @@ export const reducer = (state: InitialStateType, action: Actions) => {
         ...state,
         toggleExpertMode: action.payload.toggleExpertMode,
       };
-    case "TOGGLE_SWAP_STATE":
+    case "TOGGLE_BUY_OR_SELL":
       return {
         ...state,
-        swapState: action.payload.swapState,
+        toggleBuyOrSell: action.payload.toggleBuyOrSell,
       };
     case "UPDATE_PRICE":
       return {

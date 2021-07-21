@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Switch.module.css";
-import { SwapState, useAppContext } from "../../context/StateProvider";
+import { BuyOrSell, useAppContext } from "../../context/StateProvider";
 import { Types } from "../../reducer/reducer";
 const Switch: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
   ...props
@@ -11,14 +11,16 @@ const Switch: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
       <button
         onClick={() =>
           dispatch({
-            type: Types.swapState,
+            type: Types.toggleBuyOrSell,
             payload: {
-              swapState: SwapState.Buy,
+              toggleBuyOrSell: BuyOrSell.Buy,
             },
           })
         }
         className={`${styles.switch__option} ${
-          SwapState.Buy === state.swapState ? styles.switch__option__active : ""
+          BuyOrSell.Buy === state.toggleBuyOrSell
+            ? styles.switch__option__active
+            : ""
         }`}
       >
         {"Buy"}
@@ -26,14 +28,14 @@ const Switch: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
       <button
         onClick={() =>
           dispatch({
-            type: Types.swapState,
+            type: Types.toggleBuyOrSell,
             payload: {
-              swapState: SwapState.Sell,
+              toggleBuyOrSell: BuyOrSell.Sell,
             },
           })
         }
         className={`${styles.switch__option} ${
-          SwapState.Sell === state.swapState
+          BuyOrSell.Sell === state.toggleBuyOrSell
             ? styles.switch__option__active
             : ""
         }`}
@@ -43,7 +45,9 @@ const Switch: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
 
       <span
         style={
-          state.swapState === SwapState.Buy ? { left: 0 } : { left: "50%" }
+          state.toggleBuyOrSell === BuyOrSell.Buy
+            ? { left: 0 }
+            : { left: "50%" }
         }
         className={styles.switch__drop}
       ></span>

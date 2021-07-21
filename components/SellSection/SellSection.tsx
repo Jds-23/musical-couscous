@@ -10,21 +10,23 @@ import HidableBar from "../HidableBar/HidableBar";
 import { Web3Provider } from "@ethersproject/providers";
 import { useWeb3React } from "@web3-react/core";
 import { ExternalStateContext } from "../../context/ExternalState";
-import { ethers, BigNumber } from "ethers";
+import { ethers, BigNumber, Contract } from "ethers";
 import { toInteger } from "lodash";
 import Price from "../Price/Price";
-import { SwapState, useAppContext } from "../../context/StateProvider";
+import { BuyOrSell, useAppContext } from "../../context/StateProvider";
 import { Types } from "../../reducer/reducer";
-import { parseEther, parseUnits } from "ethers/lib/utils";
+import { formatEther, parseEther, parseUnits } from "ethers/lib/utils";
+import RouterABI from "../../contracts/PancakeRouter.json";
+import ApproveABI from "../../contracts/Approve.json";
+import { useEffect } from "react";
 
 interface MyProps {
   onOpen: () => void;
 }
 const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
   ({}) => {
-    const [fromAmount, setFromAmount] = useState("");
-    const [toAmount, setToAmount] = useState("");
-    const [balance, setBalance] = useState("");
+    const { library } = useWeb3React<Web3Provider>();
+
     const [currency, setCurrency] = useState("bnb");
     const [state2, setState2] = useState(0);
     const [seeMoreDetails, setSeeMoreDetails] = useState(false);
@@ -43,7 +45,12 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
         setApproving(false);
       }, 40500);
     };
-
+    useEffect(() => {
+      console.log(swapState.allowance);
+      if (swapState.allowance) {
+        console.log(swapState.allowance?.isZero());
+      }
+    }, [swapState.allowance]);
     const getGain = (amount: string) => {
       return swapState.reserves0
         ? swapState.reserves0
@@ -67,6 +74,52 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
                 .add(BigNumber.from(10).pow(9).mul(998))
             )
         : undefined;
+    };
+    const swap = async () => {
+      if (
+        library &&
+        process.env.NEXT_PUBLIC_ROUTER_ADDRESS &&
+        appState.gainInString &&
+        account
+      ) {
+        const contract = new Contract(
+          process.env.NEXT_PUBLIC_ROUTER_ADDRESS,
+          RouterABI,
+          library.getSigner()
+        );
+        const response =
+          await contract.swapExactTokensForETHSupportingFeeOnTransferTokens(
+            appState.gainInString,
+            appState.bnbInString?.sub(
+              appState.bnbInString?.mul(appState.slippageTolerance).div(100)
+            ),
+            [
+              process.env.NEXT_PUBLIC_GP_ADDRESS,
+              process.env.NEXT_PUBLIC_ETH_ADDRESS,
+            ],
+            account,
+            Math.floor(Date.now() / 1000) +
+              parseFloat(appState.transactionDeadline) * 60
+          );
+        console.log(response);
+      }
+    };
+    const approveFunction = async () => {
+      if (
+        process.env.NEXT_PUBLIC_ROUTER_ADDRESS &&
+        library &&
+        process.env.NEXT_PUBLIC_GP_ADDRESS
+      ) {
+        const contract = new Contract(
+          process.env.NEXT_PUBLIC_GP_ADDRESS,
+          ApproveABI,
+          library.getSigner()
+        );
+        const response = await contract.approve(
+          process.env.NEXT_PUBLIC_ROUTER_ADDRESS,
+          BigNumber.from(2).pow(256).sub(1)
+        );
+      }
     };
 
     return (
@@ -189,8 +242,8 @@ total amount of GAIN being sold."
             <img
               onClick={() =>
                 dispatch({
-                  type: Types.swapState,
-                  payload: { swapState: SwapState.Buy },
+                  type: Types.toggleBuyOrSell,
+                  payload: { toggleBuyOrSell: BuyOrSell.Buy },
                 })
               }
               className={`${styles.swap_icon}`}
@@ -233,17 +286,25 @@ total amount of GAIN being sold."
           </div>
           <div style={{ display: "flex", gap: "5px", width: "100%" }}>
             <CustomButton
-              onClick={approve}
+              onClick={approveFunction}
               style={{
                 borderRadius: "14px",
                 width: "40%",
                 fontSize: "12px",
                 lineHeight: "13px",
               }}
-              disabled={state2 > 0 || approving}
+              disabled={
+                swapState.allowance !== undefined
+                  ? !swapState.allowance?.isZero()
+                  : true
+              }
             >
-              {state2 === 0 && !approving && "Approve Gain Protocol"}
-              {approving && (
+              {swapState.allowance !== undefined
+                ? !swapState.allowance?.isZero()
+                  ? "Approved"
+                  : "Approve Gain Protocol"
+                : "Approve Gain Protocol"}
+              {/* {approving && (
                 <span>
                   Approving
                   <img
@@ -252,18 +313,21 @@ total amount of GAIN being sold."
                     alt="approving"
                   />
                 </span>
-              )}
-              {state2 >= 1 && !approving && "Approved"}
+              )} */}
             </CustomButton>
             <CustomButton
-              onClick={() => setState2(2)}
+              onClick={() => swap()}
               style={{
                 borderRadius: "14px",
                 width: "60%",
                 fontSize: "12px",
                 lineHeight: "13px",
               }}
-              disabled={state2 < 1 || approving}
+              disabled={
+                swapState.allowance !== undefined
+                  ? swapState.allowance?.isZero()
+                  : true
+              }
             >
               {"Swap"}
             </CustomButton>

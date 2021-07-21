@@ -7,7 +7,7 @@ export enum Theme {
   Dark = "Dark",
   Light = "Light",
 }
-export enum SwapState {
+export enum BuyOrSell {
   Buy = "Buy",
   Sell = "Sell",
 }
@@ -26,7 +26,7 @@ export const useTheme = () => useContext(ThemeContext);
 export type InitialStateType = {
   gainInString: BigNumber | undefined;
   bnbInString: BigNumber | undefined;
-  swapState: SwapState;
+  toggleBuyOrSell: BuyOrSell;
   slippageTolerance: string;
   transactionDeadline: string;
   toggleExpertMode: boolean;
@@ -37,7 +37,7 @@ export type InitialStateType = {
 const initialState = {
   gainInString: undefined,
   bnbInString: undefined,
-  swapState: SwapState.Buy,
+  toggleBuyOrSell: BuyOrSell.Buy,
   slippageTolerance: "3",
   transactionDeadline: "20",
   toggleExpertMode: false,

@@ -6,20 +6,19 @@ import Main from "../Main/Main";
 import { Web3Provider } from "@ethersproject/providers";
 import { useWeb3React } from "@web3-react/core";
 import { ExternalStateContext } from "../../context/ExternalState";
-import { ethers, BigNumber } from "ethers";
+import { ethers, BigNumber, Contract } from "ethers";
 import Price from "../Price/Price";
-import { SwapState, useAppContext } from "../../context/StateProvider";
+import { BuyOrSell, useAppContext } from "../../context/StateProvider";
 import { Types } from "../../reducer/reducer";
 import { parseEther, parseUnits } from "ethers/lib/utils";
+import RouterABI from "../../contracts/PancakeRouter.json";
 interface MyProps {
   onOpen: () => void;
 }
 const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
   onOpen,
 }) => {
-  const [toAmount, setToAmount] = useState("");
-  const [fromAmount, setFromAmount] = useState("");
-
+  const { library } = useWeb3React<Web3Provider>();
   const { account } = useWeb3React<Web3Provider>();
   const { state: swapState } = useContext(ExternalStateContext);
 
@@ -51,7 +50,35 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
           )
       : undefined;
   };
-
+  const buy = async () => {
+    if (
+      library &&
+      process.env.NEXT_PUBLIC_ROUTER_ADDRESS &&
+      appState.gainInString &&
+      account
+    ) {
+      const contract = new Contract(
+        process.env.NEXT_PUBLIC_ROUTER_ADDRESS,
+        RouterABI,
+        library.getSigner()
+      );
+      const response =
+        await contract.swapExactTokensForETHSupportingFeeOnTransferTokens(
+          appState.bnbInString,
+          appState.gainInString?.sub(
+            appState.gainInString?.mul(appState.slippageTolerance).div(100)
+          ),
+          [
+            process.env.NEXT_PUBLIC_ETH_ADDRESS,
+            process.env.NEXT_PUBLIC_GP_ADDRESS,
+          ],
+          account,
+          Math.floor(Date.now() / 1000) +
+            parseFloat(appState.transactionDeadline) * 60
+        );
+      console.log(response);
+    }
+  };
   return (
     <div className={styles.container}>
       <Main type={"Buy"}>
@@ -79,8 +106,8 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
           <img
             onClick={() =>
               dispatch({
-                type: Types.swapState,
-                payload: { swapState: SwapState.Sell },
+                type: Types.toggleBuyOrSell,
+                payload: { toggleBuyOrSell: BuyOrSell.Sell },
               })
             }
             className={`${styles.swap_icon} `}
@@ -122,7 +149,7 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
           <p>{appState.slippageTolerance}%</p>
         </div>
         <Price />
-        <CustomButton disabled={!account} onClick={onOpen} block>
+        <CustomButton disabled={!account} onClick={buy} block>
           {account ? "Swap" : "Unlock Wallet"}
         </CustomButton>
       </Main>
