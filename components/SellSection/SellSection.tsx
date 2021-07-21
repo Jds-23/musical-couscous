@@ -15,6 +15,7 @@ import { toInteger } from "lodash";
 import Price from "../Price/Price";
 import { SwapState, useAppContext } from "../../context/StateProvider";
 import { Types } from "../../reducer/reducer";
+import { parseEther, parseUnits } from "ethers/lib/utils";
 
 interface MyProps {
   onOpen: () => void;
@@ -47,7 +48,7 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
       return swapState.reserves0
         ? swapState.reserves0
             .mul(998)
-            .mul(BigNumber.from(10).pow(18).mul(amount))
+            .mul(parseEther(amount === "" || amount === "." ? "0" : amount))
             .div(
               swapState.reserves1
                 .mul(1000)
@@ -58,7 +59,7 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
     const getBnb = (amount: string) => {
       return swapState.reserves1
         ? swapState.reserves1
-            .mul(BigNumber.from(10).pow(9).mul(amount))
+            .mul(parseUnits(amount === "" || amount === "." ? "0" : amount, 9))
             .mul(998)
             .div(
               swapState.reserves0
@@ -171,8 +172,11 @@ total amount of GAIN being sold."
               dispatch({
                 type: Types.gain,
                 payload: {
-                  gain: BigNumber.from(10).pow(9).mul(amount),
-                  bnb: amount === "" ? "" : getBnb(amount),
+                  gain: parseUnits(
+                    amount === "" || amount === "." ? "0" : amount,
+                    9
+                  ),
+                  bnb: amount === "" || amount === "." ? "" : getBnb(amount),
                 },
               });
             }}
@@ -203,8 +207,10 @@ total amount of GAIN being sold."
               dispatch({
                 type: Types.gain,
                 payload: {
-                  gain: amount === "" ? "" : getGain(amount),
-                  bnb: BigNumber.from(10).pow(18).mul(amount),
+                  gain: amount === "" || amount === "." ? "" : getGain(amount),
+                  bnb: parseEther(
+                    amount === "" || amount === "." ? "0" : amount
+                  ),
                 },
               });
             }}

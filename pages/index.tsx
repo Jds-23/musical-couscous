@@ -85,7 +85,7 @@ export default function Home() {
   //   swapState.buyteamFee,
   //   swapState.buycharityFee,
   //   swapState.buyrewardFee,
-  //   swapState.buyhodlFee,
+  //   swapState.buyhodlFee
   //   swapState.buywhaleProtectionFee
   // );
   return (
