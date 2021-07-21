@@ -16,7 +16,7 @@ import HidableBar from "../components/HidableBar/HidableBar";
 import { useToast, Box } from "@chakra-ui/react";
 import CountdownScreen from "../components/CountdownScreen/CountdownScreen";
 import Sidebar from "../components/Sidebar/Sidebar";
-import { Theme, useTheme } from "../context/StateProvider";
+import { Theme, useTheme, useAppContext } from "../context/StateProvider";
 const opensDate = "Jul 2, 2021 16:00:00";
 export default function Home() {
   const [state, setState] = useState(0);
@@ -24,10 +24,9 @@ export default function Home() {
   const [confirmSwapModal, setConfirmSwapModal] = useState(false);
   const [errorModal, setErrorModal] = useState(false);
   const [successModal, setSuccessModal] = useState(false);
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const [seeMoreDetails, setSeeMoreDetails] = useState(false);
   const { theme, setTheme } = useTheme();
-
+  const { state: AppState, dispatch } = useAppContext();
   const [time, setTime] = useState(
     new Date(opensDate).getTime() -
       new Date().getTime() -

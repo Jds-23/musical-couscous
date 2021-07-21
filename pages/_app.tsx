@@ -1,6 +1,6 @@
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import "../styles/globals.css";
-import { Theme, ThemeContext } from "../context/StateProvider";
+import { Theme, ThemeContext, AppProvider } from "../context/StateProvider";
 import type { AppProps } from "next/app";
 import { useState } from "react";
 import { light, dark } from "@pancakeswap-libs/uikit";
@@ -36,17 +36,19 @@ function MyApp({ Component, pageProps }: AppProps) {
   });
   return (
     <Web3ReactProvider getLibrary={getLibrary}>
-      <ExternalStateProvider>
-        <ThemeContext.Provider value={{ theme: themeState, setTheme }}>
-          <ChakraProvider theme={theme}>
-            <ThemeProvider theme={themeState === "Dark" ? dark : light}>
-              <ModalProvider>
-                <Component {...pageProps} />
-              </ModalProvider>
-            </ThemeProvider>
-          </ChakraProvider>
-        </ThemeContext.Provider>
-      </ExternalStateProvider>
+      <AppProvider>
+        <ExternalStateProvider>
+          <ThemeContext.Provider value={{ theme: themeState, setTheme }}>
+            <ChakraProvider theme={theme}>
+              <ThemeProvider theme={themeState === "Dark" ? dark : light}>
+                <ModalProvider>
+                  <Component {...pageProps} />
+                </ModalProvider>
+              </ThemeProvider>
+            </ChakraProvider>
+          </ThemeContext.Provider>
+        </ExternalStateProvider>
+      </AppProvider>
     </Web3ReactProvider>
   );
 }

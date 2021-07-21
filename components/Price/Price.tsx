@@ -7,7 +7,10 @@ const Price = () => {
   const { state: swapState } = useContext(ExternalStateContext);
   const [flag, setFlag] = useBoolean();
   const bnbPerGain = () => {
-    return swapState.reserves0
+    if (!swapState.reserves0 || !swapState.reserves1) {
+      return "";
+    }
+    return swapState.reserves1
       ? ethers.utils.formatEther(
           swapState.reserves1
             .mul(BigNumber.from(10).pow(9))
@@ -21,6 +24,9 @@ const Price = () => {
       : "";
   };
   const gainPerBNB = () => {
+    if (!swapState.reserves0 || !swapState.reserves1) {
+      return "";
+    }
     return swapState.reserves0
       ? ethers.utils.formatUnits(
           swapState.reserves0
