@@ -10,6 +10,9 @@ import HidableBar from "../HidableBar/HidableBar";
 import { Web3Provider } from "@ethersproject/providers";
 import { useWeb3React } from "@web3-react/core";
 import { ExternalStateContext } from "../../context/ExternalState";
+import { ethers, BigNumber } from "ethers";
+import { toInteger } from "lodash";
+import Price from "../Price/Price";
 
 interface MyProps {
   onOpen: () => void;
@@ -20,7 +23,8 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
   setState,
   state,
 }) => {
-  const [amount, setAmount] = useState("");
+  const [fromAmount, setFromAmount] = useState("");
+  const [toAmount, setToAmount] = useState("");
   const [balance, setBalance] = useState("");
   const [currency, setCurrency] = useState("bnb");
   const [state2, setState2] = useState(0);
@@ -35,10 +39,59 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
   const approve = () => {
     setApproving(true);
     setTimeout(() => {
-      console.log("Hello");
       setState2(1);
       setApproving(false);
     }, 40500);
+  };
+
+  const getGain = (amount: string) => {
+    return swapState.reserves0
+      ? ethers.utils.formatUnits(
+          swapState.reserves0
+            .mul(998)
+            .mul(BigNumber.from(10).pow(18).mul(amount))
+            .div(
+              swapState.reserves1
+                .mul(1000)
+                .add(BigNumber.from(10).pow(18).mul(998))
+            ),
+          9
+        )
+      : "";
+  };
+  const getBnb = (amount: string) => {
+    return swapState.reserves1
+      ? ethers.utils.formatEther(
+          swapState.reserves1
+            .mul(BigNumber.from(10).pow(9).mul(amount))
+            .mul(998)
+            .div(
+              swapState.reserves0
+                .mul(1000)
+                .add(BigNumber.from(10).pow(9).mul(998))
+            )
+        )
+      : "";
+  };
+  const setBNBAmount = (amount: string) => {
+    console.log(amount);
+    setToAmount(amount === "" ? "" : getBnb(amount));
+    setFromAmount(amount);
+  };
+  const setGAINAmount = (amount: string) => {
+    console.log(amount);
+    setToAmount(amount);
+    setFromAmount(amount === "" ? "" : getGain(amount));
+  };
+  const bnbPerGain = () => {
+    return ethers.utils.formatEther(
+      swapState.reserves1
+        .mul(BigNumber.from(10).pow(9))
+        .mul(998)
+        .div(
+          swapState.reserves0.mul(1000).add(BigNumber.from(10).pow(9).mul(998))
+        )
+    );
   };
   return (
     <div className={styles.container}>
@@ -52,7 +105,23 @@ total amount of GAIN being sold."
         >
           DAILY SELL LIMIT
         </Info>
-        <ProgressBar percent={50} />
+        <ProgressBar
+          current={
+            swapState.dailyTransfersOf &&
+            parseFloat(ethers.utils.formatUnits(swapState.dailyTransfersOf, 9))
+          }
+          limit={
+            swapState.reserves0 &&
+            parseFloat(
+              parseFloat(
+                ethers.utils.formatUnits(
+                  swapState.reserves0.mul(200).div(10000),
+                  9
+                )
+              ).toFixed(2)
+            )
+          }
+        />
       </div>
       <span
         className={styles.moreDetails}
@@ -74,7 +143,16 @@ limit and price impact for all transactions. "
             </Info>
           </div>
           <div className={styles.data}>
-            <p>5,000,000 GAIN</p>
+            <p>
+              {new Intl.NumberFormat("en-US").format(
+                parseFloat(
+                  parseFloat(
+                    ethers.utils.formatUnits(swapState.reserves0, 9)
+                  ).toFixed(2)
+                )
+              )}{" "}
+              GAIN
+            </p>
           </div>
         </div>
         <div className={styles.GPInfo}>
@@ -89,18 +167,30 @@ total amount of GAIN being sold."
             </Info>
           </div>
           <div className={styles.data}>
-            <p>5,000,000 GAIN</p>
+            <p>
+              {new Intl.NumberFormat("en-US").format(
+                parseFloat(
+                  parseFloat(
+                    ethers.utils.formatUnits(
+                      swapState.reserves0.mul(200).div(10000),
+                      9
+                    )
+                  ).toFixed(2)
+                )
+              )}{" "}
+              GAIN
+            </p>
           </div>
         </div>
       </HidableBar>
       <Main style={{ marginTop: "10px" }} type={"Sell"}>
         <SwapCurrencyInputBox
           type={"From"}
-          amount={amount}
+          amount={fromAmount}
           currency={fromCurrency}
           balance={swapState.GPbalance}
           currencyOptions={["bnb"]}
-          setAmount={setAmount}
+          setAmount={setBNBAmount}
           setCurrency={setCurrency}
           style={{ marginTop: "15px", marginBottom: "15px" }}
         />
@@ -117,34 +207,15 @@ total amount of GAIN being sold."
         </div>
         <SwapCurrencyInputBox
           type={"To"}
-          amount={amount}
+          amount={toAmount}
           currency={toCurrency}
           balance={swapState.balance}
           currencyOptions={["bnb"]}
-          setAmount={setAmount}
+          setAmount={setGAINAmount}
           setCurrency={setCurrency}
           style={{ marginTop: "15px", marginBottom: "15px" }}
         />
-        <div
-          style={{
-            display: "flex",
-            marginBottom: "30px",
-            justifyContent: "space-between",
-            color: "#7A71A7",
-            padding: "1px 5px",
-            fontSize: "14px",
-          }}
-        >
-          <p>Price</p>
-          <p style={{ textAlign: "right" }}>
-            0.049585748 BNB per GAIN{" "}
-            <img
-              className={styles.reload}
-              src="./images/reload.svg"
-              alt="reload"
-            />
-          </p>
-        </div>
+        <Price />
         <div
           style={{
             display: "flex",

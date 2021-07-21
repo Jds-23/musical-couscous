@@ -6,7 +6,8 @@ import Main from "../Main/Main";
 import { Web3Provider } from "@ethersproject/providers";
 import { useWeb3React } from "@web3-react/core";
 import { ExternalStateContext } from "../../context/ExternalState";
-import { ethers } from "ethers";
+import { ethers, BigNumber } from "ethers";
+import Price from "../Price/Price";
 interface MyProps {
   onOpen: () => void;
   state: number;
@@ -17,7 +18,8 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
   state,
   setState,
 }) => {
-  const [amount, setAmount] = useState("");
+  const [toAmount, setToAmount] = useState("");
+  const [fromAmount, setFromAmount] = useState("");
   const [balance, setBalance] = useState("");
 
   const { account } = useWeb3React<Web3Provider>();
@@ -25,32 +27,55 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
 
   const [fromCurrency, setFromCurrency] = useState("BNB");
   const [toCurrency, setToCurrency] = useState("GAIN");
-
-  console.log(
-    swapState.reserves2
-      ? parseFloat(ethers.utils.formatUnits(swapState.reserves2, 6)).toFixed(2)
-      : ""
-  );
-  console.log(
-    swapState.reserves1
-      ? parseFloat(ethers.utils.formatUnits(swapState.reserves1, 6)).toFixed(2)
-      : ""
-  );
-  console.log(
-    swapState.token0
-      ? parseFloat(ethers.utils.formatUnits(swapState.token0, 6)).toFixed(2)
-      : ""
-  );
+  const getGain = (amount: string) => {
+    return swapState.reserves0
+      ? ethers.utils.formatUnits(
+          swapState.reserves0
+            .mul(998)
+            .mul(BigNumber.from(10).pow(18).mul(amount))
+            .div(
+              swapState.reserves1
+                .mul(1000)
+                .add(BigNumber.from(10).pow(18).mul(998))
+            ),
+          9
+        )
+      : "";
+  };
+  const getBnb = (amount: string) => {
+    return swapState.reserves1
+      ? ethers.utils.formatEther(
+          swapState.reserves1
+            .mul(BigNumber.from(10).pow(9).mul(amount))
+            .mul(998)
+            .div(
+              swapState.reserves0
+                .mul(1000)
+                .add(BigNumber.from(10).pow(9).mul(998))
+            )
+        )
+      : "";
+  };
+  const setBNBAmount = (amount: string) => {
+    console.log(amount);
+    setToAmount(amount === "" ? "" : getBnb(amount));
+    setFromAmount(amount);
+  };
+  const setGAINAmount = (amount: string) => {
+    console.log(amount);
+    setToAmount(amount);
+    setFromAmount(amount === "" ? "" : getGain(amount));
+  };
   return (
     <div className={styles.container}>
       <Main type={"Buy"}>
         <SwapCurrencyInputBox
           type={"From"}
-          amount={amount}
+          amount={toAmount}
           currency={fromCurrency}
           balance={swapState.balance}
           currencyOptions={[]}
-          setAmount={setAmount}
+          setAmount={setGAINAmount}
           setCurrency={setFromCurrency}
           style={{ marginTop: "15px", marginBottom: "15px" }}
         />
@@ -67,11 +92,11 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
         </div>
         <SwapCurrencyInputBox
           type={"To"}
-          amount={amount}
+          amount={fromAmount}
           currency={toCurrency}
           balance={swapState.GPbalance}
           currencyOptions={[]}
-          setAmount={setAmount}
+          setAmount={setBNBAmount}
           setCurrency={setToCurrency}
           style={{ marginTop: "15px", marginBottom: "15px" }}
         />
@@ -88,26 +113,7 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
           <p>Slippage Tolerance</p>
           <p>12%</p>
         </div>
-        <div
-          style={{
-            display: "flex",
-            marginBottom: "30px",
-            justifyContent: "space-between",
-            color: "#7A71A7",
-            padding: "1px 5px",
-            fontSize: "14px",
-          }}
-        >
-          <p>Price</p>
-          <p style={{ textAlign: "right" }}>
-            0.049585748 BNB per GAIN
-            <img
-              style={{ display: "inline" }}
-              src="./images/reload.svg"
-              alt="reload"
-            />
-          </p>
-        </div>
+        <Price />
         <CustomButton disabled={!account} onClick={onOpen} block>
           {account ? "Swap" : "Unlock Wallet"}
         </CustomButton>

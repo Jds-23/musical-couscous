@@ -1,5 +1,5 @@
 import { BigNumber } from "ethers";
-import React from "react";
+import React, { useState } from "react";
 import styles from "./SwapCurrencyInputBox.module.css";
 import { ethers } from "ethers";
 // enum Type {
@@ -28,6 +28,7 @@ const SwapCurrencyInputBox: React.FC<
   currencyOptions,
   ...props
 }) => {
+  const [activate, setActivate] = useState(false);
   return (
     <div className={styles.swapCurrencyOutput} {...props}>
       <div className={styles.swapCurrencyOutput__container}>
@@ -36,13 +37,17 @@ const SwapCurrencyInputBox: React.FC<
             <p>{type}</p>
             <p>
               {balance
-                ? `Balance: ${
-                    currency === "BNB"
-                      ? parseFloat(ethers.utils.formatEther(balance)).toFixed(2)
-                      : parseFloat(
-                          ethers.utils.formatUnits(balance, 6)
-                        ).toFixed(2)
-                  }`
+                ? `Balance: ${new Intl.NumberFormat("en-US").format(
+                    parseFloat(
+                      currency === "BNB"
+                        ? parseFloat(ethers.utils.formatEther(balance)).toFixed(
+                            2
+                          )
+                        : parseFloat(
+                            ethers.utils.formatUnits(balance, 9)
+                          ).toFixed(2)
+                    )
+                  )}`
                 : "-"}
             </p>
           </div>
@@ -56,8 +61,13 @@ const SwapCurrencyInputBox: React.FC<
             maxLength={79}
             spellCheck={false}
             value={amount}
+            onFocus={() => setActivate(true)}
+            onBlur={() => setActivate(false)}
             onChange={(e) => {
-              if (e.target.value === "" || re.test(e.target.value)) {
+              if (
+                (e.target.value === "" || re.test(e.target.value)) &&
+                activate
+              ) {
                 setAmount(e.target.value);
               }
             }}

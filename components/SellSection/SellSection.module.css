@@ -62,11 +62,6 @@
   -moz-animation: spin 4s linear infinite;
   animation: spin 4s linear infinite;
 }
-.reload {
-  display: inline;
-  vertical-align: middle;
-  object-fit: contain;
-}
 @-moz-keyframes spin {
   100% {
     -moz-transform: rotate(360deg);

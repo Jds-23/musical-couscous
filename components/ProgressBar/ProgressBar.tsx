@@ -1,18 +1,23 @@
 import styles from "./ProgressBar.module.css";
 interface myProps {
-  percent?: number | undefined;
+  limit?: number | undefined;
+  current?: number | undefined;
 }
 const ProgressBar: React.FC<myProps & React.HTMLAttributes<HTMLDivElement>> = ({
-  percent = 0,
+  limit = 0,
+  current = 0,
   ...props
 }) => {
   return (
     <div {...props} className={styles.progressBar}>
       <div
-        style={{ width: `${percent ? percent : 0}%` }}
+        style={{ width: `${(current / limit) * 100}%` }}
         className={`${styles.progressBarChild} `}
       ></div>
-      <span className={styles.label}>{percent}/100 GAIN</span>
+      <span className={styles.label}>
+        {new Intl.NumberFormat("en-US").format(current)}/
+        {new Intl.NumberFormat("en-US").format(limit)} GAIN
+      </span>
     </div>
   );
 };

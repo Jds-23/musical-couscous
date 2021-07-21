@@ -1,0 +1,6 @@
+.reload {
+  display: inline;
+  vertical-align: middle;
+  object-fit: contain;
+  cursor: pointer;
+}
