@@ -16,7 +16,12 @@ import HidableBar from "../components/HidableBar/HidableBar";
 import { useToast, Box } from "@chakra-ui/react";
 import CountdownScreen from "../components/CountdownScreen/CountdownScreen";
 import Sidebar from "../components/Sidebar/Sidebar";
-import { Theme, useTheme, useAppContext } from "../context/StateProvider";
+import {
+  Theme,
+  useTheme,
+  useAppContext,
+  SwapState,
+} from "../context/StateProvider";
 const opensDate = "Jul 2, 2021 16:00:00";
 export default function Home() {
   const [state, setState] = useState(0);
@@ -178,27 +183,16 @@ window.criteo_q.push(
             <div className={styles.home__content}>
               <Sidebar />
               <Switch
-                options={["Buy", "Sell"]}
                 style={{
                   marginLeft: "auto",
                   marginRight: "auto",
                   marginBottom: "48px",
                 }}
-                state={state}
-                setState={setState}
               />
-              {state === 0 ? (
-                <BuySection
-                  state={state}
-                  setState={setState}
-                  onOpen={() => setConfirmSwapModal(true)}
-                />
+              {AppState.swapState === SwapState.Buy ? (
+                <BuySection onOpen={() => setConfirmSwapModal(true)} />
               ) : (
-                <SellSection
-                  state={state}
-                  setState={setState}
-                  onOpen={() => setConfirmSwapModal(true)}
-                />
+                <SellSection onOpen={() => setConfirmSwapModal(true)} />
               )}
               {state === 0 ? (
                 <InfoCards>

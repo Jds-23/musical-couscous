@@ -8,17 +8,13 @@ import { useWeb3React } from "@web3-react/core";
 import { ExternalStateContext } from "../../context/ExternalState";
 import { ethers, BigNumber } from "ethers";
 import Price from "../Price/Price";
-import { useAppContext } from "../../context/StateProvider";
+import { SwapState, useAppContext } from "../../context/StateProvider";
 import { Types } from "../../reducer/reducer";
 interface MyProps {
   onOpen: () => void;
-  state: number;
-  setState: (arg0: number) => void;
 }
 const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
   onOpen,
-  state,
-  setState,
 }) => {
   const [toAmount, setToAmount] = useState("");
   const [fromAmount, setFromAmount] = useState("");
@@ -85,10 +81,13 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
           style={{ width: "100%", display: "flex", justifyContent: "center" }}
         >
           <img
-            onClick={() => setState(1)}
-            className={`${styles.swap_icon} ${
-              state !== 0 ? styles.swap__icon__rotate : ""
-            }`}
+            onClick={() =>
+              dispatch({
+                type: Types.swapState,
+                payload: { swapState: SwapState.Sell },
+              })
+            }
+            className={`${styles.swap_icon} `}
             src="./images/swap.svg"
           />
         </div>

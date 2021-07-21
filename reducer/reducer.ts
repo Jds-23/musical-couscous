@@ -17,6 +17,7 @@ export enum Types {
   transactionDeadline = "TRANSACTION_DEADLINE",
   toggleExpertMode = "TOGGLE_EXPERT_MODE",
   updatePrice = "UPDATE_PRICE",
+  swapState = "TOGGLE_SWAP_STATE",
 }
 
 type Payload = {
@@ -40,6 +41,9 @@ type Payload = {
   [Types.updatePrice]: {
     gainPerBNB: string;
     bnbPerGAIN: string;
+  };
+  [Types.swapState]: {
+    swapState: SwapState;
   };
 };
 
@@ -75,6 +79,11 @@ export const reducer = (state: InitialStateType, action: Actions) => {
       return {
         ...state,
         toggleExpertMode: action.payload.toggleExpertMode,
+      };
+    case "TOGGLE_SWAP_STATE":
+      return {
+        ...state,
+        swapState: action.payload.swapState,
       };
     case "UPDATE_PRICE":
       return {

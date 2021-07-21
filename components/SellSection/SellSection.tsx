@@ -13,290 +13,293 @@ import { ExternalStateContext } from "../../context/ExternalState";
 import { ethers, BigNumber } from "ethers";
 import { toInteger } from "lodash";
 import Price from "../Price/Price";
-import { useAppContext } from "../../context/StateProvider";
+import { SwapState, useAppContext } from "../../context/StateProvider";
 import { Types } from "../../reducer/reducer";
 
 interface MyProps {
   onOpen: () => void;
-  state: number;
-  setState: (arg0: number) => void;
 }
-const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
-  setState,
-  state,
-}) => {
-  const [fromAmount, setFromAmount] = useState("");
-  const [toAmount, setToAmount] = useState("");
-  const [balance, setBalance] = useState("");
-  const [currency, setCurrency] = useState("bnb");
-  const [state2, setState2] = useState(0);
-  const [seeMoreDetails, setSeeMoreDetails] = useState(false);
+const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
+  ({}) => {
+    const [fromAmount, setFromAmount] = useState("");
+    const [toAmount, setToAmount] = useState("");
+    const [balance, setBalance] = useState("");
+    const [currency, setCurrency] = useState("bnb");
+    const [state2, setState2] = useState(0);
+    const [seeMoreDetails, setSeeMoreDetails] = useState(false);
 
-  const { account } = useWeb3React<Web3Provider>();
-  const { state: swapState } = useContext(ExternalStateContext);
-  const [approving, setApproving] = useState(false);
-  const { state: appState, dispatch } = useAppContext();
+    const { account } = useWeb3React<Web3Provider>();
+    const { state: swapState } = useContext(ExternalStateContext);
+    const [approving, setApproving] = useState(false);
+    const { state: appState, dispatch } = useAppContext();
 
-  const [fromCurrency, setFromCurrency] = useState("GAIN");
-  const [toCurrency, setToCurrency] = useState("BNB");
-  const approve = () => {
-    setApproving(true);
-    setTimeout(() => {
-      setState2(1);
-      setApproving(false);
-    }, 40500);
-  };
+    const [fromCurrency, setFromCurrency] = useState("GAIN");
+    const [toCurrency, setToCurrency] = useState("BNB");
+    const approve = () => {
+      setApproving(true);
+      setTimeout(() => {
+        setState2(1);
+        setApproving(false);
+      }, 40500);
+    };
 
-  const getGain = (amount: string) => {
-    return swapState.reserves0
-      ? ethers.utils.formatUnits(
-          swapState.reserves0
-            .mul(998)
-            .mul(BigNumber.from(10).pow(18).mul(amount))
-            .div(
-              swapState.reserves1
-                .mul(1000)
-                .add(BigNumber.from(10).pow(18).mul(998))
-            ),
-          9
-        )
-      : "";
-  };
-  const getBnb = (amount: string) => {
-    return swapState.reserves1
-      ? ethers.utils.formatEther(
-          swapState.reserves1
-            .mul(BigNumber.from(10).pow(9).mul(amount))
-            .mul(998)
-            .div(
-              swapState.reserves0
-                .mul(1000)
-                .add(BigNumber.from(10).pow(9).mul(998))
-            )
-        )
-      : "";
-  };
-  const setBNBAmount = (amount: string) => {
-    console.log(amount);
-    setToAmount(amount === "" ? "" : getBnb(amount));
-    setFromAmount(amount);
-  };
-  const setGAINAmount = (amount: string) => {
-    console.log(amount);
-    setToAmount(amount);
-    setFromAmount(amount === "" ? "" : getGain(amount));
-  };
-  const bnbPerGain = () => {
-    return ethers.utils.formatEther(
-      swapState.reserves1
-        .mul(BigNumber.from(10).pow(9))
-        .mul(998)
-        .div(
-          swapState.reserves0.mul(1000).add(BigNumber.from(10).pow(9).mul(998))
-        )
-    );
-  };
-  return (
-    <div className={styles.container}>
-      <div className={styles.dailySellingLimit}>
-        <Info
-          tooltip="The total amount of GAIN you are allowed to sell within 24 hours without
+    const getGain = (amount: string) => {
+      return swapState.reserves0
+        ? ethers.utils.formatUnits(
+            swapState.reserves0
+              .mul(998)
+              .mul(BigNumber.from(10).pow(18).mul(amount))
+              .div(
+                swapState.reserves1
+                  .mul(1000)
+                  .add(BigNumber.from(10).pow(18).mul(998))
+              ),
+            9
+          )
+        : "";
+    };
+    const getBnb = (amount: string) => {
+      return swapState.reserves1
+        ? ethers.utils.formatEther(
+            swapState.reserves1
+              .mul(BigNumber.from(10).pow(9).mul(amount))
+              .mul(998)
+              .div(
+                swapState.reserves0
+                  .mul(1000)
+                  .add(BigNumber.from(10).pow(9).mul(998))
+              )
+          )
+        : "";
+    };
+    const setBNBAmount = (amount: string) => {
+      console.log(amount);
+      setToAmount(amount === "" ? "" : getBnb(amount));
+      setFromAmount(amount);
+    };
+    const setGAINAmount = (amount: string) => {
+      console.log(amount);
+      setToAmount(amount);
+      setFromAmount(amount === "" ? "" : getGain(amount));
+    };
+    const bnbPerGain = () => {
+      return ethers.utils.formatEther(
+        swapState.reserves1
+          .mul(BigNumber.from(10).pow(9))
+          .mul(998)
+          .div(
+            swapState.reserves0
+              .mul(1000)
+              .add(BigNumber.from(10).pow(9).mul(998))
+          )
+      );
+    };
+    return (
+      <div className={styles.container}>
+        <div className={styles.dailySellingLimit}>
+          <Info
+            tooltip="The total amount of GAIN you are allowed to sell within 24 hours without
 activating the whale protection protocol. Be aware, once whale protection is
 activated your transaction will accumulate additional fees depending on the
 total amount of GAIN being sold."
-          style={{ marginBottom: "7px" }}
-        >
-          DAILY SELL LIMIT
-        </Info>
-        <ProgressBar
-          current={
-            swapState.dailyTransfersOf &&
-            parseFloat(ethers.utils.formatUnits(swapState.dailyTransfersOf, 9))
-          }
-          limit={
-            swapState.reserves0 &&
-            parseFloat(
+            style={{ marginBottom: "7px" }}
+          >
+            DAILY SELL LIMIT
+          </Info>
+          <ProgressBar
+            current={
+              swapState.dailyTransfersOf &&
               parseFloat(
-                ethers.utils.formatUnits(
-                  swapState.reserves0.mul(200).div(10000),
-                  9
-                )
-              ).toFixed(2)
-            )
-          }
-        />
-      </div>
-      <span
-        className={styles.moreDetails}
-        onClick={() => setSeeMoreDetails(!seeMoreDetails)}
-      >
-        {seeMoreDetails ? "CLOSE" : "VIEW"} DETAILS
-      </span>
-      <HidableBar
-        style={{ maxWidth: "500px", padding: "0 30px", marginBottom: "10px" }}
-        isHidden={!seeMoreDetails}
-      >
-        <div className={styles.GPInfo}>
-          <div className={styles.label}>
-            <Info
-              tooltip="The total amount of available liquidity. Available liquidity sets the daily sell
-limit and price impact for all transactions. "
-            >
-              Total Liquidity
-            </Info>
-          </div>
-          <div className={styles.data}>
-            <p>
-              {new Intl.NumberFormat("en-US").format(
+                ethers.utils.formatUnits(swapState.dailyTransfersOf, 9)
+              )
+            }
+            limit={
+              swapState.reserves0 &&
+              parseFloat(
                 parseFloat(
-                  parseFloat(
-                    ethers.utils.formatUnits(swapState.reserves0, 9)
-                  ).toFixed(2)
-                )
-              )}{" "}
-              GAIN
-            </p>
-          </div>
-        </div>
-        <div className={styles.GPInfo}>
-          <div className={styles.label}>
-            <Info
-              tooltip="The total amount of GAIN you are allowed to sell within 24 hours without
-activating the whale protection protocol. Be aware, once whale protection is
-activated your transaction will accumulate additional fees depending on the
-total amount of GAIN being sold."
-            >
-              Daily Sell Limit
-            </Info>
-          </div>
-          <div className={styles.data}>
-            <p>
-              {new Intl.NumberFormat("en-US").format(
-                parseFloat(
-                  parseFloat(
-                    ethers.utils.formatUnits(
-                      swapState.reserves0.mul(200).div(10000),
-                      9
-                    )
-                  ).toFixed(2)
-                )
-              )}{" "}
-              GAIN
-            </p>
-          </div>
-        </div>
-      </HidableBar>
-      <Main style={{ marginTop: "10px" }} type={"Sell"}>
-        <SwapCurrencyInputBox
-          type={"From"}
-          amount={appState.gainInString}
-          currency={fromCurrency}
-          balance={swapState.GPbalance}
-          currencyOptions={["bnb"]}
-          setAmount={(amount) => {
-            dispatch({
-              type: Types.gain,
-              payload: {
-                gain: amount,
-                bnb: amount === "" ? "" : getBnb(amount),
-              },
-            });
-          }}
-          setCurrency={setCurrency}
-          style={{ marginTop: "15px", marginBottom: "15px" }}
-        />
-        <div
-          style={{ width: "100%", display: "flex", justifyContent: "center" }}
-        >
-          <img
-            onClick={() => setState(0)}
-            className={`${styles.swap_icon} ${
-              state !== 0 ? styles.swap__icon__rotate : ""
-            }`}
-            src="./images/swap.svg"
+                  ethers.utils.formatUnits(
+                    swapState.reserves0.mul(200).div(10000),
+                    9
+                  )
+                ).toFixed(2)
+              )
+            }
           />
         </div>
-        <SwapCurrencyInputBox
-          type={"To"}
-          currency={toCurrency}
-          amount={appState.bnbInString}
-          balance={swapState.balance}
-          currencyOptions={[]}
-          setAmount={(amount) => {
-            dispatch({
-              type: Types.gain,
-              payload: {
-                gain: amount === "" ? "" : getGain(amount),
-                bnb: amount,
-              },
-            });
-          }}
-          setCurrency={setCurrency}
-          style={{ marginTop: "15px", marginBottom: "15px" }}
-        />
-        <Price />
-        <div
-          style={{
-            display: "flex",
-            marginBottom: "30px",
-            justifyContent: "space-between",
-            color: "#7A71A7",
-            padding: "1px 5px",
-            fontSize: "14px",
-          }}
+        <span
+          className={styles.moreDetails}
+          onClick={() => setSeeMoreDetails(!seeMoreDetails)}
         >
-          <p>Slippage Tolerance</p>
-          <p>{appState.slippageTolerance}%</p>
-        </div>
-        <div style={{ display: "flex", gap: "5px", width: "100%" }}>
-          <CustomButton
-            onClick={approve}
-            style={{
-              borderRadius: "14px",
-              width: "40%",
-              fontSize: "12px",
-              lineHeight: "13px",
-            }}
-            disabled={state2 > 0 || approving}
-          >
-            {state2 === 0 && !approving && "Approve Gain Protocol"}
-            {approving && (
-              <span>
-                Approving
-                <img
-                  src="./images/reload.svg"
-                  className={styles.approving}
-                  alt="approving"
-                />
-              </span>
-            )}
-            {state2 >= 1 && !approving && "Approved"}
-          </CustomButton>
-          <CustomButton
-            onClick={() => setState2(2)}
-            style={{
-              borderRadius: "14px",
-              width: "60%",
-              fontSize: "12px",
-              lineHeight: "13px",
-            }}
-            disabled={state2 < 1 || approving}
-          >
-            {"Swap"}
-          </CustomButton>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            marginTop: "10px",
-          }}
+          {seeMoreDetails ? "CLOSE" : "VIEW"} DETAILS
+        </span>
+        <HidableBar
+          style={{ maxWidth: "500px", padding: "0 30px", marginBottom: "10px" }}
+          isHidden={!seeMoreDetails}
         >
-          <ProgressStepper state={state2} setState={setState2} />
-        </div>
-      </Main>
-    </div>
-  );
-};
+          <div className={styles.GPInfo}>
+            <div className={styles.label}>
+              <Info
+                tooltip="The total amount of available liquidity. Available liquidity sets the daily sell
+limit and price impact for all transactions. "
+              >
+                Total Liquidity
+              </Info>
+            </div>
+            <div className={styles.data}>
+              <p>
+                {new Intl.NumberFormat("en-US").format(
+                  parseFloat(
+                    parseFloat(
+                      ethers.utils.formatUnits(swapState.reserves0, 9)
+                    ).toFixed(2)
+                  )
+                )}{" "}
+                GAIN
+              </p>
+            </div>
+          </div>
+          <div className={styles.GPInfo}>
+            <div className={styles.label}>
+              <Info
+                tooltip="The total amount of GAIN you are allowed to sell within 24 hours without
+activating the whale protection protocol. Be aware, once whale protection is
+activated your transaction will accumulate additional fees depending on the
+total amount of GAIN being sold."
+              >
+                Daily Sell Limit
+              </Info>
+            </div>
+            <div className={styles.data}>
+              <p>
+                {new Intl.NumberFormat("en-US").format(
+                  parseFloat(
+                    parseFloat(
+                      ethers.utils.formatUnits(
+                        swapState.reserves0.mul(200).div(10000),
+                        9
+                      )
+                    ).toFixed(2)
+                  )
+                )}{" "}
+                GAIN
+              </p>
+            </div>
+          </div>
+        </HidableBar>
+        <Main style={{ marginTop: "10px" }} type={"Sell"}>
+          <SwapCurrencyInputBox
+            type={"From"}
+            amount={appState.gainInString}
+            currency={fromCurrency}
+            balance={swapState.GPbalance}
+            currencyOptions={["bnb"]}
+            setAmount={(amount) => {
+              dispatch({
+                type: Types.gain,
+                payload: {
+                  gain: amount,
+                  bnb: amount === "" ? "" : getBnb(amount),
+                },
+              });
+            }}
+            setCurrency={setCurrency}
+            style={{ marginTop: "15px", marginBottom: "15px" }}
+          />
+          <div
+            style={{ width: "100%", display: "flex", justifyContent: "center" }}
+          >
+            <img
+              onClick={() =>
+                dispatch({
+                  type: Types.swapState,
+                  payload: { swapState: SwapState.Buy },
+                })
+              }
+              className={`${styles.swap_icon}`}
+              src="./images/swap.svg"
+            />
+          </div>
+          <SwapCurrencyInputBox
+            type={"To"}
+            currency={toCurrency}
+            amount={appState.bnbInString}
+            balance={swapState.balance}
+            currencyOptions={[]}
+            setAmount={(amount) => {
+              dispatch({
+                type: Types.gain,
+                payload: {
+                  gain: amount === "" ? "" : getGain(amount),
+                  bnb: amount,
+                },
+              });
+            }}
+            setCurrency={setCurrency}
+            style={{ marginTop: "15px", marginBottom: "15px" }}
+          />
+          <Price />
+          <div
+            style={{
+              display: "flex",
+              marginBottom: "30px",
+              justifyContent: "space-between",
+              color: "#7A71A7",
+              padding: "1px 5px",
+              fontSize: "14px",
+            }}
+          >
+            <p>Slippage Tolerance</p>
+            <p>{appState.slippageTolerance}%</p>
+          </div>
+          <div style={{ display: "flex", gap: "5px", width: "100%" }}>
+            <CustomButton
+              onClick={approve}
+              style={{
+                borderRadius: "14px",
+                width: "40%",
+                fontSize: "12px",
+                lineHeight: "13px",
+              }}
+              disabled={state2 > 0 || approving}
+            >
+              {state2 === 0 && !approving && "Approve Gain Protocol"}
+              {approving && (
+                <span>
+                  Approving
+                  <img
+                    src="./images/reload.svg"
+                    className={styles.approving}
+                    alt="approving"
+                  />
+                </span>
+              )}
+              {state2 >= 1 && !approving && "Approved"}
+            </CustomButton>
+            <CustomButton
+              onClick={() => setState2(2)}
+              style={{
+                borderRadius: "14px",
+                width: "60%",
+                fontSize: "12px",
+                lineHeight: "13px",
+              }}
+              disabled={state2 < 1 || approving}
+            >
+              {"Swap"}
+            </CustomButton>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "10px",
+            }}
+          >
+            <ProgressStepper state={state2} setState={setState2} />
+          </div>
+        </Main>
+      </div>
+    );
+  };
 
 export default SellSection;
