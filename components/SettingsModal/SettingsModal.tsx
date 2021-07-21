@@ -5,17 +5,19 @@ import { Input } from "@chakra-ui/react";
 import { Switch } from "@chakra-ui/react";
 import Info from "../Info/Info";
 import { useState } from "react";
-import { useTheme } from "../../context/StateProvider";
-
+import { useTheme, useAppContext } from "../../context/StateProvider";
+import { Types } from "../../reducer/reducer";
 interface MyProps {
   isOpen: boolean;
   onClose: () => void;
 }
+const deadlineRegex = /^[0-9\b]+$/;
+const slippageToleranceRegex = /^\d*\.?\d*$/;
 const SettingsModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
   ({ isOpen, onClose, ...props }) => {
     const [activeTolerance, setActiveTolerance] = useState("3.5");
     const { theme } = useTheme();
-
+    const { state, dispatch } = useAppContext();
     return (
       <>
         <CustomModal
@@ -45,31 +47,56 @@ const SettingsModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
             <div className={styles.tolerance}>
               <button
                 className={`${styles.button} ${
-                  activeTolerance === "1" ? styles.button__active : ""
+                  state.slippageTolerance === "1.0" ? styles.button__active : ""
                 } ${styles.tolerance__button__1}`}
-                onClick={() => setActiveTolerance("1")}
+                onClick={() =>
+                  dispatch({
+                    type: Types.tolerance,
+                    payload: { tolerance: "1.0" },
+                  })
+                }
               >
                 1
               </button>
               <button
                 className={`${styles.button} ${
-                  activeTolerance === "3.5" ? styles.button__active : ""
+                  state.slippageTolerance === "3.5" ? styles.button__active : ""
                 } ${styles.tolerance__button__2}`}
-                onClick={() => setActiveTolerance("3.5")}
+                onClick={() =>
+                  dispatch({
+                    type: Types.tolerance,
+                    payload: { tolerance: "3.5" },
+                  })
+                }
               >
                 3.5
               </button>
               <button
                 className={`${styles.button} ${
-                  activeTolerance === "5.0" ? styles.button__active : ""
+                  state.slippageTolerance === "5.0" ? styles.button__active : ""
                 } ${styles.tolerance__button__3}`}
-                onClick={() => setActiveTolerance("5.0")}
+                onClick={() =>
+                  dispatch({
+                    type: Types.tolerance,
+                    payload: { tolerance: "5.0" },
+                  })
+                }
               >
                 5
               </button>
               <Input
-                value={activeTolerance}
-                onChange={(e) => setActiveTolerance(e.target.value)}
+                value={state.slippageTolerance}
+                onChange={(e) => {
+                  if (
+                    e.target.value === "" ||
+                    slippageToleranceRegex.test(e.target.value)
+                  ) {
+                    dispatch({
+                      type: Types.tolerance,
+                      payload: { tolerance: e.target.value },
+                    });
+                  }
+                }}
                 className={styles.tolerance__input}
                 borderRadius="9px"
                 variant="filled"
@@ -91,7 +118,18 @@ const SettingsModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
                 width="90px"
                 marginRight="10px"
                 variant="filled"
-                defaultValue="20"
+                value={state.transactionDeadline}
+                onChange={(e) => {
+                  if (
+                    e.target.value === "" ||
+                    deadlineRegex.test(e.target.value)
+                  ) {
+                    dispatch({
+                      type: Types.transactionDeadline,
+                      payload: { transactionDeadline: e.target.value },
+                    });
+                  }
+                }}
                 color="#7a71a7"
               />
               <p>minutes</p>
@@ -111,7 +149,17 @@ const SettingsModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
               >
                 <h4>Toggle Expert Mode</h4>
               </Info>
-              <Switch size="lg" colorScheme={"brand"} />
+              <Switch
+                isChecked={state.toggleExpertMode}
+                onChange={() => {
+                  dispatch({
+                    type: Types.toggleExpertMode,
+                    payload: { toggleExpertMode: !state.toggleExpertMode },
+                  });
+                }}
+                size="lg"
+                colorScheme={"brand"}
+              />
             </div>
           </ModalBody>
         </CustomModal>

@@ -62,7 +62,7 @@ export const reducer = (state: InitialStateType, action: Actions) => {
     case "TOLERANCE":
       return {
         ...state,
-        tolerance: action.payload.tolerance,
+        slippageTolerance: action.payload.tolerance,
       };
     case "TRANSACTION_DEADLINE":
       return {
