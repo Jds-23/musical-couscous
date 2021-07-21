@@ -8,6 +8,8 @@ import { useWeb3React } from "@web3-react/core";
 import { ExternalStateContext } from "../../context/ExternalState";
 import { ethers, BigNumber } from "ethers";
 import Price from "../Price/Price";
+import { useAppContext } from "../../context/StateProvider";
+import { Types } from "../../reducer/reducer";
 interface MyProps {
   onOpen: () => void;
   state: number;
@@ -20,13 +22,14 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
 }) => {
   const [toAmount, setToAmount] = useState("");
   const [fromAmount, setFromAmount] = useState("");
-  const [balance, setBalance] = useState("");
 
   const { account } = useWeb3React<Web3Provider>();
   const { state: swapState } = useContext(ExternalStateContext);
 
   const [fromCurrency, setFromCurrency] = useState("BNB");
   const [toCurrency, setToCurrency] = useState("GAIN");
+  const { state: appState, dispatch } = useAppContext();
+
   const getGain = (amount: string) => {
     return swapState.reserves0
       ? ethers.utils.formatUnits(
@@ -56,26 +59,25 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
         )
       : "";
   };
-  const setBNBAmount = (amount: string) => {
-    console.log(amount);
-    setToAmount(amount === "" ? "" : getBnb(amount));
-    setFromAmount(amount);
-  };
-  const setGAINAmount = (amount: string) => {
-    console.log(amount);
-    setToAmount(amount);
-    setFromAmount(amount === "" ? "" : getGain(amount));
-  };
+
   return (
     <div className={styles.container}>
       <Main type={"Buy"}>
         <SwapCurrencyInputBox
           type={"From"}
-          amount={toAmount}
+          amount={appState.bnbInString}
           currency={fromCurrency}
           balance={swapState.balance}
           currencyOptions={[]}
-          setAmount={setGAINAmount}
+          setAmount={(amount) => {
+            dispatch({
+              type: Types.gain,
+              payload: {
+                gain: amount === "" ? "" : getGain(amount),
+                bnb: amount,
+              },
+            });
+          }}
           setCurrency={setFromCurrency}
           style={{ marginTop: "15px", marginBottom: "15px" }}
         />
@@ -92,11 +94,19 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
         </div>
         <SwapCurrencyInputBox
           type={"To"}
-          amount={fromAmount}
+          amount={appState.gainInString}
           currency={toCurrency}
           balance={swapState.GPbalance}
           currencyOptions={[]}
-          setAmount={setBNBAmount}
+          setAmount={(amount) => {
+            dispatch({
+              type: Types.gain,
+              payload: {
+                gain: amount,
+                bnb: amount === "" ? "" : getBnb(amount),
+              },
+            });
+          }}
           setCurrency={setToCurrency}
           style={{ marginTop: "15px", marginBottom: "15px" }}
         />
@@ -111,7 +121,7 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
           }}
         >
           <p>Slippage Tolerance</p>
-          <p>12%</p>
+          <p>{appState.slippageTolerance}%</p>
         </div>
         <Price />
         <CustomButton disabled={!account} onClick={onOpen} block>

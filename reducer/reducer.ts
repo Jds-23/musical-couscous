@@ -48,12 +48,14 @@ export type Actions = ActionMap<Payload>[keyof ActionMap<Payload>];
 export const reducer = (state: InitialStateType, action: Actions) => {
   switch (action.type) {
     case "GAIN":
+      console.log(action.payload.gain);
       return {
         ...state,
-        gain: action.payload.gain,
-        bnb: action.payload.bnb,
+        gainInString: action.payload.gain,
+        bnbInString: action.payload.bnb,
       };
     case "BNB":
+      console.log("BNB");
       return {
         ...state,
         gain: action.payload.gain,

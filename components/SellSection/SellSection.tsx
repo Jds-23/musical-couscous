@@ -13,6 +13,8 @@ import { ExternalStateContext } from "../../context/ExternalState";
 import { ethers, BigNumber } from "ethers";
 import { toInteger } from "lodash";
 import Price from "../Price/Price";
+import { useAppContext } from "../../context/StateProvider";
+import { Types } from "../../reducer/reducer";
 
 interface MyProps {
   onOpen: () => void;
@@ -33,6 +35,7 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
   const { account } = useWeb3React<Web3Provider>();
   const { state: swapState } = useContext(ExternalStateContext);
   const [approving, setApproving] = useState(false);
+  const { state: appState, dispatch } = useAppContext();
 
   const [fromCurrency, setFromCurrency] = useState("GAIN");
   const [toCurrency, setToCurrency] = useState("BNB");
@@ -186,11 +189,19 @@ total amount of GAIN being sold."
       <Main style={{ marginTop: "10px" }} type={"Sell"}>
         <SwapCurrencyInputBox
           type={"From"}
-          amount={fromAmount}
+          amount={appState.gainInString}
           currency={fromCurrency}
           balance={swapState.GPbalance}
           currencyOptions={["bnb"]}
-          setAmount={setBNBAmount}
+          setAmount={(amount) => {
+            dispatch({
+              type: Types.gain,
+              payload: {
+                gain: amount,
+                bnb: amount === "" ? "" : getBnb(amount),
+              },
+            });
+          }}
           setCurrency={setCurrency}
           style={{ marginTop: "15px", marginBottom: "15px" }}
         />
@@ -207,11 +218,19 @@ total amount of GAIN being sold."
         </div>
         <SwapCurrencyInputBox
           type={"To"}
-          amount={toAmount}
           currency={toCurrency}
+          amount={appState.bnbInString}
           balance={swapState.balance}
-          currencyOptions={["bnb"]}
-          setAmount={setGAINAmount}
+          currencyOptions={[]}
+          setAmount={(amount) => {
+            dispatch({
+              type: Types.gain,
+              payload: {
+                gain: amount === "" ? "" : getGain(amount),
+                bnb: amount,
+              },
+            });
+          }}
           setCurrency={setCurrency}
           style={{ marginTop: "15px", marginBottom: "15px" }}
         />
@@ -227,7 +246,7 @@ total amount of GAIN being sold."
           }}
         >
           <p>Slippage Tolerance</p>
-          <p>12%</p>
+          <p>{appState.slippageTolerance}%</p>
         </div>
         <div style={{ display: "flex", gap: "5px", width: "100%" }}>
           <CustomButton
