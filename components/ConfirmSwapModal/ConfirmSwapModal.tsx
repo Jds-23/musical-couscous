@@ -10,26 +10,122 @@ import {
 } from "../../context/StateProvider";
 import Info from "../Info/Info";
 import { formatEther, formatUnits } from "ethers/lib/utils";
+import RouterABI from "../../contracts/PancakeRouter.json";
+import { Contract } from "ethers";
+import { Web3Provider } from "@ethersproject/providers";
+import { useWeb3React } from "@web3-react/core";
 
 interface MyProps {
   isOpen: boolean;
   onClose: () => void;
   successToast: Function;
   onSuccessOpen: () => void;
+  onErrorOpen: () => void;
+  setErrorMessage: (arg1: string) => void;
 }
 
 const ConfirmSwapModal: React.FC<
   React.HTMLAttributes<HTMLDivElement> & MyProps
-> = ({ isOpen, onClose, successToast, onSuccessOpen, ...props }) => {
+> = ({
+  isOpen,
+  onClose,
+  successToast,
+  onSuccessOpen,
+  onErrorOpen,
+  setErrorMessage,
+  ...props
+}) => {
+  const { library } = useWeb3React<Web3Provider>();
+  const { account } = useWeb3React<Web3Provider>();
   const { theme } = useTheme();
   const { state: appState } = useAppContext();
   const getBNB = () => {
-    return appState.bnbInBigNumber ? formatEther(appState.bnbInBigNumber) : "0";
+    return appState.bnbInBigNumber ? formatEther(appState.bnbInBigNumber) : "";
   };
   const getGAIN = () => {
     return appState.gainInBigNumber
       ? formatUnits(appState.gainInBigNumber, 9)
-      : "0";
+      : "";
+  };
+  const buy = async () => {
+    if (
+      library &&
+      process.env.NEXT_PUBLIC_ROUTER_ADDRESS &&
+      appState.gainInBigNumber &&
+      account
+    ) {
+      const contract = new Contract(
+        process.env.NEXT_PUBLIC_ROUTER_ADDRESS,
+        RouterABI,
+        library.getSigner()
+      );
+      await contract
+        .swapExactETHForTokens(
+          appState.gainInBigNumber?.sub(
+            appState.gainInBigNumber?.mul(appState.slippageTolerance).div(100)
+          ),
+          [
+            process.env.NEXT_PUBLIC_ETH_ADDRESS,
+            process.env.NEXT_PUBLIC_GP_ADDRESS,
+          ],
+          account,
+          Math.floor(Date.now() / 1000) +
+            parseFloat(appState.transactionDeadline) * 60,
+          { value: appState.bnbInBigNumber }
+        )
+        .then((res: any) => {
+          console.log(res);
+          successToast();
+          onSuccessOpen();
+          onClose();
+        })
+        .catch((err: any) => {
+          console.log(err);
+          onErrorOpen();
+          onClose();
+        });
+    }
+  };
+  const sell = async () => {
+    if (
+      library &&
+      process.env.NEXT_PUBLIC_ROUTER_ADDRESS &&
+      appState.gainInBigNumber &&
+      account
+    ) {
+      const contract = new Contract(
+        process.env.NEXT_PUBLIC_ROUTER_ADDRESS,
+        RouterABI,
+        library.getSigner()
+      );
+      contract
+        .swapExactTokensForETHSupportingFeeOnTransferTokens(
+          appState.gainInBigNumber,
+          appState.bnbInBigNumber?.sub(
+            appState.bnbInBigNumber?.mul(appState.slippageTolerance).div(100)
+          ),
+          [
+            process.env.NEXT_PUBLIC_GP_ADDRESS,
+            process.env.NEXT_PUBLIC_ETH_ADDRESS,
+          ],
+          account,
+          Math.floor(Date.now() / 1000) +
+            parseFloat(appState.transactionDeadline) * 60
+        )
+        .then((res: any) => {
+          console.log(res);
+          successToast();
+          onSuccessOpen();
+          onClose();
+        })
+        .catch((err: any) => {
+          console.log(err.message);
+          setErrorMessage(err.message);
+          onErrorOpen();
+          onClose();
+        });
+      // console.log(response);
+    }
   };
   return (
     <>
@@ -169,10 +265,17 @@ const ConfirmSwapModal: React.FC<
           <CustomButton
             block
             onClick={() => {
-              onClose();
-              onSuccessOpen();
-              successToast();
+              appState.toggleBuyOrSell === BuyOrSell.Buy ? buy() : sell();
+              // onClose();
+              // onSuccessOpen();
+              // successToast();
             }}
+            disabled={
+              appState.gainInBigNumber && appState.bnbInBigNumber
+                ? appState.gainInBigNumber.isZero() ||
+                  appState.bnbInBigNumber.isZero()
+                : true
+            }
           >
             Confirm Swap
           </CustomButton>

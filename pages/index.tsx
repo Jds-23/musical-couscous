@@ -27,11 +27,10 @@ export default function Home() {
   const [walletInfoModal, setWalletInfoModal] = useState(false);
   const [confirmSwapModal, setConfirmSwapModal] = useState(false);
   const [errorModal, setErrorModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [successModal, setSuccessModal] = useState(false);
-  const { state: swapState } = useContext(ExternalStateContext);
-  const [seeMoreDetails, setSeeMoreDetails] = useState(false);
   const { theme } = useTheme();
-  const { state: appState, dispatch } = useAppContext();
+  const { state: appState } = useAppContext();
   const [time, setTime] = useState(
     new Date(opensDate).getTime() -
       new Date().getTime() -
@@ -171,10 +170,13 @@ window.criteo_q.push(
               isOpen={confirmSwapModal}
               successToast={successToast}
               onSuccessOpen={() => setSuccessModal(true)}
+              onErrorOpen={() => setErrorModal(true)}
+              setErrorMessage={setErrorMessage}
               onClose={() => setConfirmSwapModal(false)}
             />
             <ErrorModal
               isOpen={errorModal}
+              errorMessage={errorMessage}
               onClose={() => setErrorModal(false)}
             />
             <SuccessModal

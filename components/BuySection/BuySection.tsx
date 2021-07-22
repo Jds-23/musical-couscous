@@ -6,12 +6,11 @@ import Main from "../Main/Main";
 import { Web3Provider } from "@ethersproject/providers";
 import { useWeb3React } from "@web3-react/core";
 import { ExternalStateContext } from "../../context/ExternalState";
-import { ethers, BigNumber, Contract } from "ethers";
+import { BigNumber } from "ethers";
 import Price from "../Price/Price";
 import { BuyOrSell, useAppContext } from "../../context/StateProvider";
 import { Types } from "../../reducer/reducer";
 import { parseEther, parseUnits } from "ethers/lib/utils";
-import RouterABI from "../../contracts/PancakeRouter.json";
 interface MyProps {
   onOpen: () => void;
 }
@@ -62,34 +61,7 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
           )
       : undefined;
   };
-  const buy = async () => {
-    if (
-      library &&
-      process.env.NEXT_PUBLIC_ROUTER_ADDRESS &&
-      appState.gainInBigNumber &&
-      account
-    ) {
-      const contract = new Contract(
-        process.env.NEXT_PUBLIC_ROUTER_ADDRESS,
-        RouterABI,
-        library.getSigner()
-      );
-      const response = await contract.swapExactETHForTokens(
-        appState.gainInBigNumber?.sub(
-          appState.gainInBigNumber?.mul(appState.slippageTolerance).div(100)
-        ),
-        [
-          process.env.NEXT_PUBLIC_ETH_ADDRESS,
-          process.env.NEXT_PUBLIC_GP_ADDRESS,
-        ],
-        account,
-        Math.floor(Date.now() / 1000) +
-          parseFloat(appState.transactionDeadline) * 60,
-        { value: appState.bnbInBigNumber }
-      );
-      console.log(response);
-    }
-  };
+
   return (
     <div className={styles.container}>
       <Main type={"Buy"}>
@@ -165,7 +137,7 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
           <p>{appState.slippageTolerance}%</p>
         </div>
         <Price />
-        <CustomButton disabled={!account} onClick={buy} block>
+        <CustomButton disabled={!account} onClick={onOpen} block>
           {account ? "Swap" : "Unlock Wallet"}
         </CustomButton>
       </Main>

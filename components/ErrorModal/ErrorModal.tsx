@@ -6,11 +6,13 @@ import CustomButton from "../Button/Button";
 import { useTheme } from "../../context/StateProvider";
 interface MyProps {
   isOpen: boolean;
+  errorMessage: string;
   onClose: () => void;
 }
 const ErrorModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
   isOpen,
   onClose,
+  errorMessage,
   ...props
 }) => {
   const { theme } = useTheme();
@@ -40,8 +42,8 @@ const ErrorModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
           ${theme === "Dark" ? styles.dark : ""}
           ${styles.text}`}
           >
-            The transaction cannot succeed due to error: undefined. This is
-            probably an issue with one of the tokens you are swapping.
+            The transaction cannot succeed due to error: {errorMessage}.
+            {/* This is probably an issue with one of the tokens you are swapping. */}
           </h1>
         </ModalBody>
         <ModalFooter background={theme === "Dark" ? "#000" : "#fff"}>

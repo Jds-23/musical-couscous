@@ -88,35 +88,6 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
           )
       : undefined;
   };
-  const swap = async () => {
-    if (
-      library &&
-      process.env.NEXT_PUBLIC_ROUTER_ADDRESS &&
-      appState.gainInBigNumber &&
-      account
-    ) {
-      const contract = new Contract(
-        process.env.NEXT_PUBLIC_ROUTER_ADDRESS,
-        RouterABI,
-        library.getSigner()
-      );
-      const response =
-        await contract.swapExactTokensForETHSupportingFeeOnTransferTokens(
-          appState.gainInBigNumber,
-          appState.bnbInBigNumber?.sub(
-            appState.bnbInBigNumber?.mul(appState.slippageTolerance).div(100)
-          ),
-          [
-            process.env.NEXT_PUBLIC_GP_ADDRESS,
-            process.env.NEXT_PUBLIC_ETH_ADDRESS,
-          ],
-          account,
-          Math.floor(Date.now() / 1000) +
-            parseFloat(appState.transactionDeadline) * 60
-        );
-      console.log(response);
-    }
-  };
   const approveFunction = async () => {
     if (
       process.env.NEXT_PUBLIC_ROUTER_ADDRESS &&
