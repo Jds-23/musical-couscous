@@ -79,6 +79,15 @@ export const reducer = (state: InitialStateType, action: Actions) => {
         slippageTolerance: action.payload.tolerance,
       };
     case "TRANSACTION_DEADLINE":
+      if (
+        action.payload.transactionDeadline === "" ||
+        parseFloat(action.payload.transactionDeadline) < 1
+      ) {
+        return {
+          ...state,
+          transactionDeadline: "1",
+        };
+      }
       return {
         ...state,
         transactionDeadline: action.payload.transactionDeadline,
