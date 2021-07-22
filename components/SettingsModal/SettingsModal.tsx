@@ -16,6 +16,7 @@ const slippageToleranceRegex = /^\d*\.?\d*$/;
 const SettingsModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
   ({ isOpen, onClose, ...props }) => {
     const [activeTolerance, setActiveTolerance] = useState("3.5");
+    const [activeDeadline, setActiveDeadline] = useState("20");
     const { theme } = useTheme();
     const { state, dispatch } = useAppContext();
     return (

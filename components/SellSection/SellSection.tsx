@@ -106,24 +106,22 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
     }
   };
   const checkIfDisabled = () => {
-    if (
-      swapState.allowance !== undefined ? swapState.allowance?.isZero() : true
-    ) {
-      return true;
-    }
-    if (
-      appState.gainInBigNumber !== undefined
-        ? appState.gainInBigNumber.isZero()
-        : true
-    ) {
-      return true;
-    }
-    if (appState.gainInBigNumber) {
-      if (appState.gainInBigNumber.gt(swapState.GPbalance)) {
-        return true;
+    if (!account) return "Unlock Wallet";
+    if (swapState.allowance && !swapState.allowance.isZero()) {
+      if (!appState.gainInBigNumber) {
+        return "Enter Amount";
+      } else {
+        if (appState.gainInBigNumber.isZero()) {
+          return "Enter Amount";
+        }
+        if (appState.gainInBigNumber.gt(swapState.GPbalance)) {
+          return "Insufficient GAIN Balance";
+        }
+        return "Sell";
       }
+    } else {
+      return "Not Approved";
     }
-    return false;
   };
   return (
     <div className={styles.container}>
@@ -304,32 +302,27 @@ total amount of GAIN being sold."
           <p>{appState.slippageTolerance}%</p>
         </div>
         <div style={{ display: "flex", gap: "5px", width: "100%" }}>
-          {!account ? (
-            <CustomButton disabled={!account} block>
-              {"Unlock Wallet"}
-            </CustomButton>
-          ) : (
-            <>
-              <CustomButton
-                onClick={approveFunction}
-                style={{
-                  borderRadius: "14px",
-                  width: "40%",
-                  fontSize: "12px",
-                  lineHeight: "13px",
-                }}
-                disabled={
-                  swapState.allowance !== undefined
-                    ? !swapState.allowance?.isZero()
-                    : true
-                }
-              >
-                {swapState.allowance !== undefined
+          <>
+            <CustomButton
+              onClick={approveFunction}
+              style={{
+                borderRadius: "14px",
+                width: "40%",
+                fontSize: "12px",
+                lineHeight: "13px",
+              }}
+              disabled={
+                swapState.allowance !== undefined
                   ? !swapState.allowance?.isZero()
-                    ? "Approved"
-                    : "Approve Gain Protocol"
-                  : "Approve Gain Protocol"}
-                {/* {approving && (
+                  : true
+              }
+            >
+              {swapState.allowance !== undefined
+                ? !swapState.allowance?.isZero()
+                  ? "Approved"
+                  : "Approve Gain Protocol"
+                : "Approve Gain Protocol"}
+              {/* {approving && (
                 <span>
                   Approving
                   <img
@@ -339,21 +332,26 @@ total amount of GAIN being sold."
                   />
                 </span>
               )} */}
-              </CustomButton>
-              <CustomButton
-                onClick={() => onOpen()}
-                style={{
-                  borderRadius: "14px",
-                  width: "60%",
-                  fontSize: "12px",
-                  lineHeight: "13px",
-                }}
-                disabled={checkIfDisabled()}
-              >
-                {"Swap"}
-              </CustomButton>
-            </>
-          )}
+            </CustomButton>
+            <CustomButton
+              onClick={() => onOpen()}
+              style={
+                checkIfDisabled() === "Insufficient GAIN Balance"
+                  ? {
+                      borderRadius: "14px",
+                      width: "60%",
+                      fontSize: "12px",
+                    }
+                  : {
+                      borderRadius: "14px",
+                      width: "60%",
+                    }
+              }
+              disabled={checkIfDisabled() !== "Sell"}
+            >
+              {checkIfDisabled()}
+            </CustomButton>
+          </>
         </div>
         <div
           style={{

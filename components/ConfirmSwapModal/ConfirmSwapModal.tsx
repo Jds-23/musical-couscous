@@ -1,7 +1,7 @@
 import CustomModal from "../Modal/Modal";
 import styles from "./ConfirmSwapModal.module.css";
 import { ModalBody, ModalFooter } from "@chakra-ui/react";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import CustomButton from "../Button/Button";
 import {
   BuyOrSell,
@@ -42,6 +42,7 @@ const ConfirmSwapModal: React.FC<
   const { theme } = useTheme();
   const { state: appState } = useAppContext();
   const { state: swapState } = useContext(ExternalStateContext);
+  const [loading, setLoading] = useState(false);
   const getBNB = () => {
     return appState.bnbInBigNumber ? formatEther(appState.bnbInBigNumber) : "";
   };
@@ -58,6 +59,7 @@ const ConfirmSwapModal: React.FC<
     }
   };
   const buy = async () => {
+    setLoading(true);
     if (
       library &&
       process.env.NEXT_PUBLIC_ROUTER_ADDRESS &&
@@ -90,15 +92,18 @@ const ConfirmSwapModal: React.FC<
           successToast(getSwapInfos(), res.hash);
           onSuccessOpen();
           onClose();
+          setLoading(false);
         })
         .catch((err: any) => {
           console.log(err);
           onErrorOpen();
           onClose();
+          setLoading(false);
         });
     }
   };
   const sell = async () => {
+    setLoading(true);
     if (
       library &&
       process.env.NEXT_PUBLIC_ROUTER_ADDRESS &&
@@ -131,12 +136,14 @@ const ConfirmSwapModal: React.FC<
           successToast(getSwapInfos(), res.hash);
           onSuccessOpen();
           onClose();
+          setLoading(false);
         })
         .catch((err: any) => {
           console.log(err.message);
           setErrorMessage(err.message);
           onErrorOpen();
           onClose();
+          setLoading(false);
         });
       // console.log(response);
     }
@@ -319,16 +326,8 @@ const ConfirmSwapModal: React.FC<
             block
             onClick={() => {
               appState.toggleBuyOrSell === BuyOrSell.Buy ? buy() : sell();
-              // onClose();
-              // onSuccessOpen();
-              // successToast();
             }}
-            disabled={
-              appState.gainInBigNumber && appState.bnbInBigNumber
-                ? appState.gainInBigNumber.isZero() ||
-                  appState.bnbInBigNumber.isZero()
-                : true
-            }
+            disabled={loading}
           >
             Confirm Swap
           </CustomButton>
