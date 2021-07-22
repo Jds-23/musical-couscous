@@ -136,7 +136,21 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
           <p>Slippage Tolerance</p>
           <p>{appState.slippageTolerance}%</p>
         </div>
-        <Price />
+        <div
+          style={{
+            display: "flex",
+            marginBottom: "30px",
+            justifyContent: "space-between",
+            color: "#7A71A7",
+            padding: "1px 5px",
+            fontSize: "14px",
+          }}
+        >
+          <p>Price</p>
+          <p style={{ textAlign: "right" }}>
+            <Price />
+          </p>
+        </div>
         <CustomButton disabled={!account} onClick={onOpen} block>
           {account ? "Swap" : "Unlock Wallet"}
         </CustomButton>

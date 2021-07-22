@@ -42,32 +42,20 @@ const Price = () => {
       : "";
   };
   return (
-    <div
-      style={{
-        display: "flex",
-        marginBottom: "30px",
-        justifyContent: "space-between",
-        color: "#7A71A7",
-        padding: "1px 5px",
-        fontSize: "14px",
-      }}
-    >
-      <p>Price</p>
-      <p style={{ textAlign: "right" }}>
-        {flag ? (
-          <>{bnbPerGain()} BNB per GAIN </>
-        ) : (
-          <>{gainPerBNB()} GAIN per BNB </>
-        )}
-        <img
-          className={styles.reload}
-          src="./images/reload.svg"
-          role="button"
-          alt="reload"
-          onClick={setFlag.toggle}
-        />
-      </p>
-    </div>
+    <>
+      {flag ? (
+        <>{bnbPerGain()} BNB per GAIN </>
+      ) : (
+        <>{gainPerBNB()} GAIN per BNB </>
+      )}
+      <img
+        className={styles.reload}
+        src="./images/reload.svg"
+        role="button"
+        alt="reload"
+        onClick={setFlag.toggle}
+      />
+    </>
   );
 };
 

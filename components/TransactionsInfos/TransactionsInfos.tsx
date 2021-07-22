@@ -118,14 +118,16 @@ const TransactionsInfos = () => {
               </p>
               <p style={{ color: "#ECB42A" }}>
                 {"<"}
-                {formatUnits(
-                  appState.gainInBigNumber && swapState.reserves0
-                    ? appState.gainInBigNumber
-                        ?.div(swapState.reserves0)
-                        .mul(100)
-                    : "0",
-                  9
-                )}
+                {parseFloat(
+                  formatUnits(
+                    appState.gainInBigNumber && swapState.reserves0
+                      ? appState.gainInBigNumber
+                          ?.div(swapState.reserves0)
+                          .mul(100)
+                      : "0",
+                    9
+                  )
+                ).toFixed(2)}
                 %
               </p>
               <p>

@@ -255,7 +255,22 @@ total amount of GAIN being sold."
           setCurrency={setCurrency}
           style={{ marginTop: "15px", marginBottom: "15px" }}
         />
-        <Price />
+        <div
+          style={{
+            display: "flex",
+            marginBottom: "30px",
+            justifyContent: "space-between",
+            color: "#7A71A7",
+            padding: "1px 5px",
+            fontSize: "14px",
+          }}
+        >
+          <p>Price</p>
+          <p style={{ textAlign: "right" }}>
+            <Price />
+          </p>
+        </div>
+
         <div
           style={{
             display: "flex",

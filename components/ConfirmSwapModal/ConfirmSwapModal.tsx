@@ -1,7 +1,7 @@
 import CustomModal from "../Modal/Modal";
 import styles from "./ConfirmSwapModal.module.css";
 import { ModalBody, ModalFooter } from "@chakra-ui/react";
-import React from "react";
+import React, { useContext } from "react";
 import CustomButton from "../Button/Button";
 import {
   BuyOrSell,
@@ -14,6 +14,8 @@ import RouterABI from "../../contracts/PancakeRouter.json";
 import { Contract } from "ethers";
 import { Web3Provider } from "@ethersproject/providers";
 import { useWeb3React } from "@web3-react/core";
+import Price from "../Price/Price";
+import { ExternalStateContext } from "../../context/ExternalState";
 
 interface MyProps {
   isOpen: boolean;
@@ -39,6 +41,7 @@ const ConfirmSwapModal: React.FC<
   const { account } = useWeb3React<Web3Provider>();
   const { theme } = useTheme();
   const { state: appState } = useAppContext();
+  const { state: swapState } = useContext(ExternalStateContext);
   const getBNB = () => {
     return appState.bnbInBigNumber ? formatEther(appState.bnbInBigNumber) : "";
   };
@@ -218,10 +221,28 @@ const ConfirmSwapModal: React.FC<
                 {appState.toggleBuyOrSell === BuyOrSell.Buy ? "GAIN" : "BNB"}
               </p>
             </div>
-            <p>
-              Output is estimated. You will receive at least 23.6125 GAIN
-              PROTOCOL or the transaction will revert.
-            </p>
+            {appState.gainInBigNumber && appState.bnbInBigNumber && (
+              <p>
+                Output is estimated. You will receive at least{" "}
+                {appState.toggleBuyOrSell === BuyOrSell.Buy
+                  ? `${formatUnits(
+                      appState.gainInBigNumber?.sub(
+                        appState.gainInBigNumber
+                          ?.mul(appState.slippageTolerance)
+                          .div(100)
+                      ),
+                      9
+                    )} GAIN `
+                  : `${formatEther(
+                      appState.bnbInBigNumber?.sub(
+                        appState.bnbInBigNumber
+                          ?.mul(appState.slippageTolerance)
+                          .div(100)
+                      )
+                    )} BNB `}
+                or the transaction will revert.
+              </p>
+            )}
           </div>
 
           <div
@@ -230,7 +251,7 @@ const ConfirmSwapModal: React.FC<
             <div>
               <h4 className={styles.label}>Price</h4>
               <p style={{ fontSize: "10px" }}>
-                0.04989897 BNB per Gain Protocol
+                <Price />
               </p>
             </div>
             <div>
@@ -246,7 +267,20 @@ const ConfirmSwapModal: React.FC<
               <Info tooltip="The difference between the market price and estimated price due to trade size.">
                 Price Impact
               </Info>
-              <p style={{ color: "#ECB42A", fontSize: "10px" }}>{"<"}0.99%</p>
+              <p style={{ color: "#ECB42A", fontSize: "10px" }}>
+                {"<"}
+                {parseFloat(
+                  formatUnits(
+                    appState.gainInBigNumber && swapState.reserves0
+                      ? appState.gainInBigNumber
+                          ?.div(swapState.reserves0)
+                          .mul(100)
+                      : "0",
+                    9
+                  )
+                ).toFixed(2)}
+                %
+              </p>
             </div>
             <div>
               <Info
@@ -257,7 +291,15 @@ const ConfirmSwapModal: React.FC<
               >
                 Liquidity Provider Fee
               </Info>
-              <p style={{ fontSize: "10px" }}>23.0004</p>
+              <p style={{ fontSize: "10px" }}>
+                {formatUnits(
+                  appState.gainInBigNumber
+                    ? appState.gainInBigNumber?.mul(2).div(1000)
+                    : "0",
+                  9
+                )}{" "}
+                GAIN
+              </p>
             </div>
           </div>
         </ModalBody>
