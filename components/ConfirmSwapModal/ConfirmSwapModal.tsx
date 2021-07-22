@@ -24,12 +24,10 @@ const ConfirmSwapModal: React.FC<
   const { theme } = useTheme();
   const { state: appState, dispatch } = useAppContext();
   const getBNB = () => {
-    return appState.bnbInBigNumber && !appState.bnbInBigNumber.isZero()
-      ? formatEther(appState.bnbInBigNumber)
-      : "0";
+    return appState.bnbInBigNumber ? formatEther(appState.bnbInBigNumber) : "0";
   };
   const getGAIN = () => {
-    return appState.gainInBigNumber && !appState.gainInBigNumber.isZero()
+    return appState.gainInBigNumber
       ? formatUnits(appState.gainInBigNumber, 9)
       : "0";
   };

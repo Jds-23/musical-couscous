@@ -196,18 +196,18 @@ window.criteo_q.push(
                 <SellSection onOpen={() => setConfirmSwapModal(true)} />
               )}
 
-              {appState.gainInBigNumber !== undefined &&
-              !appState.gainInBigNumber.isZero() ? (
-                <TransactionsFees />
-              ) : (
-                <></>
-              )}
-              {appState.gainInBigNumber !== undefined &&
-              !appState.gainInBigNumber.isZero() ? (
-                <TransactionsInfos />
-              ) : (
-                <></>
-              )}
+              {appState.gainInBigNumber &&
+                (!appState.gainInBigNumber.isZero() ? (
+                  <TransactionsFees />
+                ) : (
+                  <></>
+                ))}
+              {appState.gainInBigNumber &&
+                (!appState.gainInBigNumber.isZero() ? (
+                  <TransactionsInfos />
+                ) : (
+                  <></>
+                ))}
             </div>
           </>
         )}
