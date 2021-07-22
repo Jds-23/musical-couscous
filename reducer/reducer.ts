@@ -55,8 +55,8 @@ export const reducer = (state: InitialStateType, action: Actions) => {
     case "GAIN":
       return {
         ...state,
-        gainInString: action.payload.gain,
-        bnbInString: action.payload.bnb,
+        gainInBigNumber: action.payload.gain,
+        bnbInBigNumber: action.payload.bnb,
       };
     case "BNB":
       return {

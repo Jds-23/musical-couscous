@@ -39,9 +39,9 @@ const TransactionsInfos = () => {
             <div style={{ textAlign: "right" }}>
               <p>
                 {formatUnits(
-                  appState.gainInString
-                    ? appState.gainInString?.sub(
-                        appState.gainInString
+                  appState.gainInBigNumber
+                    ? appState.gainInBigNumber?.sub(
+                        appState.gainInBigNumber
                           ?.mul(appState.slippageTolerance)
                           .div(100)
                       )
@@ -54,8 +54,10 @@ const TransactionsInfos = () => {
                 {"<"}
                 {parseFloat(
                   formatUnits(
-                    appState.gainInString && swapState.reserves0
-                      ? appState.gainInString?.div(swapState.reserves0).mul(100)
+                    appState.gainInBigNumber && swapState.reserves0
+                      ? appState.gainInBigNumber
+                          ?.div(swapState.reserves0)
+                          .mul(100)
                       : "0",
                     9
                   )
@@ -64,8 +66,8 @@ const TransactionsInfos = () => {
               </p>
               <p>
                 {formatUnits(
-                  appState.gainInString
-                    ? appState.gainInString?.mul(2).div(1000)
+                  appState.gainInBigNumber
+                    ? appState.gainInBigNumber?.mul(2).div(1000)
                     : "0",
                   9
                 )}{" "}
@@ -103,9 +105,9 @@ const TransactionsInfos = () => {
             <div style={{ textAlign: "right" }}>
               <p>
                 {formatUnits(
-                  appState.gainInString
-                    ? appState.gainInString?.sub(
-                        appState.gainInString
+                  appState.gainInBigNumber
+                    ? appState.gainInBigNumber?.sub(
+                        appState.gainInBigNumber
                           ?.mul(appState.slippageTolerance)
                           .div(100)
                       )
@@ -117,8 +119,10 @@ const TransactionsInfos = () => {
               <p style={{ color: "#ECB42A" }}>
                 {"<"}
                 {formatUnits(
-                  appState.gainInString && swapState.reserves0
-                    ? appState.gainInString?.div(swapState.reserves0).mul(100)
+                  appState.gainInBigNumber && swapState.reserves0
+                    ? appState.gainInBigNumber
+                        ?.div(swapState.reserves0)
+                        .mul(100)
                     : "0",
                   9
                 )}
@@ -127,8 +131,8 @@ const TransactionsInfos = () => {
               <p>
                 {" "}
                 {formatUnits(
-                  appState.gainInString
-                    ? appState.gainInString?.mul(2).div(1000)
+                  appState.gainInBigNumber
+                    ? appState.gainInBigNumber?.mul(2).div(1000)
                     : "0",
                   9
                 )}{" "}

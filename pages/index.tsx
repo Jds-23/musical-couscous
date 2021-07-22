@@ -196,14 +196,14 @@ window.criteo_q.push(
                 <SellSection onOpen={() => setConfirmSwapModal(true)} />
               )}
 
-              {appState.gainInString !== undefined &&
-              !appState.gainInString.isZero() ? (
+              {appState.gainInBigNumber !== undefined &&
+              !appState.gainInBigNumber.isZero() ? (
                 <TransactionsFees />
               ) : (
                 <></>
               )}
-              {appState.gainInString !== undefined &&
-              !appState.gainInString.isZero() ? (
+              {appState.gainInBigNumber !== undefined &&
+              !appState.gainInBigNumber.isZero() ? (
                 <TransactionsInfos />
               ) : (
                 <></>

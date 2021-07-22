@@ -49,8 +49,8 @@ export const ExternalStateProvider: React.FC = ({ children }) => {
     }
     // if (
     //   process.env.NEXT_PUBLIC_PAIR_ADDRESS &&
-    //   AppState.gainInString &&
-    //   !AppState.gainInString.eq(0)
+    //   AppState.gainInBigNumber &&
+    //   !AppState.gainInBigNumber.eq(0)
     // ) {
     //   calls.push({
     //     target: process.env.NEXT_PUBLIC_GP_ADDRESS,
@@ -58,7 +58,7 @@ export const ExternalStateProvider: React.FC = ({ children }) => {
     //       "calculateFees(address,address,uint256)(uint256,uint256,uint256,uint256,uint256,uint256,uint256)",
     //       process.env.NEXT_PUBLIC_PAIR_ADDRESS,
     //       account,
-    //       formatUnits(AppState.gainInString, 9),
+    //       formatUnits(AppState.gainInBigNumber, 9),
     //     ],
     //     returns: [
     //       ["buyliquidityFee"],
@@ -76,7 +76,7 @@ export const ExternalStateProvider: React.FC = ({ children }) => {
     //       "calculateFees(address,address,uint256)(uint256,uint256,uint256,uint256,uint256,uint256,uint256)",
     //       account,
     //       process.env.NEXT_PUBLIC_PAIR_ADDRESS,
-    //       formatUnits(AppState.gainInString, 9),
+    //       formatUnits(AppState.gainInBigNumber, 9),
     //     ],
     //     returns: [
     //       ["sellliquidityFee"],

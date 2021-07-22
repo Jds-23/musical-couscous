@@ -3,8 +3,13 @@ import styles from "./ConfirmSwapModal.module.css";
 import { ModalBody, ModalFooter } from "@chakra-ui/react";
 import React from "react";
 import CustomButton from "../Button/Button";
-import { useTheme } from "../../context/StateProvider";
+import {
+  BuyOrSell,
+  useAppContext,
+  useTheme,
+} from "../../context/StateProvider";
 import Info from "../Info/Info";
+import { formatEther, formatUnits } from "ethers/lib/utils";
 
 interface MyProps {
   isOpen: boolean;
@@ -17,6 +22,17 @@ const ConfirmSwapModal: React.FC<
   React.HTMLAttributes<HTMLDivElement> & MyProps
 > = ({ isOpen, onClose, successToast, onSuccessOpen, ...props }) => {
   const { theme } = useTheme();
+  const { state: appState, dispatch } = useAppContext();
+  const getBNB = () => {
+    return appState.bnbInBigNumber && !appState.bnbInBigNumber.isZero()
+      ? formatEther(appState.bnbInBigNumber)
+      : "0";
+  };
+  const getGAIN = () => {
+    return appState.gainInBigNumber && !appState.gainInBigNumber.isZero()
+      ? formatUnits(appState.gainInBigNumber, 9)
+      : "0";
+  };
   return (
     <>
       <CustomModal
@@ -36,10 +52,20 @@ const ConfirmSwapModal: React.FC<
               }`}
             >
               <div>
-                <img src={"./images/BNB.svg"} />
-                <p>0.004454</p>
+                <img
+                  src={`./images/${
+                    appState.toggleBuyOrSell === BuyOrSell.Buy ? "BNB" : "GAIN"
+                  }.svg`}
+                />
+                <p>
+                  {appState.toggleBuyOrSell === BuyOrSell.Buy
+                    ? getBNB()
+                    : getGAIN()}
+                </p>
               </div>
-              <p>BNB</p>
+              <p>
+                {appState.toggleBuyOrSell === BuyOrSell.Buy ? "BNB" : "GAIN"}
+              </p>
             </div>
             <div
               style={{
@@ -82,11 +108,21 @@ const ConfirmSwapModal: React.FC<
               }`}
             >
               <div>
-                <img src={"./images/GP.svg"} />
+                <img
+                  src={`./images/${
+                    appState.toggleBuyOrSell === BuyOrSell.Buy ? "GAIN" : "BNB"
+                  }.svg`}
+                />
 
-                <p>0.004454</p>
+                <p>
+                  {appState.toggleBuyOrSell === BuyOrSell.Buy
+                    ? getGAIN()
+                    : getBNB()}
+                </p>
               </div>
-              <p>GAIN PROTOCOL</p>
+              <p>
+                {appState.toggleBuyOrSell === BuyOrSell.Buy ? "GAIN" : "BNB"}
+              </p>
             </div>
             <p>
               Output is estimated. You will receive at least 23.6125 GAIN

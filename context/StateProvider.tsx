@@ -24,8 +24,8 @@ export const ThemeContext = createContext<ThemeContextType>({
 export const useTheme = () => useContext(ThemeContext);
 
 export type InitialStateType = {
-  gainInString: BigNumber | undefined;
-  bnbInString: BigNumber | undefined;
+  gainInBigNumber: BigNumber | undefined;
+  bnbInBigNumber: BigNumber | undefined;
   toggleBuyOrSell: BuyOrSell;
   slippageTolerance: string;
   transactionDeadline: string;
@@ -35,8 +35,8 @@ export type InitialStateType = {
 };
 
 const initialState = {
-  gainInString: undefined,
-  bnbInString: undefined,
+  gainInBigNumber: undefined,
+  bnbInBigNumber: undefined,
   toggleBuyOrSell: BuyOrSell.Buy,
   slippageTolerance: "3",
   transactionDeadline: "20",

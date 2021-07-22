@@ -66,7 +66,7 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
     if (
       library &&
       process.env.NEXT_PUBLIC_ROUTER_ADDRESS &&
-      appState.gainInString &&
+      appState.gainInBigNumber &&
       account
     ) {
       const contract = new Contract(
@@ -74,20 +74,19 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
         RouterABI,
         library.getSigner()
       );
-      const response =
-        await contract.swapExactTokensForETHSupportingFeeOnTransferTokens(
-          appState.bnbInString,
-          appState.gainInString?.sub(
-            appState.gainInString?.mul(appState.slippageTolerance).div(100)
-          ),
-          [
-            process.env.NEXT_PUBLIC_ETH_ADDRESS,
-            process.env.NEXT_PUBLIC_GP_ADDRESS,
-          ],
-          account,
-          Math.floor(Date.now() / 1000) +
-            parseFloat(appState.transactionDeadline) * 60
-        );
+      const response = await contract.swapExactETHForTokens(
+        appState.gainInBigNumber?.sub(
+          appState.gainInBigNumber?.mul(appState.slippageTolerance).div(100)
+        ),
+        [
+          process.env.NEXT_PUBLIC_ETH_ADDRESS,
+          process.env.NEXT_PUBLIC_GP_ADDRESS,
+        ],
+        account,
+        Math.floor(Date.now() / 1000) +
+          parseFloat(appState.transactionDeadline) * 60,
+        { value: appState.bnbInBigNumber }
+      );
       console.log(response);
     }
   };
@@ -96,7 +95,7 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
       <Main type={"Buy"}>
         <SwapCurrencyInputBox
           type={"From"}
-          amount={appState.bnbInString}
+          amount={appState.bnbInBigNumber}
           currency={fromCurrency}
           balance={swapState.balance}
           currencyOptions={[]}
@@ -128,7 +127,7 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
         </div>
         <SwapCurrencyInputBox
           type={"To"}
-          amount={appState.gainInString}
+          amount={appState.gainInBigNumber}
           currency={toCurrency}
           balance={swapState.GPbalance}
           currencyOptions={[]}
