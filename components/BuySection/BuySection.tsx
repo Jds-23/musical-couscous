@@ -158,7 +158,7 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
             justifyContent: "space-between",
             color: "#7A71A7",
             padding: "1px 5px",
-            fontSize: "14px",
+            fontSize: "12px",
           }}
         >
           <p>Price</p>
