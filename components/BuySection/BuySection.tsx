@@ -103,8 +103,12 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
             dispatch({
               type: Types.gain,
               payload: {
-                gain: amount === "" || amount === "." ? "" : getGain(amount),
-                bnb: parseEther(amount === "" || amount === "." ? "0" : amount),
+                gain:
+                  amount === "" || amount === "." ? undefined : getGain(amount),
+                bnb:
+                  amount === "" || amount === "."
+                    ? undefined
+                    : parseEther(amount),
               },
             });
           }}
@@ -135,11 +139,12 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
             dispatch({
               type: Types.gain,
               payload: {
-                gain: parseUnits(
-                  amount === "" || amount === "." ? "0" : amount,
-                  9
-                ),
-                bnb: amount === "" || amount === "." ? "" : getBnb(amount),
+                gain:
+                  amount === "" || amount === "."
+                    ? undefined
+                    : parseUnits(amount, 9),
+                bnb:
+                  amount === "" || amount === "." ? undefined : getBnb(amount),
               },
             });
           }}

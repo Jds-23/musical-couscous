@@ -86,10 +86,7 @@ const SwapCurrencyInputBox: React.FC<
             }}
             onBlur={() => setActivate(false)}
             onChange={(e) => {
-              if (
-                (e.target.value === "" || re.test(e.target.value)) &&
-                activate
-              ) {
+              if (e.target.value === "" || re.test(e.target.value)) {
                 setActiveState(e.target.value);
                 setAmount(e.target.value);
               }

@@ -236,11 +236,12 @@ total amount of GAIN being sold."
             dispatch({
               type: Types.gain,
               payload: {
-                gain: parseUnits(
-                  amount === "" || amount === "." ? "0" : amount,
-                  9
-                ),
-                bnb: amount === "" || amount === "." ? "" : getBnb(amount),
+                gain:
+                  amount === "" || amount === "."
+                    ? undefined
+                    : parseUnits(amount, 9),
+                bnb:
+                  amount === "" || amount === "." ? undefined : getBnb(amount),
               },
             });
           }}
@@ -271,8 +272,12 @@ total amount of GAIN being sold."
             dispatch({
               type: Types.gain,
               payload: {
-                gain: amount === "" || amount === "." ? "" : getGain(amount),
-                bnb: parseEther(amount === "" || amount === "." ? "0" : amount),
+                gain:
+                  amount === "" || amount === "." ? undefined : getGain(amount),
+                bnb:
+                  amount === "" || amount === "."
+                    ? undefined
+                    : parseEther(amount),
               },
             });
           }}
@@ -294,26 +299,32 @@ total amount of GAIN being sold."
           <p>{appState.slippageTolerance}%</p>
         </div>
         <div style={{ display: "flex", gap: "5px", width: "100%" }}>
-          <CustomButton
-            onClick={approveFunction}
-            style={{
-              borderRadius: "14px",
-              width: "40%",
-              fontSize: "12px",
-              lineHeight: "13px",
-            }}
-            disabled={
-              swapState.allowance !== undefined
-                ? !swapState.allowance?.isZero()
-                : true
-            }
-          >
-            {swapState.allowance !== undefined
-              ? !swapState.allowance?.isZero()
-                ? "Approved"
-                : "Approve Gain Protocol"
-              : "Approve Gain Protocol"}
-            {/* {approving && (
+          {!account ? (
+            <CustomButton disabled={!account} block>
+              {"Unlock Wallet"}
+            </CustomButton>
+          ) : (
+            <>
+              <CustomButton
+                onClick={approveFunction}
+                style={{
+                  borderRadius: "14px",
+                  width: "40%",
+                  fontSize: "12px",
+                  lineHeight: "13px",
+                }}
+                disabled={
+                  swapState.allowance !== undefined
+                    ? !swapState.allowance?.isZero()
+                    : true
+                }
+              >
+                {swapState.allowance !== undefined
+                  ? !swapState.allowance?.isZero()
+                    ? "Approved"
+                    : "Approve Gain Protocol"
+                  : "Approve Gain Protocol"}
+                {/* {approving && (
                 <span>
                   Approving
                   <img
@@ -323,23 +334,25 @@ total amount of GAIN being sold."
                   />
                 </span>
               )} */}
-          </CustomButton>
-          <CustomButton
-            onClick={() => onOpen()}
-            style={{
-              borderRadius: "14px",
-              width: "60%",
-              fontSize: "12px",
-              lineHeight: "13px",
-            }}
-            disabled={
-              swapState.allowance !== undefined
-                ? swapState.allowance?.isZero()
-                : true
-            }
-          >
-            {"Swap"}
-          </CustomButton>
+              </CustomButton>
+              <CustomButton
+                onClick={() => onOpen()}
+                style={{
+                  borderRadius: "14px",
+                  width: "60%",
+                  fontSize: "12px",
+                  lineHeight: "13px",
+                }}
+                disabled={
+                  swapState.allowance !== undefined
+                    ? swapState.allowance?.isZero()
+                    : true
+                }
+              >
+                {"Swap"}
+              </CustomButton>
+            </>
+          )}
         </div>
         <div
           style={{

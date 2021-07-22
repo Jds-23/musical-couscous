@@ -22,7 +22,7 @@ const ConfirmSwapModal: React.FC<
   React.HTMLAttributes<HTMLDivElement> & MyProps
 > = ({ isOpen, onClose, successToast, onSuccessOpen, ...props }) => {
   const { theme } = useTheme();
-  const { state: appState, dispatch } = useAppContext();
+  const { state: appState } = useAppContext();
   const getBNB = () => {
     return appState.bnbInBigNumber ? formatEther(appState.bnbInBigNumber) : "0";
   };
