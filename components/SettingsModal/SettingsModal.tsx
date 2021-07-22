@@ -142,7 +142,7 @@ const SettingsModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
             >
               Interface Settings
             </h3>
-            <div className={styles.switches}>
+            {/* {<div className={styles.switches}>
               <Info
                 tooltip="Bypasses confirmation modals and allows high slippage trades. Use at your own risk."
                 style={{ fontSize: "10px" }}
@@ -160,7 +160,7 @@ const SettingsModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
                 size="lg"
                 colorScheme={"brand"}
               />
-            </div>
+            </div>} */}
           </ModalBody>
         </CustomModal>
       </>

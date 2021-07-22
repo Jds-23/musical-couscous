@@ -254,7 +254,7 @@ const ConfirmSwapModal: React.FC<
                 <Price />
               </p>
             </div>
-            <div>
+            {/* <div>
               <Info
                 tooltip="Bypasses confirmation modals and allows high slippage trades. Use at your own risk."
                 style={{ fontSize: "10px" }}
@@ -262,7 +262,7 @@ const ConfirmSwapModal: React.FC<
                 <h4>Toggle Expert Mode</h4>
               </Info>{" "}
               <p style={{ fontSize: "10px" }}>23.42 GAIN PROTOCOL</p>
-            </div>
+            </div> */}
             <div>
               <Info tooltip="The difference between the market price and estimated price due to trade size.">
                 Price Impact
