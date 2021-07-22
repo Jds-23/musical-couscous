@@ -38,16 +38,20 @@ export default function Home() {
   );
   const toast = useToast();
 
-  const successToast = () => {
+  const successToast = (swapInfo: string, txId: string) => {
     toast({
       position: "top",
       render: () => (
         <Box width={"100%"} color="#24135B" p={3} bg="#FFFFFF">
-          <h1 style={{ fontSize: "22px", marginBottom: "50px" }}>
-            Swap 0.0584758 BNB for 5794877 GAIN PROTOCOL
-          </h1>
+          <h1 style={{ fontSize: "22px", marginBottom: "50px" }}>{swapInfo}</h1>
           <h1 style={{ fontSize: "19px", marginBottom: "10px" }}>
-            View on BscScan
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href={`${process.env.NEXT_PUBLIC_REACT_APP_BSSCAN_URL}${txId}`}
+            >
+              View on BscScan
+            </a>
           </h1>
         </Box>
       ),

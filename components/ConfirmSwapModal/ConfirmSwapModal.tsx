@@ -20,7 +20,7 @@ import { ExternalStateContext } from "../../context/ExternalState";
 interface MyProps {
   isOpen: boolean;
   onClose: () => void;
-  successToast: Function;
+  successToast: (swapInfo: string, txId: string) => void;
   onSuccessOpen: () => void;
   onErrorOpen: () => void;
   setErrorMessage: (arg1: string) => void;
@@ -49,6 +49,13 @@ const ConfirmSwapModal: React.FC<
     return appState.gainInBigNumber
       ? formatUnits(appState.gainInBigNumber, 9)
       : "";
+  };
+  const getSwapInfos = () => {
+    if (appState.toggleBuyOrSell === BuyOrSell.Buy) {
+      return `Swapped ${getBNB()} BNB for ${getGAIN()} GAIN`;
+    } else {
+      return `Swapped ${getGAIN()} GAIN for ${getBNB()} BNB`;
+    }
   };
   const buy = async () => {
     if (
@@ -80,7 +87,7 @@ const ConfirmSwapModal: React.FC<
         )
         .then((res: any) => {
           console.log(res);
-          successToast();
+          successToast(getSwapInfos(), res.hash);
           onSuccessOpen();
           onClose();
         })
@@ -121,7 +128,7 @@ const ConfirmSwapModal: React.FC<
         )
         .then((res: any) => {
           console.log(res);
-          successToast();
+          successToast(getSwapInfos(), res.hash);
           onSuccessOpen();
           onClose();
         })
