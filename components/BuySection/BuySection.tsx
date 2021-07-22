@@ -61,6 +61,21 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
           )
       : undefined;
   };
+  const checkIfDisabled = () => {
+    if (
+      appState.bnbInBigNumber !== undefined
+        ? appState.bnbInBigNumber.isZero()
+        : true
+    ) {
+      return true;
+    }
+    if (appState.bnbInBigNumber) {
+      if (appState.bnbInBigNumber.gt(swapState.balance)) {
+        return true;
+      }
+    }
+    return false;
+  };
 
   return (
     <div className={styles.container}>
@@ -151,7 +166,11 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
             <Price />
           </p>
         </div>
-        <CustomButton disabled={!account} onClick={onOpen} block>
+        <CustomButton
+          disabled={!account ? true : checkIfDisabled()}
+          onClick={onOpen}
+          block
+        >
           {account ? "Swap" : "Unlock Wallet"}
         </CustomButton>
       </Main>

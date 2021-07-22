@@ -105,7 +105,26 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
       );
     }
   };
-
+  const checkIfDisabled = () => {
+    if (
+      swapState.allowance !== undefined ? swapState.allowance?.isZero() : true
+    ) {
+      return true;
+    }
+    if (
+      appState.gainInBigNumber !== undefined
+        ? appState.gainInBigNumber.isZero()
+        : true
+    ) {
+      return true;
+    }
+    if (appState.gainInBigNumber) {
+      if (appState.gainInBigNumber.gt(swapState.GPbalance)) {
+        return true;
+      }
+    }
+    return false;
+  };
   return (
     <div className={styles.container}>
       <div className={styles.dailySellingLimit}>
@@ -329,11 +348,7 @@ total amount of GAIN being sold."
                   fontSize: "12px",
                   lineHeight: "13px",
                 }}
-                disabled={
-                  swapState.allowance !== undefined
-                    ? swapState.allowance?.isZero()
-                    : true
-                }
+                disabled={checkIfDisabled()}
               >
                 {"Swap"}
               </CustomButton>
