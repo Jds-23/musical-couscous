@@ -47,7 +47,9 @@ const ErrorModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
           </h1>
         </ModalBody>
         <ModalFooter background={theme === "Dark" ? "#000" : "#fff"}>
-          <CustomButton block>Dismiss</CustomButton>
+          <CustomButton onClick={onClose} block>
+            Dismiss
+          </CustomButton>
         </ModalFooter>
       </CustomModal>
     </>

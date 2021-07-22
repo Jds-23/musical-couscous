@@ -61,7 +61,7 @@ const SuccessModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
             </div>
           </ModalBody>
           <ModalFooter backgroundColor={theme === "Dark" ? "#000" : "#fff"}>
-            <CustomButton>Close</CustomButton>
+            <CustomButton onClick={onClose}>Close</CustomButton>
           </ModalFooter>
         </CustomModal>
       </>
