@@ -15,8 +15,12 @@ const deadlineRegex = /^[0-9\b]+$/;
 const slippageToleranceRegex = /^\d*\.?\d*$/;
 const SettingsModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
   ({ isOpen, onClose, ...props }) => {
-    const [activeTolerance, setActiveTolerance] = useState("3.5");
-    const [activeDeadline, setActiveDeadline] = useState("20");
+    const [tolerance, setTolerance] = useState("3.5");
+    const [toleranceError, setToleranceError] = useState("");
+    const [deadlineError, setDeadlineError] = useState("");
+    const [activeTolerance, setActiveTolerance] = useState(false);
+    const [activeDeadline, setActiveDeadline] = useState(false);
+    const [deadline, setDeadline] = useState("20");
     const { theme } = useTheme();
     const { state, dispatch } = useAppContext();
     return (
@@ -86,17 +90,36 @@ const SettingsModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
                 5
               </button>
               <Input
-                value={state.slippageTolerance}
+                value={activeTolerance ? tolerance : state.slippageTolerance}
                 onChange={(e) => {
                   if (
                     e.target.value === "" ||
                     slippageToleranceRegex.test(e.target.value)
                   ) {
-                    dispatch({
-                      type: Types.tolerance,
-                      payload: { tolerance: e.target.value },
-                    });
+                    setTolerance(e.target.value);
+                    if (e.target.value !== "" && e.target.value !== ".") {
+                      console.log(0.1 <= parseFloat(e.target.value));
+                      if (0.1 <= parseFloat(e.target.value)) {
+                        dispatch({
+                          type: Types.tolerance,
+                          payload: { tolerance: e.target.value },
+                        });
+                        setToleranceError("");
+                      } else {
+                        setToleranceError("Enter a valid slippage percentage");
+                      }
+                    } else {
+                      setToleranceError("Enter a valid slippage percentage");
+                    }
                   }
+                }}
+                onFocus={() => {
+                  setTolerance(state.slippageTolerance);
+                  setActiveTolerance(true);
+                }}
+                onBlur={() => {
+                  setToleranceError("");
+                  setActiveTolerance(false);
                 }}
                 className={styles.tolerance__input}
                 borderRadius="9px"
@@ -104,6 +127,9 @@ const SettingsModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
                 color="#7a71a7"
               />
             </div>
+            <span style={{ color: "red", fontSize: "12px" }}>
+              {toleranceError}
+            </span>
             <Info
               tooltip="Your transaction will revert if it is pending for more than this long."
               style={{ marginTop: "20px", fontSize: "10px" }}
@@ -119,22 +145,43 @@ const SettingsModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
                 width="90px"
                 marginRight="10px"
                 variant="filled"
-                value={state.transactionDeadline}
+                value={activeDeadline ? deadline : state.transactionDeadline}
                 onChange={(e) => {
                   if (
                     e.target.value === "" ||
                     deadlineRegex.test(e.target.value)
                   ) {
-                    dispatch({
-                      type: Types.transactionDeadline,
-                      payload: { transactionDeadline: e.target.value },
-                    });
+                    setDeadline(e.target.value);
+                    if (e.target.value !== "") {
+                      if (parseFloat(e.target.value) >= 1) {
+                        dispatch({
+                          type: Types.transactionDeadline,
+                          payload: { transactionDeadline: e.target.value },
+                        });
+                        setDeadlineError("");
+                      } else {
+                        setDeadlineError("Enter a valid deadline");
+                      }
+                    } else {
+                      setDeadlineError("Enter a valid deadline");
+                    }
                   }
+                }}
+                onFocus={() => {
+                  setDeadline(state.transactionDeadline);
+                  setActiveDeadline(true);
+                }}
+                onBlur={() => {
+                  setDeadlineError("");
+                  setActiveDeadline(false);
                 }}
                 color="#7a71a7"
               />
               <p>minutes</p>
             </div>
+            <span style={{ color: "red", fontSize: "12px" }}>
+              {deadlineError}
+            </span>
             {/* <h3
               className={`${theme === "Dark" ? styles.dark : ""} ${
                 styles.heading
