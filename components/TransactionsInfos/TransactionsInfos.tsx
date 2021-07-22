@@ -42,8 +42,8 @@ const TransactionsInfos = () => {
                   appState.gainInBigNumber
                     ? appState.gainInBigNumber?.sub(
                         appState.gainInBigNumber
-                          ?.mul(appState.slippageTolerance)
-                          .div(100)
+                          ?.mul(parseFloat(appState.slippageTolerance) * 1000)
+                          .div(100000)
                       )
                     : "0",
                   9
@@ -108,8 +108,8 @@ const TransactionsInfos = () => {
                   appState.gainInBigNumber
                     ? appState.gainInBigNumber?.sub(
                         appState.gainInBigNumber
-                          ?.mul(appState.slippageTolerance)
-                          .div(100)
+                          ?.mul(parseFloat(appState.slippageTolerance) * 1000)
+                          .div(100000)
                       )
                     : "0",
                   9

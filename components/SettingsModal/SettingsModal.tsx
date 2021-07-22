@@ -134,14 +134,14 @@ const SettingsModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
               />
               <p>minutes</p>
             </div>
-            <h3
+            {/* <h3
               className={`${theme === "Dark" ? styles.dark : ""} ${
                 styles.heading
               }`}
               style={{ marginTop: "30px" }}
             >
               Interface Settings
-            </h3>
+            </h3> */}
             {/* {<div className={styles.switches}>
               <Info
                 tooltip="Bypasses confirmation modals and allows high slippage trades. Use at your own risk."

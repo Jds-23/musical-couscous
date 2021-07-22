@@ -69,7 +69,7 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
     ) {
       return true;
     }
-    if (appState.bnbInBigNumber) {
+    if (appState.bnbInBigNumber && swapState.balance) {
       if (appState.bnbInBigNumber.gt(swapState.balance)) {
         return true;
       }

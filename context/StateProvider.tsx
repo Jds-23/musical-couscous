@@ -38,7 +38,7 @@ const initialState = {
   gainInBigNumber: undefined,
   bnbInBigNumber: undefined,
   toggleBuyOrSell: BuyOrSell.Buy,
-  slippageTolerance: "3",
+  slippageTolerance: "3.5",
   transactionDeadline: "20",
   toggleExpertMode: false,
   gainPerBNB: "",

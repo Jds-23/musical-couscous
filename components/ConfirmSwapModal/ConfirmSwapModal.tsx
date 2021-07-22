@@ -65,7 +65,9 @@ const ConfirmSwapModal: React.FC<
       await contract
         .swapExactETHForTokens(
           appState.gainInBigNumber?.sub(
-            appState.gainInBigNumber?.mul(appState.slippageTolerance).div(100)
+            appState.gainInBigNumber
+              ?.mul(parseFloat(appState.slippageTolerance) * 1000)
+              .div(100000)
           ),
           [
             process.env.NEXT_PUBLIC_ETH_ADDRESS,
@@ -105,7 +107,9 @@ const ConfirmSwapModal: React.FC<
         .swapExactTokensForETHSupportingFeeOnTransferTokens(
           appState.gainInBigNumber,
           appState.bnbInBigNumber?.sub(
-            appState.bnbInBigNumber?.mul(appState.slippageTolerance).div(100)
+            appState.bnbInBigNumber
+              ?.mul(parseFloat(appState.slippageTolerance) * 1000)
+              .div(100000)
           ),
           [
             process.env.NEXT_PUBLIC_GP_ADDRESS,
@@ -228,16 +232,16 @@ const ConfirmSwapModal: React.FC<
                   ? `${formatUnits(
                       appState.gainInBigNumber?.sub(
                         appState.gainInBigNumber
-                          ?.mul(appState.slippageTolerance)
-                          .div(100)
+                          ?.mul(parseFloat(appState.slippageTolerance) * 1000)
+                          .div(100000)
                       ),
                       9
                     )} GAIN `
                   : `${formatEther(
                       appState.bnbInBigNumber?.sub(
                         appState.bnbInBigNumber
-                          ?.mul(appState.slippageTolerance)
-                          .div(100)
+                          ?.mul(parseFloat(appState.slippageTolerance) * 1000)
+                          .div(100000)
                       )
                     )} BNB `}
                 or the transaction will revert.

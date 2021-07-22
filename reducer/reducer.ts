@@ -65,6 +65,15 @@ export const reducer = (state: InitialStateType, action: Actions) => {
         bnb: action.payload.bnb,
       };
     case "TOLERANCE":
+      if (
+        action.payload.tolerance === "" ||
+        parseFloat(action.payload.tolerance) < 0.1
+      ) {
+        return {
+          ...state,
+          slippageTolerance: "0.1",
+        };
+      }
       return {
         ...state,
         slippageTolerance: action.payload.tolerance,
