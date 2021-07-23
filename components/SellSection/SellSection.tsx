@@ -108,7 +108,7 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
     }
   };
   const checkIfDisabled = () => {
-    if (!account) return "Unlock Wallet";
+    if (!account || !swapState.GPbalance) return "Unlock Wallet";
     if (swapState.allowance && !swapState.allowance.isZero()) {
       if (!appState.gainInBigNumber) {
         return "Enter Amount";

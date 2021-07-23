@@ -66,7 +66,7 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
       : undefined;
   };
   const checkIfDisabled = () => {
-    if (!account) return "Unlock Wallet";
+    if (!account || !swapState.balance) return "Unlock Wallet";
     if (!appState.bnbInBigNumber) {
       return "Enter Amount";
     } else {
