@@ -46,8 +46,8 @@ const Switch: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
       <span
         style={
           state.toggleBuyOrSell === BuyOrSell.Buy
-            ? { left: 0 }
-            : { left: "50%" }
+            ? { left: "-1px" }
+            : { left: "51%" }
         }
         className={styles.switch__drop}
       ></span>

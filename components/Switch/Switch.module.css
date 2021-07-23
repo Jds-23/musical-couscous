@@ -1,7 +1,6 @@
 .switch {
   display: flex;
   border-radius: 23px;
-  overflow: hidden;
   background-color: #fff;
   width: fit-content;
   position: relative;

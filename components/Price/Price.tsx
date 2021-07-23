@@ -28,16 +28,22 @@ const Price = () => {
       return "";
     }
     return swapState.reserves0
-      ? ethers.utils.formatUnits(
-          swapState.reserves0
-            .mul(998)
-            .mul(BigNumber.from(10).pow(18))
-            .div(
-              swapState.reserves1
-                .mul(1000)
-                .add(BigNumber.from(10).pow(18).mul(998))
-            ),
-          9
+      ? new Intl.NumberFormat("en-US").format(
+          parseFloat(
+            parseFloat(
+              ethers.utils.formatUnits(
+                swapState.reserves0
+                  .mul(998)
+                  .mul(BigNumber.from(10).pow(18))
+                  .div(
+                    swapState.reserves1
+                      .mul(1000)
+                      .add(BigNumber.from(10).pow(18).mul(998))
+                  ),
+                9
+              )
+            ).toFixed(2)
+          )
         )
       : "";
   };
