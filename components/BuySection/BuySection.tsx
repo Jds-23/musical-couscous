@@ -11,6 +11,7 @@ import Price from "../Price/Price";
 import { BuyOrSell, useAppContext } from "../../context/StateProvider";
 import { Types } from "../../reducer/reducer";
 import { parseEther, parseUnits } from "ethers/lib/utils";
+import TotalAgainAvailable from "../TotalAgainAvailable/TotalAgainAvailable";
 interface MyProps {
   onOpen: () => void;
 }
@@ -23,6 +24,9 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
 
   const [fromCurrency, setFromCurrency] = useState("BNB");
   const [toCurrency, setToCurrency] = useState("GAIN");
+
+  const [showTotalGain, setShowTotalGain] = useState(false);
+
   const { state: appState, dispatch } = useAppContext();
 
   const getGain = (amount: string) => {
@@ -78,101 +82,114 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
 
   return (
     <div className={styles.container}>
-      <Main type={"Buy"}>
-        <SwapCurrencyInputBox
-          type={"From"}
-          amount={appState.bnbInBigNumber}
-          currency={fromCurrency}
-          balance={swapState.balance}
-          currencyOptions={[]}
-          setAmount={(amount) => {
-            dispatch({
-              type: Types.gain,
-              payload: {
-                gain:
-                  amount === "" || amount === "." ? undefined : getGain(amount),
-                bnb:
-                  amount === "" || amount === "."
-                    ? undefined
-                    : parseEther(amount),
-              },
-            });
-          }}
-          setCurrency={setFromCurrency}
-          style={{ marginTop: "15px", marginBottom: "15px" }}
+      {showTotalGain ? (
+        <TotalAgainAvailable
+          setShowTotalGain={setShowTotalGain}
+          style={{ height: "542.5px" }}
         />
-        <div
-          style={{ width: "100%", display: "flex", justifyContent: "center" }}
-        >
-          <img
-            onClick={() =>
+      ) : (
+        <Main type={"Buy"}>
+          <SwapCurrencyInputBox
+            type={"From"}
+            amount={appState.bnbInBigNumber}
+            currency={fromCurrency}
+            balance={swapState.balance}
+            currencyOptions={[]}
+            setShowTotalGain={(a: boolean) => {}}
+            setAmount={(amount) => {
               dispatch({
-                type: Types.toggleBuyOrSell,
-                payload: { toggleBuyOrSell: BuyOrSell.Sell },
-              })
-            }
-            className={`${styles.swap_icon} `}
-            src="./images/swap.svg"
+                type: Types.gain,
+                payload: {
+                  gain:
+                    amount === "" || amount === "."
+                      ? undefined
+                      : getGain(amount),
+                  bnb:
+                    amount === "" || amount === "."
+                      ? undefined
+                      : parseEther(amount),
+                },
+              });
+            }}
+            setCurrency={setFromCurrency}
+            style={{ marginTop: "15px", marginBottom: "15px" }}
           />
-        </div>
-        <SwapCurrencyInputBox
-          type={"To"}
-          amount={appState.gainInBigNumber}
-          currency={toCurrency}
-          balance={swapState.GPbalance}
-          currencyOptions={[]}
-          setAmount={(amount) => {
-            dispatch({
-              type: Types.gain,
-              payload: {
-                gain:
-                  amount === "" || amount === "."
-                    ? undefined
-                    : parseUnits(amount, 9),
-                bnb:
-                  amount === "" || amount === "." ? undefined : getBnb(amount),
-              },
-            });
-          }}
-          setCurrency={setToCurrency}
-          style={{ marginTop: "15px", marginBottom: "15px" }}
-        />
-        <div
-          style={{
-            display: "flex",
-            marginBottom: "30px",
-            justifyContent: "space-between",
-            color: "#7A71A7",
-            padding: "1px 5px",
-            fontSize: "14px",
-          }}
-        >
-          <p>Slippage Tolerance</p>
-          <p>{appState.slippageTolerance}%</p>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            marginBottom: "30px",
-            justifyContent: "space-between",
-            color: "#7A71A7",
-            padding: "1px 5px",
-            fontSize: "12px",
-          }}
-        >
-          <p>Price</p>
-          <p style={{ textAlign: "right" }}>
-            <Price />
-          </p>
-        </div>
-        <CustomButton
-          disabled={checkIfDisabled() !== "Buy"}
-          onClick={onOpen}
-          block
-        >
-          {checkIfDisabled()}
-        </CustomButton>
-      </Main>
+          <div
+            style={{ width: "100%", display: "flex", justifyContent: "center" }}
+          >
+            <img
+              onClick={() =>
+                dispatch({
+                  type: Types.toggleBuyOrSell,
+                  payload: { toggleBuyOrSell: BuyOrSell.Sell },
+                })
+              }
+              className={`${styles.swap_icon} `}
+              src="./images/swap.svg"
+            />
+          </div>
+          <SwapCurrencyInputBox
+            type={"To"}
+            amount={appState.gainInBigNumber}
+            currency={toCurrency}
+            setShowTotalGain={setShowTotalGain}
+            balance={swapState.GPbalance}
+            currencyOptions={[]}
+            setAmount={(amount) => {
+              dispatch({
+                type: Types.gain,
+                payload: {
+                  gain:
+                    amount === "" || amount === "."
+                      ? undefined
+                      : parseUnits(amount, 9),
+                  bnb:
+                    amount === "" || amount === "."
+                      ? undefined
+                      : getBnb(amount),
+                },
+              });
+            }}
+            setCurrency={setToCurrency}
+            style={{ marginTop: "15px", marginBottom: "15px" }}
+          />
+          <div
+            style={{
+              display: "flex",
+              marginBottom: "30px",
+              justifyContent: "space-between",
+              color: "#7A71A7",
+              padding: "1px 5px",
+              fontSize: "14px",
+            }}
+          >
+            <p>Slippage Tolerance</p>
+            <p>{appState.slippageTolerance}%</p>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              marginBottom: "30px",
+              justifyContent: "space-between",
+              color: "#7A71A7",
+              padding: "1px 5px",
+              fontSize: "12px",
+            }}
+          >
+            <p>Price</p>
+            <p style={{ textAlign: "right" }}>
+              <Price />
+            </p>
+          </div>
+          <CustomButton
+            disabled={checkIfDisabled() !== "Buy"}
+            onClick={onOpen}
+            block
+          >
+            {checkIfDisabled()}
+          </CustomButton>
+        </Main>
+      )}
     </div>
   );
 };

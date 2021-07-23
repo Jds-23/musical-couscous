@@ -14,6 +14,7 @@ interface MyProps {
   setCurrency: (arg0: string) => void;
   currencyOptions: string[];
   balance: BigNumber | undefined;
+  setShowTotalGain: (a: boolean) => void;
 }
 const re = /^\d*\.?\d*$/;
 const SwapCurrencyInputBox: React.FC<
@@ -26,6 +27,7 @@ const SwapCurrencyInputBox: React.FC<
   setCurrency,
   setAmount,
   currencyOptions,
+  setShowTotalGain,
   ...props
 }) => {
   const [activate, setActivate] = useState(false);
@@ -36,7 +38,7 @@ const SwapCurrencyInputBox: React.FC<
         <div className={styles.swapCurrencyOutput__container__row1}>
           <div className={styles.swapCurrencyOutput__container__row1__content}>
             <p>{type}</p>
-            <p>
+            <p onClick={() => setShowTotalGain(true)}>
               {balance
                 ? `Available Balance: ${new Intl.NumberFormat("en-US").format(
                     parseFloat(

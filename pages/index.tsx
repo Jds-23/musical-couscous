@@ -7,7 +7,6 @@ import BuySection from "../components/BuySection/BuySection";
 import SellSection from "../components/SellSection/SellSection";
 import WalletInfoModal from "../components/WalletInfoModal/WalletInfoModal";
 import ConfirmSwapModal from "../components/ConfirmSwapModal/ConfirmSwapModal";
-import InfoCards from "../components/InfoCards/InfoCards";
 import Info from "../components/Info/Info";
 import ErrorModal from "../components/ErrorModal/ErrorModal";
 import SuccessModal from "../components/SuccessModal/SuccessModal";
