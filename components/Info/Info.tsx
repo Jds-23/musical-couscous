@@ -17,10 +17,10 @@ const Info: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
         hasArrow
         label={tooltip}
         aria-label="A tooltip"
-        bg="#D9D0FB"
+        bg="#fff"
         color="#7A71A7"
         fontWeight="400"
-        fontSize="10px"
+        fontSize="12px"
       >
         <QuestionOutlineIcon cursor={"pointer"} />
       </Tooltip>

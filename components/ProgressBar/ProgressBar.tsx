@@ -15,7 +15,8 @@ const ProgressBar: React.FC<myProps & React.HTMLAttributes<HTMLDivElement>> = ({
         className={`${styles.progressBarChild} `}
       ></div>
       <span className={styles.label}>
-        {new Intl.NumberFormat("en-US").format(current)}/
+        {new Intl.NumberFormat("en-US").format(current)}
+        {" / "}
         {new Intl.NumberFormat("en-US").format(limit)} GAIN
       </span>
     </div>

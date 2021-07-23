@@ -38,7 +38,7 @@ const SwapCurrencyInputBox: React.FC<
             <p>{type}</p>
             <p>
               {balance
-                ? `Balance: ${new Intl.NumberFormat("en-US").format(
+                ? `Available Balance: ${new Intl.NumberFormat("en-US").format(
                     parseFloat(
                       currency === "BNB"
                         ? parseFloat(ethers.utils.formatEther(balance)).toFixed(

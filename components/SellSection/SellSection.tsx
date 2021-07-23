@@ -131,7 +131,7 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
 activating the whale protection protocol. Be aware, once whale protection is
 activated your transaction will accumulate additional fees depending on the
 total amount of GAIN being sold."
-          style={{ marginBottom: "7px" }}
+          style={{ marginBottom: "7px", fontWeight: "bold" }}
         >
           DAILY SELL LIMIT
         </Info>
