@@ -3,6 +3,7 @@ import React, { useState, useContext } from "react";
 import CustomButton from "../Button/Button";
 import SwapCurrencyInputBox from "../SwapCurrencyInputBox/SwapCurrencyInputBox";
 import Main from "../Main/Main";
+import TotalAgainAvailable from "../TotalAgainAvailable/TotalAgainAvailable";
 import ProgressStepper from "../ProgressStepper/ProgressStepper";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import Info from "../Info/Info";
@@ -46,6 +47,8 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
   const { state: swapState } = useContext(ExternalStateContext);
   const [approving, setApproving] = useState(false);
   const { state: appState, dispatch } = useAppContext();
+
+  const [showTotalGain, setShowTotalGain] = useState(false);
 
   const [fromCurrency, setFromCurrency] = useState("GAIN");
   const [toCurrency, setToCurrency] = useState("BNB");
@@ -173,117 +176,125 @@ total amount of GAIN being sold."
           </div>
         </div>
       </HidableBar>
-      <Main style={{ marginTop: "10px" }} type={"Sell"}>
-        <SwapCurrencyInputBox
-          type={"From"}
-          amount={appState.gainInBigNumber}
-          currency={fromCurrency}
-          balance={swapState.GPBalance}
-          currencyOptions={["bnb"]}
-          setAmount={(amount) => {
-            const value = tryParseGain(amount, undefined);
-            dispatch({
-              type: Types.gain,
-              payload: {
-                gain: value,
-                bnb: getAmountOut(gain, bnb, value),
-              },
-            });
-          }}
-          setCurrency={setCurrency}
-          style={{ marginTop: "15px", marginBottom: "15px" }}
+      {showTotalGain ? (
+        <TotalAgainAvailable
+          setShowTotalGain={setShowTotalGain}
+          style={{ height: "612.5px" }}
         />
-        <div
-          style={{ width: "100%", display: "flex", justifyContent: "center" }}
-        >
-          <img
-            alt="Swap"
-            onClick={() =>
+      ) : (
+        <Main style={{ marginTop: "10px" }} type={"Sell"}>
+          <SwapCurrencyInputBox
+            type={"From"}
+            amount={appState.gainInBigNumber}
+            setShowTotalGain={setShowTotalGain}
+            currency={fromCurrency}
+            balance={swapState.GPBalance}
+            currencyOptions={["bnb"]}
+            setAmount={(amount) => {
+              const value = tryParseGain(amount, undefined);
               dispatch({
-                type: Types.toggleBuyOrSell,
+                type: Types.gain,
                 payload: {
-                  toggleBuyOrSell: BuyOrSell.Buy,
-                  liquidity: { gain, bnb },
+                  gain: value,
+                  bnb: getAmountOut(gain, bnb, value),
                 },
-              })
-            }
-            className={`${styles.swap_icon}`}
-            src="./images/swap.svg"
+              });
+            }}
+            setCurrency={setCurrency}
+            style={{ marginTop: "15px", marginBottom: "15px" }}
           />
-        </div>
-        <SwapCurrencyInputBox
-          type={"To"}
-          currency={toCurrency}
-          amount={appState.bnbInBigNumber}
-          balance={swapState.balance}
-          currencyOptions={[]}
-          setAmount={(amount) => {
-            const value = tryParseEther(amount, undefined);
-            if (isUndefined(value)) {
-              return;
-            }
-            dispatch({
-              type: Types.bnb,
-              payload: {
-                gain: getAmountIn(gain, bnb, value),
-                bnb: value,
-              },
-            });
-          }}
-          setCurrency={setCurrency}
-          style={{ marginTop: "15px", marginBottom: "15px" }}
-        />
-        <div
-          style={{
-            display: "flex",
-            marginBottom: "30px",
-            justifyContent: "space-between",
-            color: "#7A71A7",
-            padding: "1px 5px",
-            fontSize: "12px",
-          }}
-        >
-          <p>Price</p>
-          <p style={{ textAlign: "right" }}>
-            <Price />
-          </p>
-        </div>
-
-        <div
-          style={{
-            display: "flex",
-            marginBottom: "30px",
-            justifyContent: "space-between",
-            color: "#7A71A7",
-            padding: "1px 5px",
-            fontSize: "14px",
-          }}
-        >
-          <p>Slippage Tolerance</p>
-          <p>{appState.slippageTolerance}%</p>
-        </div>
-        <div style={{ display: "flex", gap: "5px", width: "100%" }}>
-          <>
-            <CustomButton
-              onClick={approveFunction}
-              style={{
-                borderRadius: "14px",
-                width: "40%",
-                fontSize: "12px",
-                lineHeight: "13px",
-              }}
-              disabled={
-                swapState.allowance !== undefined
-                  ? !swapState.allowance?.isZero()
-                  : true
+          <div
+            style={{ width: "100%", display: "flex", justifyContent: "center" }}
+          >
+            <img
+              alt="Swap"
+              onClick={() =>
+                dispatch({
+                  type: Types.toggleBuyOrSell,
+                  payload: {
+                    toggleBuyOrSell: BuyOrSell.Buy,
+                    liquidity: { gain, bnb },
+                  },
+                })
               }
-            >
-              {swapState.allowance !== undefined
-                ? !swapState.allowance?.isZero()
-                  ? "Approved"
-                  : "Approve Gain Protocol"
-                : "Approve Gain Protocol"}
-              {/* {approving && (
+              className={`${styles.swap_icon}`}
+              src="./images/swap.svg"
+            />
+          </div>
+          <SwapCurrencyInputBox
+            type={"To"}
+            currency={toCurrency}
+            amount={appState.bnbInBigNumber}
+            setShowTotalGain={(a: boolean) => {}}
+            balance={swapState.balance}
+            currencyOptions={[]}
+            setAmount={(amount) => {
+              const value = tryParseEther(amount, undefined);
+              if (isUndefined(value)) {
+                return;
+              }
+              dispatch({
+                type: Types.bnb,
+                payload: {
+                  gain: getAmountIn(gain, bnb, value),
+                  bnb: value,
+                },
+              });
+            }}
+            setCurrency={setCurrency}
+            style={{ marginTop: "15px", marginBottom: "15px" }}
+          />
+          <div
+            style={{
+              display: "flex",
+              marginBottom: "30px",
+              justifyContent: "space-between",
+              color: "#7A71A7",
+              padding: "1px 5px",
+              fontSize: "12px",
+            }}
+          >
+            <p>Price</p>
+            <p style={{ textAlign: "right" }}>
+              <Price />
+            </p>
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              marginBottom: "30px",
+              justifyContent: "space-between",
+              color: "#7A71A7",
+              padding: "1px 5px",
+              fontSize: "14px",
+            }}
+          >
+            <p>Slippage Tolerance</p>
+            <p>{appState.slippageTolerance}%</p>
+          </div>
+          <div style={{ display: "flex", gap: "5px", width: "100%" }}>
+            <>
+              <CustomButton
+                onClick={approveFunction}
+                style={{
+                  borderRadius: "14px",
+                  width: "40%",
+                  fontSize: "12px",
+                  lineHeight: "13px",
+                }}
+                disabled={
+                  swapState.allowance !== undefined
+                    ? !swapState.allowance?.isZero()
+                    : true
+                }
+              >
+                {swapState.allowance !== undefined
+                  ? !swapState.allowance?.isZero()
+                    ? "Approved"
+                    : "Approve Gain Protocol"
+                  : "Approve Gain Protocol"}
+                {/* {approving && (
                 <span>
                   Approving
                   <img
@@ -293,37 +304,38 @@ total amount of GAIN being sold."
                   />
                 </span>
               )} */}
-            </CustomButton>
-            <CustomButton
-              onClick={() => onOpen()}
-              style={
-                checkIfDisabled() === "Insufficient GAIN Balance"
-                  ? {
-                      borderRadius: "14px",
-                      width: "60%",
-                      fontSize: "12px",
-                    }
-                  : {
-                      borderRadius: "14px",
-                      width: "60%",
-                    }
-              }
-              disabled={checkIfDisabled() !== "Sell"}
-            >
-              {checkIfDisabled()}
-            </CustomButton>
-          </>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            marginTop: "10px",
-          }}
-        >
-          <ProgressStepper state={state2} setState={setState2} />
-        </div>
-      </Main>
+              </CustomButton>
+              <CustomButton
+                onClick={() => onOpen()}
+                style={
+                  checkIfDisabled() === "Insufficient GAIN Balance"
+                    ? {
+                        borderRadius: "14px",
+                        width: "60%",
+                        fontSize: "12px",
+                      }
+                    : {
+                        borderRadius: "14px",
+                        width: "60%",
+                      }
+                }
+                disabled={checkIfDisabled() !== "Sell"}
+              >
+                {checkIfDisabled()}
+              </CustomButton>
+            </>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "10px",
+            }}
+          >
+            <ProgressStepper state={state2} setState={setState2} />
+          </div>
+        </Main>
+      )}
     </div>
   );
 };

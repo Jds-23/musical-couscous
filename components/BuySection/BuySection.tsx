@@ -19,6 +19,7 @@ import {
   useLiquidity,
 } from "../../utils";
 import { isUndefined } from "lodash";
+import TotalAgainAvailable from "../TotalAgainAvailable/TotalAgainAvailable";
 interface MyProps {
   onOpen: () => void;
 }
@@ -32,6 +33,9 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
 
   const [fromCurrency, setFromCurrency] = useState("BNB");
   const [toCurrency, setToCurrency] = useState("GAIN");
+
+  const [showTotalGain, setShowTotalGain] = useState(false);
+
   const { state: appState, dispatch } = useAppContext();
 
   const checkIfDisabled = () => {
@@ -56,102 +60,111 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
 
   return (
     <div className={styles.container}>
-      <Main type={"Buy"}>
-        <SwapCurrencyInputBox
-          type={"From"}
-          amount={appState.bnbInBigNumber}
-          currency={fromCurrency}
-          balance={swapState.balance}
-          currencyOptions={[]}
-          setAmount={(amount) => {
-            const value = tryParseEther(amount, undefined);
-            if (isUndefined(value)) {
-              return;
-            }
-            dispatch({
-              type: Types.bnb,
-              payload: {
-                gain: getAmountOut(bnb, gain, value),
-                bnb: value,
-              },
-            });
-          }}
-          setCurrency={setFromCurrency}
-          style={{ marginTop: "15px", marginBottom: "15px" }}
+      {showTotalGain ? (
+        <TotalAgainAvailable
+          setShowTotalGain={setShowTotalGain}
+          style={{ height: "542.5px" }}
         />
-        <div
-          style={{ width: "100%", display: "flex", justifyContent: "center" }}
-        >
-          <img
-            alt="Swap"
-            onClick={() =>
+      ) : (
+        <Main type={"Buy"}>
+          <SwapCurrencyInputBox
+            type={"From"}
+            amount={appState.bnbInBigNumber}
+            currency={fromCurrency}
+            balance={swapState.balance}
+            currencyOptions={[]}
+            setShowTotalGain={(a: boolean) => {}}
+            setAmount={(amount) => {
+              const value = tryParseEther(amount, undefined);
+              if (isUndefined(value)) {
+                return;
+              }
               dispatch({
-                type: Types.toggleBuyOrSell,
+                type: Types.bnb,
                 payload: {
-                  toggleBuyOrSell: BuyOrSell.Sell,
-                  liquidity: { gain, bnb },
+                  gain: getAmountOut(bnb, gain, value),
+                  bnb: value,
                 },
-              })
-            }
-            className={`${styles.swap_icon} `}
-            src="./images/swap.svg"
+              });
+            }}
+            setCurrency={setFromCurrency}
+            style={{ marginTop: "15px", marginBottom: "15px" }}
           />
-        </div>
-        <SwapCurrencyInputBox
-          type={"To"}
-          amount={appState.gainInBigNumber}
-          currency={toCurrency}
-          balance={swapState.GPBalance}
-          currencyOptions={[]}
-          setAmount={(amount) => {
-            const value = tryParseGain(amount, undefined);
-            dispatch({
-              type: Types.gain,
-              payload: {
-                gain: value,
-                bnb: getAmountIn(bnb, gain, value),
-              },
-            });
-          }}
-          setCurrency={setToCurrency}
-          style={{ marginTop: "15px", marginBottom: "15px" }}
-        />
-        <div
-          style={{
-            display: "flex",
-            marginBottom: "30px",
-            justifyContent: "space-between",
-            color: "#7A71A7",
-            padding: "1px 5px",
-            fontSize: "14px",
-          }}
-        >
-          <p>Slippage Tolerance</p>
-          <p>{appState.slippageTolerance}%</p>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            marginBottom: "30px",
-            justifyContent: "space-between",
-            color: "#7A71A7",
-            padding: "1px 5px",
-            fontSize: "12px",
-          }}
-        >
-          <p>Price</p>
-          <p style={{ textAlign: "right" }}>
-            <Price />
-          </p>
-        </div>
-        <CustomButton
-          disabled={checkIfDisabled() !== "Buy"}
-          onClick={onOpen}
-          block
-        >
-          {checkIfDisabled()}
-        </CustomButton>
-      </Main>
+          <div
+            style={{ width: "100%", display: "flex", justifyContent: "center" }}
+          >
+            <img
+              alt="Swap"
+              onClick={() =>
+                dispatch({
+                  type: Types.toggleBuyOrSell,
+                  payload: {
+                    toggleBuyOrSell: BuyOrSell.Sell,
+                    liquidity: { gain, bnb },
+                  },
+                })
+              }
+              className={`${styles.swap_icon} `}
+              src="./images/swap.svg"
+            />
+          </div>
+          <SwapCurrencyInputBox
+            type={"To"}
+            amount={appState.gainInBigNumber}
+            currency={toCurrency}
+            balance={swapState.GPBalance}
+            currencyOptions={[]}
+            setShowTotalGain={setShowTotalGain}
+            setAmount={(amount) => {
+              const value = tryParseGain(amount, undefined);
+              dispatch({
+                type: Types.gain,
+                payload: {
+                  gain: value,
+                  bnb: getAmountIn(bnb, gain, value),
+                },
+              });
+            }}
+            setCurrency={setToCurrency}
+            style={{ marginTop: "15px", marginBottom: "15px" }}
+          />
+          <div
+            style={{
+              display: "flex",
+              marginBottom: "30px",
+              justifyContent: "space-between",
+              color: "#7A71A7",
+              padding: "1px 5px",
+              fontSize: "14px",
+            }}
+          >
+            <p>Slippage Tolerance</p>
+            <p>{appState.slippageTolerance}%</p>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              marginBottom: "30px",
+              justifyContent: "space-between",
+              color: "#7A71A7",
+              padding: "1px 5px",
+              fontSize: "12px",
+            }}
+          >
+            <p>Price</p>
+            <p style={{ textAlign: "right" }}>
+              <Price />
+            </p>
+          </div>
+          <CustomButton
+            disabled={checkIfDisabled() !== "Buy"}
+            onClick={onOpen}
+            block
+          >
+            {checkIfDisabled()}
+          </CustomButton>
+        </Main>
+      )}
     </div>
   );
 };
