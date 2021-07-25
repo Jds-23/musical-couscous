@@ -90,9 +90,39 @@ export default function Home() {
       />
       <div className={styles.home__container}>
         <Head>
-          <title>Gain Protocol SwapX</title>
-          <meta name="description" content="Coin offering" />
-          <link rel="icon" href="/favicon.ico" />
+          <title>Buy Gain Protocol Tokens - Gain Protocol</title>
+          <meta
+            name="description"
+            content="The Most innovative project on the block is here. Gain Protocol is the next generation DeFi rewarding holders with innovative protocols designed for the people."
+          />
+          <meta property="og:url" content="https://presale.gainprotocol.com/" />
+          <meta property="og:type" content="website" />
+          <meta
+            property="og:title"
+            content="Buy Gain Protocol Tokens  - Gain Protocol"
+          />
+          <meta
+            property="og:description"
+            content="The Most innovative project on the block is here. Gain Protocol is the next generation DeFi rewarding holders with innovative protocols designed for the people."
+          />
+          <meta
+            property="og:image"
+            content="https://www.gainprotocol.com/images/social-icon.jpg"
+          />
+
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta
+            name="twitter:title"
+            content="Buy Gain Protocol Tokens  - Gain Protocol"
+          />
+          <meta
+            name="twitter:description"
+            content="The Most innovative project on the block is here. Gain Protocol is the next generation DeFi rewarding holders with innovative protocols designed for the people."
+          />
+          <meta
+            name="twitter:image"
+            content="https://www.gainprotocol.com/images/social-icon.jpg"
+          />
           <link
             rel="preload"
             href="/fonts/euro_technic_extended_regular.ttf"
@@ -104,6 +134,32 @@ export default function Home() {
             href="/fonts/Eurostile-Bold.ttf"
             as="font"
             crossOrigin=""
+          />
+          <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="https://www.gainprotocol.com/images/favicon/apple-touch-icon.png"
+          />
+          <link
+            rel="shortcut icon"
+            sizes="180x180"
+            href="https://www.gainprotocol.com/images/favicon/apple-touch-icon.png"
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="https://www.gainprotocol.com/images/favicon/favicon-32x32.png"
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="https://www.gainprotocol.com/images/favicon/favicon-16x16.png"
+          />
+          <link
+            rel="manifest"
+            href="https://www.gainprotocol.com/images/favicon/site.webmanifest"
           />
           {/* <!-- Criteo Loader File --> */}
           <script
@@ -138,21 +194,6 @@ window.criteo_q.push(
       gtag("js", new Date());
 
       gtag("config", "UA-198458708-1");`,
-            }}
-          />
-          <script
-            async
-            src="https://www.googletagmanager.com/gtag/js?id=AW-358031656"
-          ></script>
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-
-      gtag("config", "AW-358031656");`,
             }}
           />
         </Head>
