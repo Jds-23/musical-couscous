@@ -32,10 +32,10 @@ export type InitialStateType = {
   toggleExpertMode: boolean;
   gainPerBNB: string;
   bnbPerGAIN: string;
-  userSelected: "GAIN" | "BNB";
+  userSelected: string; //"GAIN" | "BNB";
 };
 
-const initialState = {
+const initialState: InitialStateType = {
   gainInBigNumber: undefined,
   bnbInBigNumber: undefined,
   toggleBuyOrSell: BuyOrSell.Buy,
@@ -44,6 +44,7 @@ const initialState = {
   toggleExpertMode: false,
   gainPerBNB: "",
   bnbPerGAIN: "",
+  userSelected: "GAIN",
 };
 
 export const AppContext = createContext<{
