@@ -34,7 +34,7 @@ export function formatEtherShort(
 }
 
 export function getPriceImpactString(value?: BigNumber, market?: BigNumber) {
-  if (!value || !market) {
+  if (!value || !market || market.isZero()) {
     return "-";
   }
   if (value.gt(market)) {
@@ -68,7 +68,11 @@ export function getAmountOut(
   reserveOut?: BigNumber,
   amountIn?: BigNumber
 ) {
-  return reserveIn && reserveOut && amountIn
+  return reserveIn &&
+    reserveOut &&
+    amountIn &&
+    !reserveIn.isZero() &&
+    !reserveOut.isZero()
     ? reserveOut
         .mul(amountIn)
         .mul(process.env.NEXT_PUBLIC_VARIABLE_1!)
@@ -85,12 +89,18 @@ export function getAmountIn(
   reserveOut?: BigNumber,
   amountOut?: BigNumber
 ) {
-  if (!reserveIn || !reserveOut || !amountOut || amountOut.gt(reserveOut)) {
+  if (
+    !reserveIn ||
+    !reserveOut ||
+    !amountOut ||
+    amountOut.gt(reserveOut) ||
+    reserveOut.isZero() ||
+    reserveIn.isZero()
+  ) {
     return undefined;
   }
   const numerator = reserveIn.mul(amountOut).mul(10000);
   const denominator = reserveOut.sub(amountOut).mul(9975);
-  console.log("BN", numerator.div(denominator).add(1));
   return numerator.div(denominator).add(1);
 }
 
