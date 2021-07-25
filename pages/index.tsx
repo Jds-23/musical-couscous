@@ -21,24 +21,34 @@ import { formatUnits } from "ethers/lib/utils";
 import TransactionsInfos from "../components/TransactionsInfos/TransactionsInfos";
 import TransactionsFees from "../components/TransactionsFees/TransactionsFees";
 import { formatGain, useLiquidity } from "../utils";
+import { Types } from "../reducer/reducer";
 
 const opensDate = "Jul 2, 2021 16:00:00";
 export default function Home() {
   const [walletInfoModal, setWalletInfoModal] = useState(false);
   const [confirmSwapModal, setConfirmSwapModal] = useState(false);
-  const { gain } = useLiquidity();
+  const { gain, bnb } = useLiquidity();
   const { state: swapState } = useContext(ExternalStateContext);
+
   const [errorModal, setErrorModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successModal, setSuccessModal] = useState(false);
   const { theme } = useTheme();
-  const { state: appState } = useAppContext();
+  const { state: appState, dispatch } = useAppContext();
   const [time, setTime] = useState(
     new Date(opensDate).getTime() -
       new Date().getTime() -
       new Date().getTimezoneOffset() * 60000
   );
   const toast = useToast();
+  useEffect(() => {
+    dispatch({
+      type: Types.updatePrice,
+      payload: {
+        liquidity: { gain, bnb },
+      },
+    });
+  }, [gain, bnb, dispatch]);
 
   const successToast = (swapInfo: string, txId: string) => {
     toast({

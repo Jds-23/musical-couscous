@@ -41,8 +41,10 @@ type Payload = {
     toggleExpertMode: boolean;
   };
   [Types.updatePrice]: {
-    gainPerBNB: string;
-    bnbPerGAIN: string;
+    liquidity: {
+      gain?: BigNumber;
+      bnb?: BigNumber;
+    };
   };
   [Types.toggleBuyOrSell]: {
     toggleBuyOrSell: BuyOrSell;
@@ -145,8 +147,39 @@ export const reducer = (state: InitialStateType, action: Actions) => {
     case "UPDATE_PRICE":
       return {
         ...state,
-        gainPerBNB: action.payload.gainPerBNB,
-        bnbPerGAIN: action.payload.bnbPerGAIN,
+        gainInBigNumber:
+          state.userSelected == "GAIN" ||
+          !action.payload.liquidity.gain ||
+          !action.payload.liquidity.bnb
+            ? state.gainInBigNumber
+            : state.toggleBuyOrSell == BuyOrSell.Buy
+            ? getAmountOut(
+                action.payload.liquidity.bnb,
+                action.payload.liquidity.gain,
+                state.bnbInBigNumber
+              )
+            : getAmountIn(
+                action.payload.liquidity.gain,
+                action.payload.liquidity.bnb,
+                state.bnbInBigNumber
+              ),
+
+        bnbInBigNumber:
+          state.userSelected == "BNB" ||
+          !action.payload.liquidity.gain ||
+          !action.payload.liquidity.bnb
+            ? state.bnbInBigNumber
+            : state.toggleBuyOrSell == BuyOrSell.Buy
+            ? getAmountIn(
+                action.payload.liquidity.bnb,
+                action.payload.liquidity.gain,
+                state.gainInBigNumber
+              )
+            : getAmountOut(
+                action.payload.liquidity.gain,
+                action.payload.liquidity.bnb,
+                state.gainInBigNumber
+              ),
       };
     default:
       return state;
