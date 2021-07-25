@@ -32,6 +32,7 @@ const Main: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
           <div className={styles.main__header__right}>
             <button className={styles.main__header__buttons}>
               <img
+                alt="Menu"
                 onClick={() => setSettingsModal(true)}
                 src={"./images/MenuIcon.svg"}
               />
