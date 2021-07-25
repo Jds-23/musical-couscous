@@ -11,6 +11,14 @@ import Price from "../Price/Price";
 import { BuyOrSell, useAppContext } from "../../context/StateProvider";
 import { Types } from "../../reducer/reducer";
 import { parseEther, parseUnits } from "ethers/lib/utils";
+import {
+  getAmountIn,
+  getAmountOut,
+  tryParseEther,
+  tryParseGain,
+  useLiquidity,
+} from "../../utils";
+import { isUndefined } from "lodash";
 interface MyProps {
   onOpen: () => void;
 }
@@ -20,49 +28,19 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
   const { library } = useWeb3React<Web3Provider>();
   const { account } = useWeb3React<Web3Provider>();
   const { state: swapState } = useContext(ExternalStateContext);
+  const { gain, bnb } = useLiquidity();
 
   const [fromCurrency, setFromCurrency] = useState("BNB");
   const [toCurrency, setToCurrency] = useState("GAIN");
   const { state: appState, dispatch } = useAppContext();
 
-  const getGain = (amount: string) => {
-    return swapState.reserves0 &&
-      process.env.NEXT_PUBLIC_VARIABLE_1 &&
-      process.env.NEXT_PUBLIC_VARIABLE_2
-      ? swapState.reserves0
-          .mul(process.env.NEXT_PUBLIC_VARIABLE_1)
-          .mul(parseEther(amount === "" || amount === "." ? "0" : amount))
-          .div(
-            swapState.reserves1
-              .mul(process.env.NEXT_PUBLIC_VARIABLE_2)
-              .add(
-                BigNumber.from(10)
-                  .pow(18)
-                  .mul(process.env.NEXT_PUBLIC_VARIABLE_1)
-              )
-          )
-      : undefined;
-  };
-  const getBnb = (amount: string) => {
-    return swapState.reserves1 &&
-      process.env.NEXT_PUBLIC_VARIABLE_1 &&
-      process.env.NEXT_PUBLIC_VARIABLE_2
-      ? swapState.reserves1
-          .mul(parseUnits(amount === "" || amount === "." ? "0" : amount, 9))
-          .mul(process.env.NEXT_PUBLIC_VARIABLE_1)
-          .div(
-            swapState.reserves0
-              .mul(process.env.NEXT_PUBLIC_VARIABLE_2)
-              .add(
-                BigNumber.from(10)
-                  .pow(9)
-                  .mul(process.env.NEXT_PUBLIC_VARIABLE_1)
-              )
-          )
-      : undefined;
-  };
   const checkIfDisabled = () => {
-    if (!account) return "Unlock Wallet";
+    if (!account) {
+      return "Unlock Wallet";
+    }
+    if (!swapState.balance) {
+      return "Loading..";
+    }
     if (!appState.bnbInBigNumber) {
       return "Enter Amount";
     } else {
@@ -86,15 +64,15 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
           balance={swapState.balance}
           currencyOptions={[]}
           setAmount={(amount) => {
+            const value = tryParseEther(amount, undefined);
+            if (isUndefined(value)) {
+              return;
+            }
             dispatch({
-              type: Types.gain,
+              type: Types.bnb,
               payload: {
-                gain:
-                  amount === "" || amount === "." ? undefined : getGain(amount),
-                bnb:
-                  amount === "" || amount === "."
-                    ? undefined
-                    : parseEther(amount),
+                gain: getAmountOut(bnb, gain, value),
+                bnb: value,
               },
             });
           }}
@@ -105,10 +83,14 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
           style={{ width: "100%", display: "flex", justifyContent: "center" }}
         >
           <img
+            alt="Swap"
             onClick={() =>
               dispatch({
                 type: Types.toggleBuyOrSell,
-                payload: { toggleBuyOrSell: BuyOrSell.Sell },
+                payload: {
+                  toggleBuyOrSell: BuyOrSell.Sell,
+                  liquidity: { gain, bnb },
+                },
               })
             }
             className={`${styles.swap_icon} `}
@@ -119,18 +101,15 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
           type={"To"}
           amount={appState.gainInBigNumber}
           currency={toCurrency}
-          balance={swapState.GPbalance}
+          balance={swapState.GPBalance}
           currencyOptions={[]}
           setAmount={(amount) => {
+            const value = tryParseGain(amount, undefined);
             dispatch({
               type: Types.gain,
               payload: {
-                gain:
-                  amount === "" || amount === "."
-                    ? undefined
-                    : parseUnits(amount, 9),
-                bnb:
-                  amount === "" || amount === "." ? undefined : getBnb(amount),
+                gain: value,
+                bnb: getAmountIn(bnb, gain, value),
               },
             });
           }}

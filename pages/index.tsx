@@ -21,11 +21,14 @@ import { ethers } from "ethers";
 import { formatUnits } from "ethers/lib/utils";
 import TransactionsInfos from "../components/TransactionsInfos/TransactionsInfos";
 import TransactionsFees from "../components/TransactionsFees/TransactionsFees";
+import { formatGain, useLiquidity } from "../utils";
 
 const opensDate = "Jul 2, 2021 16:00:00";
 export default function Home() {
   const [walletInfoModal, setWalletInfoModal] = useState(false);
   const [confirmSwapModal, setConfirmSwapModal] = useState(false);
+  const { gain } = useLiquidity();
+  const { state: swapState } = useContext(ExternalStateContext);
   const [errorModal, setErrorModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successModal, setSuccessModal] = useState(false);
@@ -197,9 +200,70 @@ window.criteo_q.push(
                 }}
               />
               {appState.toggleBuyOrSell === BuyOrSell.Buy ? (
-                <BuySection onOpen={() => setConfirmSwapModal(true)} />
+                <BuySection
+                  onOpen={() => {
+                    if (!swapState.txLimit || !appState.gainInBigNumber) {
+                      return;
+                    }
+                    if (appState.gainInBigNumber.gt(swapState.txLimit)) {
+                      alert(
+                        `Transaction is larger then max transaction limit (${formatGain(
+                          swapState.txLimit
+                        )} GAIN)`
+                      );
+                      return;
+                    }
+                    setConfirmSwapModal(true);
+                  }}
+                />
               ) : (
-                <SellSection onOpen={() => setConfirmSwapModal(true)} />
+                <SellSection
+                  onOpen={() => {
+                    if (
+                      !gain ||
+                      !swapState.dailyTransfersOf ||
+                      !swapState.txLimit ||
+                      !appState.gainInBigNumber
+                    ) {
+                      return;
+                    }
+                    if (appState.gainInBigNumber.gt(swapState.txLimit)) {
+                      alert(
+                        `Transaction is larger then max transaction limit (${formatGain(
+                          swapState.txLimit
+                        )} GAIN)`
+                      );
+                      return;
+                    }
+                    const whaleLimit = gain.mul(200).div(10000);
+                    if (
+                      appState.gainInBigNumber
+                        ?.add(swapState.dailyTransfersOf)
+                        .gte(whaleLimit)
+                    ) {
+                      if (
+                        prompt(
+                          "Your transaction is over the daily limit. You will be charged a whale protection selling fee between 0%-25%. We recommend making a smaller transaction. To continue anyways, type: 'confirm whale'."
+                        ) != "confirm whale"
+                      ) {
+                        return;
+                      }
+                    } else if (
+                      appState.gainInBigNumber
+                        ?.add(swapState.dailyTransfersOf)
+                        .gt(whaleLimit.mul(90).div(100))
+                    ) {
+                      if (
+                        prompt(
+                          "Your transaction is just below the daily limit. As other users sell/buy GAIN tokens, it might shift the daily limit, and you might be charged whale protection fee between 0%-25%. We recommend making a smaller transaction. To continue anyway, type: 'confirm whale'."
+                        ) != "confirm whale"
+                      ) {
+                        return;
+                      }
+                    }
+                    setConfirmSwapModal(true);
+                  }}
+                />
               )}
 
               {appState.gainInBigNumber &&

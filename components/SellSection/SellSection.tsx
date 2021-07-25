@@ -11,7 +11,7 @@ import { Web3Provider } from "@ethersproject/providers";
 import { useWeb3React } from "@web3-react/core";
 import { ExternalStateContext } from "../../context/ExternalState";
 import { ethers, BigNumber, Contract } from "ethers";
-import { toInteger } from "lodash";
+import { isUndefined, toInteger } from "lodash";
 import Price from "../Price/Price";
 import { BuyOrSell, useAppContext } from "../../context/StateProvider";
 import { Types } from "../../reducer/reducer";
@@ -19,6 +19,14 @@ import { formatEther, parseEther, parseUnits } from "ethers/lib/utils";
 import RouterABI from "../../contracts/PancakeRouter.json";
 import ApproveABI from "../../contracts/Approve.json";
 import { useEffect } from "react";
+import {
+  formatGain,
+  getAmountIn,
+  getAmountOut,
+  tryParseEther,
+  tryParseGain,
+  useLiquidity,
+} from "../../utils";
 
 interface MyProps {
   onOpen: () => void;
@@ -27,6 +35,8 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
   onOpen,
 }) => {
   const { library } = useWeb3React<Web3Provider>();
+
+  const { gain, bnb } = useLiquidity();
 
   const [currency, setCurrency] = useState("bnb");
   const [state2, setState2] = useState(0);
@@ -52,42 +62,7 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
       console.log(swapState.allowance?.isZero());
     }
   }, [swapState.allowance]);
-  const getGain = (amount: string) => {
-    return swapState.reserves0 &&
-      process.env.NEXT_PUBLIC_VARIABLE_1 &&
-      process.env.NEXT_PUBLIC_VARIABLE_2
-      ? swapState.reserves0
-          .mul(process.env.NEXT_PUBLIC_VARIABLE_1)
-          .mul(parseEther(amount === "" || amount === "." ? "0" : amount))
-          .div(
-            swapState.reserves1
-              .mul(process.env.NEXT_PUBLIC_VARIABLE_2)
-              .add(
-                BigNumber.from(10)
-                  .pow(18)
-                  .mul(process.env.NEXT_PUBLIC_VARIABLE_1)
-              )
-          )
-      : undefined;
-  };
-  const getBnb = (amount: string) => {
-    return swapState.reserves1 &&
-      process.env.NEXT_PUBLIC_VARIABLE_1 &&
-      process.env.NEXT_PUBLIC_VARIABLE_2
-      ? swapState.reserves1
-          .mul(parseUnits(amount === "" || amount === "." ? "0" : amount, 9))
-          .mul(process.env.NEXT_PUBLIC_VARIABLE_1)
-          .div(
-            swapState.reserves0
-              .mul(process.env.NEXT_PUBLIC_VARIABLE_2)
-              .add(
-                BigNumber.from(10)
-                  .pow(9)
-                  .mul(process.env.NEXT_PUBLIC_VARIABLE_1)
-              )
-          )
-      : undefined;
-  };
+
   const approveFunction = async () => {
     if (
       process.env.NEXT_PUBLIC_ROUTER_ADDRESS &&
@@ -106,7 +81,9 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
     }
   };
   const checkIfDisabled = () => {
-    if (!account) return "Unlock Wallet";
+    if (!account) {
+      return "Unlock Wallet";
+    }
     if (swapState.allowance && !swapState.allowance.isZero()) {
       if (!appState.gainInBigNumber) {
         return "Enter Amount";
@@ -114,7 +91,10 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
         if (appState.gainInBigNumber.isZero()) {
           return "Enter Amount";
         }
-        if (appState.gainInBigNumber.gt(swapState.GPbalance)) {
+        if (
+          swapState.GPBalance &&
+          appState.gainInBigNumber.gt(swapState.GPBalance)
+        ) {
           return "Insufficient GAIN Balance";
         }
         return "Sell";
@@ -141,13 +121,10 @@ total amount of GAIN being sold."
             parseFloat(ethers.utils.formatUnits(swapState.dailyTransfersOf, 9))
           }
           limit={
-            swapState.reserves0 &&
+            gain &&
             parseFloat(
               parseFloat(
-                ethers.utils.formatUnits(
-                  swapState.reserves0.mul(200).div(10000),
-                  9
-                )
+                ethers.utils.formatUnits(gain.mul(200).div(10000), 9)
               ).toFixed(2)
             )
           }
@@ -173,16 +150,7 @@ limit and price impact for all transactions. "
             </Info>
           </div>
           <div className={styles.data}>
-            <p>
-              {new Intl.NumberFormat("en-US").format(
-                parseFloat(
-                  parseFloat(
-                    ethers.utils.formatUnits(swapState.reserves0, 9)
-                  ).toFixed(2)
-                )
-              )}{" "}
-              GAIN
-            </p>
+            <p>{gain ? `${formatGain(gain, 2)} GAIN` : "Loading.."}</p>
           </div>
         </div>
         <div className={styles.GPInfo}>
@@ -198,17 +166,9 @@ total amount of GAIN being sold."
           </div>
           <div className={styles.data}>
             <p>
-              {new Intl.NumberFormat("en-US").format(
-                parseFloat(
-                  parseFloat(
-                    ethers.utils.formatUnits(
-                      swapState.reserves0.mul(200).div(10000),
-                      9
-                    )
-                  ).toFixed(2)
-                )
-              )}{" "}
-              GAIN
+              {gain
+                ? `${formatGain(gain.mul(200).div(10000), 2)} GAIN`
+                : "Loading.."}
             </p>
           </div>
         </div>
@@ -218,18 +178,15 @@ total amount of GAIN being sold."
           type={"From"}
           amount={appState.gainInBigNumber}
           currency={fromCurrency}
-          balance={swapState.GPbalance}
+          balance={swapState.GPBalance}
           currencyOptions={["bnb"]}
           setAmount={(amount) => {
+            const value = tryParseGain(amount, undefined);
             dispatch({
               type: Types.gain,
               payload: {
-                gain:
-                  amount === "" || amount === "."
-                    ? undefined
-                    : parseUnits(amount, 9),
-                bnb:
-                  amount === "" || amount === "." ? undefined : getBnb(amount),
+                gain: value,
+                bnb: getAmountOut(gain, bnb, value),
               },
             });
           }}
@@ -240,10 +197,14 @@ total amount of GAIN being sold."
           style={{ width: "100%", display: "flex", justifyContent: "center" }}
         >
           <img
+            alt="Swap"
             onClick={() =>
               dispatch({
                 type: Types.toggleBuyOrSell,
-                payload: { toggleBuyOrSell: BuyOrSell.Buy },
+                payload: {
+                  toggleBuyOrSell: BuyOrSell.Buy,
+                  liquidity: { gain, bnb },
+                },
               })
             }
             className={`${styles.swap_icon}`}
@@ -257,15 +218,15 @@ total amount of GAIN being sold."
           balance={swapState.balance}
           currencyOptions={[]}
           setAmount={(amount) => {
+            const value = tryParseEther(amount, undefined);
+            if (isUndefined(value)) {
+              return;
+            }
             dispatch({
-              type: Types.gain,
+              type: Types.bnb,
               payload: {
-                gain:
-                  amount === "" || amount === "." ? undefined : getGain(amount),
-                bnb:
-                  amount === "" || amount === "."
-                    ? undefined
-                    : parseEther(amount),
+                gain: getAmountIn(gain, bnb, value),
+                bnb: value,
               },
             });
           }}

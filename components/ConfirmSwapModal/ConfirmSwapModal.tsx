@@ -16,6 +16,7 @@ import { Web3Provider } from "@ethersproject/providers";
 import { useWeb3React } from "@web3-react/core";
 import Price from "../Price/Price";
 import { ExternalStateContext } from "../../context/ExternalState";
+import { getPriceImpactString, useLiquidity } from "../../utils";
 
 interface MyProps {
   isOpen: boolean;
@@ -40,9 +41,11 @@ const ConfirmSwapModal: React.FC<
   const { library } = useWeb3React<Web3Provider>();
   const { account } = useWeb3React<Web3Provider>();
   const { theme } = useTheme();
+  const { gain, bnb } = useLiquidity();
   const { state: appState } = useAppContext();
   const { state: swapState } = useContext(ExternalStateContext);
   const [loading, setLoading] = useState(false);
+
   const getBNB = () => {
     return appState.bnbInBigNumber ? formatEther(appState.bnbInBigNumber) : "";
   };
@@ -70,6 +73,17 @@ const ConfirmSwapModal: React.FC<
         process.env.NEXT_PUBLIC_ROUTER_ADDRESS,
         RouterABI,
         library.getSigner()
+      );
+      console.log(
+        "Min -deadline - value",
+        appState.gainInBigNumber?.sub(
+          appState.gainInBigNumber
+            ?.mul(parseFloat(appState.slippageTolerance) * 1000)
+            .div(100000)
+        ),
+        Math.floor(Date.now() / 1000) +
+          parseFloat(appState.transactionDeadline) * 60,
+        appState.bnbInBigNumber
       );
       await contract
         .swapExactETHForTokens(
@@ -114,6 +128,17 @@ const ConfirmSwapModal: React.FC<
         process.env.NEXT_PUBLIC_ROUTER_ADDRESS,
         RouterABI,
         library.getSigner()
+      );
+      console.log(
+        "Min -deadline - value",
+        appState.bnbInBigNumber?.sub(
+          appState.bnbInBigNumber
+            ?.mul(parseFloat(appState.slippageTolerance) * 1000)
+            .div(100000)
+        ),
+        Math.floor(Date.now() / 1000) +
+          parseFloat(appState.transactionDeadline) * 60,
+        appState.gainInBigNumber
       );
       contract
         .swapExactTokensForETHSupportingFeeOnTransferTokens(
@@ -168,6 +193,9 @@ const ConfirmSwapModal: React.FC<
             >
               <div>
                 <img
+                  alt={
+                    appState.toggleBuyOrSell === BuyOrSell.Buy ? "BNB" : "GAIN"
+                  }
                   src={`./images/${
                     appState.toggleBuyOrSell === BuyOrSell.Buy ? "BNB" : "GAIN"
                   }.svg`}
@@ -224,6 +252,9 @@ const ConfirmSwapModal: React.FC<
             >
               <div>
                 <img
+                  alt={
+                    appState.toggleBuyOrSell === BuyOrSell.Buy ? "GAIN" : "BNB"
+                  }
                   src={`./images/${
                     appState.toggleBuyOrSell === BuyOrSell.Buy ? "GAIN" : "BNB"
                   }.svg`}
@@ -286,18 +317,9 @@ const ConfirmSwapModal: React.FC<
                 Price Impact
               </Info>
               <p style={{ color: "#ECB42A", fontSize: "10px" }}>
-                {"<"}
-                {parseFloat(
-                  formatUnits(
-                    appState.gainInBigNumber && swapState.reserves0
-                      ? appState.gainInBigNumber
-                          ?.div(swapState.reserves0)
-                          .mul(100)
-                      : "0",
-                    9
-                  )
-                ).toFixed(2)}
-                %
+                {appState.toggleBuyOrSell === BuyOrSell.Buy
+                  ? getPriceImpactString(appState.gainInBigNumber, gain)
+                  : getPriceImpactString(appState.bnbInBigNumber, bnb)}
               </p>
             </div>
             <div>

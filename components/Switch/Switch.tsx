@@ -2,10 +2,12 @@ import React from "react";
 import styles from "./Switch.module.css";
 import { BuyOrSell, useAppContext } from "../../context/StateProvider";
 import { Types } from "../../reducer/reducer";
+import { useLiquidity } from "../../utils";
 const Switch: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
   ...props
 }) => {
   const { state, dispatch } = useAppContext();
+  const { gain, bnb } = useLiquidity();
   return (
     <div className={styles.switch} {...props}>
       <button
@@ -14,6 +16,7 @@ const Switch: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
             type: Types.toggleBuyOrSell,
             payload: {
               toggleBuyOrSell: BuyOrSell.Buy,
+              liquidity: { gain, bnb },
             },
           })
         }
@@ -31,6 +34,7 @@ const Switch: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
             type: Types.toggleBuyOrSell,
             payload: {
               toggleBuyOrSell: BuyOrSell.Sell,
+              liquidity: { gain, bnb },
             },
           })
         }

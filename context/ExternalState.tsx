@@ -5,15 +5,47 @@ import { formatEther, formatUnits } from "ethers/lib/utils";
 import React from "react";
 import useWatcher from "../hooks/useWatcher";
 import { useAppContext } from "./StateProvider";
+interface StateVars {
+  reserves0?: BigNumber;
+  reserves1?: BigNumber;
+  token0?: BigNumber;
+  whaleProtectionPercentFromLP?: BigNumber;
+  dailyTransfersOf?: BigNumber;
+  allowance?: BigNumber;
 
-export const ExternalStateContext = React.createContext({
-  state: {} as any,
+  buyLiquidityFee?: BigNumber;
+  buySweepstakeFee?: BigNumber;
+  buyTeamFee?: BigNumber;
+  buyCharityFee?: BigNumber;
+  buyRewardFee?: BigNumber;
+  buyHodlFee?: BigNumber;
+  buyWhaleProtectionFee?: BigNumber;
+
+  sellLiquidityFee?: BigNumber;
+  sellSweepstakeFee?: BigNumber;
+  sellTeamFee?: BigNumber;
+  sellCharityFee?: BigNumber;
+  sellRewardFee?: BigNumber;
+  sellHodlFee?: BigNumber;
+  sellWhaleProtectionFee?: BigNumber;
+
+  balance?: BigNumber;
+  GPBalance?: BigNumber;
+  txLimit?: BigNumber;
+}
+export const ExternalStateContext = React.createContext<{ state: StateVars }>({
+  state: {},
 });
 
 export const ExternalStateProvider: React.FC = ({ children }) => {
   const { account } = useWeb3React<Web3Provider>();
   const { state: AppState, dispatch } = useAppContext();
   const calls = [
+    {
+      target: process.env.NEXT_PUBLIC_GP_ADDRESS,
+      call: ["maxTxAmount()(uint256)"],
+      returns: [["txLimit"]],
+    },
     {
       target: process.env.NEXT_PUBLIC_PAIR_ADDRESS,
       call: ["getReserves()(uint256,uint256,uint256)"],
@@ -47,48 +79,48 @@ export const ExternalStateProvider: React.FC = ({ children }) => {
         returns: [["allowance"]],
       });
     }
-    // if (
-    //   process.env.NEXT_PUBLIC_PAIR_ADDRESS &&
-    //   AppState.gainInBigNumber &&
-    //   !AppState.gainInBigNumber.eq(0)
-    // ) {
-    //   calls.push({
-    //     target: process.env.NEXT_PUBLIC_GP_ADDRESS,
-    //     call: [
-    //       "calculateFees(address,address,uint256)(uint256,uint256,uint256,uint256,uint256,uint256,uint256)",
-    //       process.env.NEXT_PUBLIC_PAIR_ADDRESS,
-    //       account,
-    //       formatUnits(AppState.gainInBigNumber, 9),
-    //     ],
-    //     returns: [
-    //       ["buyliquidityFee"],
-    //       ["buysweepstakeFee"],
-    //       ["buyteamFee"],
-    //       ["buycharityFee"],
-    //       ["buyrewardFee"],
-    //       ["buyhodlFee"],
-    //       ["buywhaleProtectionFee"],
-    //     ],
-    //   });
-    //   calls.push({
-    //     target: process.env.NEXT_PUBLIC_GP_ADDRESS,
-    //     call: [
-    //       "calculateFees(address,address,uint256)(uint256,uint256,uint256,uint256,uint256,uint256,uint256)",
-    //       account,
-    //       process.env.NEXT_PUBLIC_PAIR_ADDRESS,
-    //       formatUnits(AppState.gainInBigNumber, 9),
-    //     ],
-    //     returns: [
-    //       ["sellliquidityFee"],
-    //       ["sellsweepstakeFee"],
-    //       ["sellteamFee"],
-    //       ["sellcharityFee"],
-    //       ["sellrewardFee"],
-    //       ["sellhodlFee"],
-    //       ["sellwhaleProtectionFee"],
-    //     ],
-    //   });
-    // }
+    if (
+      process.env.NEXT_PUBLIC_PAIR_ADDRESS &&
+      AppState.gainInBigNumber &&
+      !AppState.gainInBigNumber.eq(0)
+    ) {
+      calls.push({
+        target: process.env.NEXT_PUBLIC_GP_ADDRESS,
+        call: [
+          "calculateFees(address,address,uint256)(uint256,uint256,uint256,uint256,uint256,uint256,uint256)",
+          process.env.NEXT_PUBLIC_PAIR_ADDRESS,
+          account,
+          AppState.gainInBigNumber.toString(),
+        ],
+        returns: [
+          ["buyLiquidityFee"],
+          ["buySweepstakeFee"],
+          ["buyTeamFee"],
+          ["buyCharityFee"],
+          ["buyRewardFee"],
+          ["buyHodlFee"],
+          ["buyWhaleProtectionFee"],
+        ],
+      });
+      calls.push({
+        target: process.env.NEXT_PUBLIC_GP_ADDRESS,
+        call: [
+          "calculateFees(address,address,uint256)(uint256,uint256,uint256,uint256,uint256,uint256,uint256)",
+          account,
+          process.env.NEXT_PUBLIC_PAIR_ADDRESS,
+          AppState.gainInBigNumber.toString(),
+        ],
+        returns: [
+          ["sellLiquidityFee"],
+          ["sellSweepstakeFee"],
+          ["sellTeamFee"],
+          ["sellCharityFee"],
+          ["sellRewardFee"],
+          ["sellHodlFee"],
+          ["sellWhaleProtectionFee"],
+        ],
+      });
+    }
     calls.push({
       target: undefined,
       call: ["getEthBalance(address)(uint256)", account],
@@ -97,7 +129,7 @@ export const ExternalStateProvider: React.FC = ({ children }) => {
     calls.push({
       target: process.env.NEXT_PUBLIC_GP_ADDRESS,
       call: ["balanceOf(address)(uint256)", account],
-      returns: [["GPbalance"]],
+      returns: [["GPBalance"]],
     });
   }
 

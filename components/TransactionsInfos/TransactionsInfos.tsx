@@ -1,12 +1,14 @@
-import { formatUnits } from "ethers/lib/utils";
+import { formatEther, formatUnits } from "ethers/lib/utils";
 import { useContext } from "react";
 import { ExternalStateContext } from "../../context/ExternalState";
 import { BuyOrSell, useAppContext } from "../../context/StateProvider";
+import { formatGain, getPriceImpactString, useLiquidity } from "../../utils";
 import Info from "../Info/Info";
 import InfoCards from "../InfoCards/InfoCards";
 
 const TransactionsInfos = () => {
   const { state: swapState } = useContext(ExternalStateContext);
+  const { gain, bnb } = useLiquidity();
   const { state: appState } = useAppContext();
   return (
     <>
@@ -15,7 +17,7 @@ const TransactionsInfos = () => {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "5fr 3fr",
+              gridTemplateColumns: "5fr 4fr",
               width: "100%",
               fontSize: "11px",
             }}
@@ -38,7 +40,7 @@ const TransactionsInfos = () => {
             </div>
             <div style={{ textAlign: "right" }}>
               <p>
-                {formatUnits(
+                {formatGain(
                   appState.gainInBigNumber
                     ? appState.gainInBigNumber?.sub(
                         appState.gainInBigNumber
@@ -46,32 +48,25 @@ const TransactionsInfos = () => {
                           .div(100000)
                       )
                     : "0",
-                  9
+                  2
                 )}{" "}
                 GAIN
               </p>
               <p style={{ color: "#ECB42A" }}>
-                {"<"}
-                {parseFloat(
-                  formatUnits(
-                    appState.gainInBigNumber && swapState.reserves0
-                      ? appState.gainInBigNumber
-                          ?.div(swapState.reserves0)
-                          .mul(100)
-                      : "0",
-                    9
-                  )
-                ).toFixed(2)}
-                %
+                {getPriceImpactString(appState.gainInBigNumber, gain)}
               </p>
               <p>
-                {formatUnits(
-                  appState.gainInBigNumber
-                    ? appState.gainInBigNumber?.mul(2).div(1000)
-                    : "0",
-                  9
+                {formatEther(
+                  appState.bnbInBigNumber
+                    ? appState.bnbInBigNumber
+                        ?.mul(
+                          parseInt(process.env.NEXT_PUBLIC_VARIABLE_2!) -
+                            parseInt(process.env.NEXT_PUBLIC_VARIABLE_1!)
+                        )
+                        .div(process.env.NEXT_PUBLIC_VARIABLE_2!)
+                    : "0"
                 )}{" "}
-                GAIN
+                BNB
               </p>
             </div>
           </div>
@@ -81,14 +76,14 @@ const TransactionsInfos = () => {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "5fr 3fr",
+              gridTemplateColumns: "5fr 4fr",
               width: "100%",
               fontSize: "11px",
             }}
           >
             <div>
               <Info tooltip="The minimum amount of GAIN you will receive. Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.">
-                Maximum Sold
+                Minimum received
               </Info>
               <Info tooltip="The difference between the market price and estimated price due to trade size.">
                 Price Impact
@@ -104,31 +99,19 @@ const TransactionsInfos = () => {
             </div>
             <div style={{ textAlign: "right" }}>
               <p>
-                {formatUnits(
-                  appState.gainInBigNumber
-                    ? appState.gainInBigNumber?.sub(
-                        appState.gainInBigNumber
+                {formatEther(
+                  appState.bnbInBigNumber
+                    ? appState.bnbInBigNumber?.sub(
+                        appState.bnbInBigNumber
                           ?.mul(parseFloat(appState.slippageTolerance) * 1000)
                           .div(100000)
                       )
-                    : "0",
-                  9
+                    : "0"
                 )}{" "}
-                GAIN
+                BNB
               </p>
               <p style={{ color: "#ECB42A" }}>
-                {"<"}
-                {parseFloat(
-                  formatUnits(
-                    appState.gainInBigNumber && swapState.reserves0
-                      ? appState.gainInBigNumber
-                          ?.div(swapState.reserves0)
-                          .mul(100)
-                      : "0",
-                    9
-                  )
-                ).toFixed(2)}
-                %
+                {getPriceImpactString(appState.bnbInBigNumber, bnb)}
               </p>
               <p>
                 {" "}

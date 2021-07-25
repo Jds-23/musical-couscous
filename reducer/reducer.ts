@@ -1,5 +1,6 @@
 import { BigNumber } from "ethers";
 import { BuyOrSell, InitialStateType } from "../context/StateProvider";
+import { getAmountIn, getAmountOut } from "../utils";
 type ActionMap<M extends { [index: string]: any }> = {
   [Key in keyof M]: M[Key] extends undefined
     ? {
@@ -45,6 +46,10 @@ type Payload = {
   };
   [Types.toggleBuyOrSell]: {
     toggleBuyOrSell: BuyOrSell;
+    liquidity: {
+      gain?: BigNumber;
+      bnb?: BigNumber;
+    };
   };
 };
 
@@ -57,12 +62,14 @@ export const reducer = (state: InitialStateType, action: Actions) => {
         ...state,
         gainInBigNumber: action.payload.gain,
         bnbInBigNumber: action.payload.bnb,
+        userSelected: "GAIN",
       };
     case "BNB":
       return {
         ...state,
-        gain: action.payload.gain,
-        bnb: action.payload.bnb,
+        gainInBigNumber: action.payload.gain,
+        bnbInBigNumber: action.payload.bnb,
+        userSelected: "BNB",
       };
     case "TOLERANCE":
       if (
@@ -101,6 +108,39 @@ export const reducer = (state: InitialStateType, action: Actions) => {
       return {
         ...state,
         toggleBuyOrSell: action.payload.toggleBuyOrSell,
+        gainInBigNumber:
+          state.userSelected == "GAIN" ||
+          !action.payload.liquidity.gain ||
+          !action.payload.liquidity.bnb
+            ? state.gainInBigNumber
+            : action.payload.toggleBuyOrSell == BuyOrSell.Buy
+            ? getAmountOut(
+                action.payload.liquidity.bnb,
+                action.payload.liquidity.gain,
+                state.bnbInBigNumber
+              )
+            : getAmountIn(
+                action.payload.liquidity.gain,
+                action.payload.liquidity.bnb,
+                state.bnbInBigNumber
+              ),
+
+        bnbInBigNumber:
+          state.userSelected == "BNB" ||
+          !action.payload.liquidity.gain ||
+          !action.payload.liquidity.bnb
+            ? state.bnbInBigNumber
+            : action.payload.toggleBuyOrSell == BuyOrSell.Buy
+            ? getAmountIn(
+                action.payload.liquidity.bnb,
+                action.payload.liquidity.gain,
+                state.gainInBigNumber
+              )
+            : getAmountOut(
+                action.payload.liquidity.gain,
+                action.payload.liquidity.bnb,
+                state.gainInBigNumber
+              ),
       };
     case "UPDATE_PRICE":
       return {

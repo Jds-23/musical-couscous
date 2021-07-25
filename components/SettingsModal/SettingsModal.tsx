@@ -15,7 +15,7 @@ const deadlineRegex = /^[0-9\b]+$/;
 const slippageToleranceRegex = /^\d*\.?\d*$/;
 const SettingsModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
   ({ isOpen, onClose, ...props }) => {
-    const [tolerance, setTolerance] = useState("3.5");
+    const [tolerance, setTolerance] = useState("4");
     const [toleranceError, setToleranceError] = useState("");
     const [deadlineError, setDeadlineError] = useState("");
     const [activeTolerance, setActiveTolerance] = useState(false);
@@ -65,29 +65,29 @@ const SettingsModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
               </button>
               <button
                 className={`${styles.button} ${
-                  state.slippageTolerance === "3.5" ? styles.button__active : ""
+                  state.slippageTolerance === "4" ? styles.button__active : ""
                 } ${styles.tolerance__button__2}`}
                 onClick={() =>
                   dispatch({
                     type: Types.tolerance,
-                    payload: { tolerance: "3.5" },
+                    payload: { tolerance: "4" },
                   })
                 }
               >
-                3.5
+                4
               </button>
               <button
                 className={`${styles.button} ${
-                  state.slippageTolerance === "5.0" ? styles.button__active : ""
+                  state.slippageTolerance === "5.5" ? styles.button__active : ""
                 } ${styles.tolerance__button__3}`}
                 onClick={() =>
                   dispatch({
                     type: Types.tolerance,
-                    payload: { tolerance: "5.0" },
+                    payload: { tolerance: "5.5" },
                   })
                 }
               >
-                5
+                5.5
               </button>
               <Input
                 value={activeTolerance ? tolerance : state.slippageTolerance}

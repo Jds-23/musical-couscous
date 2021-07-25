@@ -2,6 +2,7 @@ import { ethers } from "ethers";
 import { useContext, useState } from "react";
 import { ExternalStateContext } from "../../context/ExternalState";
 import { BuyOrSell, useAppContext } from "../../context/StateProvider";
+import { formatGain } from "../../utils";
 import HidableBar from "../HidableBar/HidableBar";
 import Info from "../Info/Info";
 import InfoCards from "../InfoCards/InfoCards";
@@ -26,7 +27,18 @@ const TransactionsFees = () => {
               Buyer Fee
             </Info>
             <p style={{ textAlign: "center" }}>3.5%</p>
-            <p style={{ textAlign: "right" }}>56,789 GAIN</p>
+            <p style={{ textAlign: "right" }}>
+              {swapState.buyLiquidityFee &&
+              swapState.buyTeamFee &&
+              swapState.buySweepstakeFee
+                ? `${formatGain(
+                    swapState.buyTeamFee
+                      .add(swapState.buyLiquidityFee)
+                      .add(swapState.buySweepstakeFee),
+                    3
+                  )} GAIN`
+                : "Loading.."}{" "}
+            </p>
           </div>
           <div
             style={{
@@ -48,9 +60,9 @@ const TransactionsFees = () => {
             </span>
           </div>
           <HidableBar isHidden={!seeMoreDetails}>
-            {!swapState.buyliquidityFee ||
-            !swapState.buyteamFee ||
-            !swapState.buysweepstakeFee ? (
+            {!swapState.buyLiquidityFee ||
+            !swapState.buyTeamFee ||
+            !swapState.buySweepstakeFee ? (
               <></>
             ) : (
               <div
@@ -73,22 +85,14 @@ const TransactionsFees = () => {
                   </Info>
                 </div>
                 <div style={{ textAlign: "center" }}>
-                  <p>3.5%</p>
-                  <p>3.5%</p>
-                  <p>3.5%</p>
+                  <p>1.9%</p>
+                  <p>0.1%</p>
+                  <p>1.5%</p>
                 </div>
                 <div style={{ textAlign: "right" }}>
-                  <p>
-                    {ethers.utils.formatUnits(swapState.buyliquidityFee, 9)}{" "}
-                    GAIN
-                  </p>
-                  <p>
-                    {ethers.utils.formatUnits(swapState.buyteamFee, 9)} GAIN
-                  </p>
-                  <p>
-                    {ethers.utils.formatUnits(swapState.buysweepstakeFee, 9)}{" "}
-                    GAIN
-                  </p>
+                  <p>{formatGain(swapState.buyLiquidityFee, 3)} GAIN</p>
+                  <p>{formatGain(swapState.buyTeamFee, 3)} GAIN</p>
+                  <p>{formatGain(swapState.buySweepstakeFee, 3)} GAIN</p>
                 </div>
               </div>
             )}
@@ -106,8 +110,31 @@ const TransactionsFees = () => {
             <Info tooltip="The total fee you are set to pay when selling GAIN. ">
               Seller Fee
             </Info>
-            <p style={{ textAlign: "center" }}>3.5%</p>
-            <p style={{ textAlign: "right" }}>56,789 GAIN</p>
+            <p style={{ textAlign: "center" }}>
+              {swapState.sellWhaleProtectionFee && appState.gainInBigNumber
+                ? 3.5 +
+                  swapState.sellWhaleProtectionFee
+                    .mul(1000)
+                    .div(appState.gainInBigNumber)
+                    .toNumber() /
+                    10
+                : "3.5"}
+              %
+            </p>
+            <p style={{ textAlign: "right" }}>
+              {swapState.sellRewardFee &&
+              swapState.sellHodlFee &&
+              swapState.sellCharityFee &&
+              swapState.sellWhaleProtectionFee
+                ? `${formatGain(
+                    swapState.sellRewardFee
+                      .add(swapState.sellHodlFee)
+                      .add(swapState.sellCharityFee)
+                      .add(swapState.sellWhaleProtectionFee),
+                    3
+                  )} GAIN`
+                : "Loading.."}
+            </p>
           </div>
           <div
             style={{
@@ -129,10 +156,10 @@ const TransactionsFees = () => {
             </span>
           </div>
           <HidableBar isHidden={!seeMoreDetails}>
-            {!swapState.sellrewardFee ||
-            !swapState.sellhodlFee ||
-            !swapState.sellcharityFee ||
-            !swapState.sellwhaleProtectionFee ? (
+            {!swapState.sellRewardFee ||
+            !swapState.sellHodlFee ||
+            !swapState.sellCharityFee ||
+            !swapState.sellWhaleProtectionFee ? (
               <></>
             ) : (
               <div
@@ -163,28 +190,25 @@ distribution."
                   </Info>
                 </div>
                 <div style={{ textAlign: "center" }}>
-                  <p>3.5%</p>
-                  <p>3.5%</p>
-                  <p>3.5%</p>
-                  <p>3.5%</p>
+                  <p>3%</p>
+                  <p>0.25%</p>
+                  <p>0.25%</p>
+                  <p>
+                    {appState.gainInBigNumber
+                      ? `${
+                          swapState.sellWhaleProtectionFee
+                            .mul(1000)
+                            .div(appState.gainInBigNumber)
+                            .toNumber() / 10
+                        }%`
+                      : "-"}
+                  </p>
                 </div>
                 <div style={{ textAlign: "right" }}>
-                  <p>
-                    {ethers.utils.formatUnits(swapState.sellrewardFee, 9)} GAIN
-                  </p>
-                  <p>
-                    {ethers.utils.formatUnits(swapState.sellhodlFee, 9)} GAIN
-                  </p>
-                  <p>
-                    {ethers.utils.formatUnits(swapState.sellcharityFee, 9)} GAIN
-                  </p>
-                  <p>
-                    {ethers.utils.formatUnits(
-                      swapState.sellwhaleProtectionFee,
-                      9
-                    )}{" "}
-                    GAIN
-                  </p>
+                  <p>{formatGain(swapState.sellRewardFee, 3)} GAIN</p>
+                  <p>{formatGain(swapState.sellHodlFee, 3)} GAIN</p>
+                  <p>{formatGain(swapState.sellCharityFee, 3)} GAIN</p>
+                  <p>{formatGain(swapState.sellWhaleProtectionFee, 3)} GAIN</p>
                 </div>
               </div>
             )}
