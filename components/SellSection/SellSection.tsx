@@ -47,6 +47,8 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
   const { state: swapState } = useContext(ExternalStateContext);
   const [approving, setApproving] = useState(false);
   const { state: appState, dispatch } = useAppContext();
+  const [examinedLockedBalanceAccount, setExaminedLockedBalanceAccount] =
+    useState(BigNumber.from(0));
 
   const [showTotalGain, setShowTotalGain] = useState(false);
 
@@ -65,6 +67,23 @@ const SellSection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
       console.log(swapState.allowance?.isZero());
     }
   }, [swapState.allowance]);
+
+  useEffect(() => {
+    if (
+      swapState.lockedBalanceOf &&
+      examinedLockedBalanceAccount.toString() !=
+        swapState.lockedBalanceOf.toString()
+    ) {
+      setExaminedLockedBalanceAccount(swapState.lockedBalanceOf);
+      if (swapState.lockedBalanceOf.gt(0)) {
+        setShowTotalGain(true);
+      }
+    }
+  }, [
+    swapState,
+    examinedLockedBalanceAccount,
+    setExaminedLockedBalanceAccount,
+  ]);
 
   const approveFunction = async () => {
     if (

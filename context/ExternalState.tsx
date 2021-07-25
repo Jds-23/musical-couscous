@@ -11,6 +11,7 @@ interface StateVars {
   token0?: BigNumber;
   whaleProtectionPercentFromLP?: BigNumber;
   dailyTransfersOf?: BigNumber;
+  lockedBalanceOf?: BigNumber;
   allowance?: BigNumber;
 
   buyLiquidityFee?: BigNumber;
@@ -68,6 +69,12 @@ export const ExternalStateProvider: React.FC = ({ children }) => {
       call: ["dailyTransfersOf(address)(uint256)", account],
       returns: [["dailyTransfersOf"]],
     });
+    calls.push({
+      target: process.env.NEXT_PUBLIC_GP_ADDRESS,
+      call: ["lockedBalanceOf(address)(uint256)", account],
+      returns: [["lockedBalanceOf"]],
+    });
+
     if (process.env.NEXT_PUBLIC_ROUTER_ADDRESS) {
       calls.push({
         target: process.env.NEXT_PUBLIC_GP_ADDRESS,

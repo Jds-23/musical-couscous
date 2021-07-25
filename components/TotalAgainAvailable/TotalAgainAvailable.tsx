@@ -1,3 +1,6 @@
+import { useContext } from "react";
+import { ExternalStateContext } from "../../context/ExternalState";
+import { formatGain } from "../../utils";
 import styles from "./TotalAgainAvailable.module.css";
 interface MyProps {
   setShowTotalGain: (a: boolean) => void;
@@ -6,6 +9,7 @@ const Main: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
   setShowTotalGain,
   ...props
 }) => {
+  const { state: swapState } = useContext(ExternalStateContext);
   return (
     <>
       <main className={styles.main} {...props}>
@@ -20,16 +24,29 @@ const Main: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
         <div className={styles.main__body}>
           <div className={styles.row1}>
             <h1 className={styles.row1__header}>TOTAL GAIN</h1>
-            <h1 className={styles.row1__number}>2,538,628</h1>
+            <h1 className={styles.row1__number}>
+              {swapState.GPBalance ? formatGain(swapState.GPBalance, 3) : "-"}
+            </h1>
           </div>
           <div className={styles.row2}>
             <div className={styles.row2__left}>
               <h1>Available</h1>
-              <h1>25388</h1>
+              <h1>
+                {swapState.GPBalance && swapState.lockedBalanceOf
+                  ? formatGain(
+                      swapState.GPBalance.sub(swapState.lockedBalanceOf),
+                      3
+                    )
+                  : "-"}
+              </h1>
             </div>
             <div className={styles.row2__right}>
               <h1>Locked</h1>
-              <h1>2628</h1>
+              <h1>
+                {swapState.lockedBalanceOf
+                  ? formatGain(swapState.lockedBalanceOf, 3)
+                  : "-"}
+              </h1>
             </div>
           </div>
           <div className={styles.line}></div>
