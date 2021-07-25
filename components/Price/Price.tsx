@@ -38,7 +38,7 @@ const Price = () => {
       appState.gainInBigNumber
         .mul(BigNumber.from(10).pow(18))
         .div(appState.bnbInBigNumber),
-      4
+      2
     );
   };
   return (

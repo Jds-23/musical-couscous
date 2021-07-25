@@ -12,7 +12,11 @@ export function formatGain(number: BigNumberish, maxDecimalDigits: number = 9) {
   const str = formatUnits(number, 9);
   if (str.includes(".")) {
     const parts = str.split(".");
-    return parts[0] + "." + parts[1].slice(0, maxDecimalDigits);
+    return (
+      parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
+      "." +
+      parts[1].slice(0, maxDecimalDigits)
+    );
   }
   return str;
 }

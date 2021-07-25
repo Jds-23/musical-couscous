@@ -115,11 +115,11 @@ const TransactionsInfos = () => {
               </p>
               <p>
                 {" "}
-                {formatUnits(
+                {formatGain(
                   appState.gainInBigNumber
                     ? appState.gainInBigNumber?.mul(2).div(1000)
                     : "0",
-                  9
+                  2
                 )}{" "}
                 GAIN
               </p>

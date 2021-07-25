@@ -36,12 +36,12 @@ const Main: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
                 src={"./images/MenuIcon.svg"}
               />
             </button>
-            <button className={styles.main__header__buttons}>
+            {/* <button className={styles.main__header__buttons}>
               <img
                 onClick={() => setRecentTransaction(true)}
                 src={"./images/RecentIcon.svg"}
               />
-            </button>
+            </button> */}
           </div>
         </div>
         <div className={styles.main__body}>{children}</div>

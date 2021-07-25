@@ -35,7 +35,7 @@ const TransactionsFees = () => {
                     swapState.buyTeamFee
                       .add(swapState.buyLiquidityFee)
                       .add(swapState.buySweepstakeFee),
-                    3
+                    2
                   )} GAIN`
                 : "Loading.."}{" "}
             </p>
@@ -90,9 +90,9 @@ const TransactionsFees = () => {
                   <p>1.5%</p>
                 </div>
                 <div style={{ textAlign: "right" }}>
-                  <p>{formatGain(swapState.buyLiquidityFee, 3)} GAIN</p>
-                  <p>{formatGain(swapState.buyTeamFee, 3)} GAIN</p>
-                  <p>{formatGain(swapState.buySweepstakeFee, 3)} GAIN</p>
+                  <p>{formatGain(swapState.buyLiquidityFee, 2)} GAIN</p>
+                  <p>{formatGain(swapState.buyTeamFee, 2)} GAIN</p>
+                  <p>{formatGain(swapState.buySweepstakeFee, 2)} GAIN</p>
                 </div>
               </div>
             )}
@@ -205,10 +205,10 @@ distribution."
                   </p>
                 </div>
                 <div style={{ textAlign: "right" }}>
-                  <p>{formatGain(swapState.sellRewardFee, 3)} GAIN</p>
-                  <p>{formatGain(swapState.sellHodlFee, 3)} GAIN</p>
-                  <p>{formatGain(swapState.sellCharityFee, 3)} GAIN</p>
-                  <p>{formatGain(swapState.sellWhaleProtectionFee, 3)} GAIN</p>
+                  <p>{formatGain(swapState.sellRewardFee, 2)} GAIN</p>
+                  <p>{formatGain(swapState.sellHodlFee, 2)} GAIN</p>
+                  <p>{formatGain(swapState.sellCharityFee, 2)} GAIN</p>
+                  <p>{formatGain(swapState.sellWhaleProtectionFee, 2)} GAIN</p>
                 </div>
               </div>
             )}

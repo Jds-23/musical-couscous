@@ -13,7 +13,7 @@ const SuccessModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
     return (
       <>
         <CustomModal
-          title={"Recent Transactions"}
+          title={"Success"}
           isOpen={isOpen}
           onClose={onClose}
           maxWidth={"593px"}
@@ -28,11 +28,16 @@ const SuccessModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
           >
             {theme === "Dark" ? (
               <img
+                alt="Arrow"
                 className={styles.image}
                 src={"./images/BigArrowVDark.svg"}
               />
             ) : (
-              <img className={styles.image} src={"./images/BigArrow.svg"} />
+              <img
+                alt="Arrow"
+                className={styles.image}
+                src={"./images/BigArrow.svg"}
+              />
             )}
             <h1
               style={{ fontSize: "23px" }}
@@ -56,7 +61,7 @@ const SuccessModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
             >
               <p>
                 Add GAIN PROTOCOL to Metamask
-                <img src={"./images/MetaMask.svg"} />
+                <img alt="Meta Mask" src={"./images/MetaMask.svg"} />
               </p>
             </div>
           </ModalBody>
