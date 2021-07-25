@@ -32,6 +32,7 @@ export type InitialStateType = {
   toggleExpertMode: boolean;
   gainPerBNB: string;
   bnbPerGAIN: string;
+  userSelected: "GAIN" | "BNB";
 };
 
 const initialState = {

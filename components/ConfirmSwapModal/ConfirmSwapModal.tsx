@@ -86,7 +86,7 @@ const ConfirmSwapModal: React.FC<
         appState.bnbInBigNumber
       );
       await contract
-        .swapExactETHForTokens(
+        .swapExactETHForTokensSupportingFeeOnTransferTokens(
           appState.gainInBigNumber?.sub(
             appState.gainInBigNumber
               ?.mul(parseFloat(appState.slippageTolerance) * 1000)

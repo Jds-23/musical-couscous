@@ -208,7 +208,9 @@ window.criteo_q.push(
                       alert(
                         `Transaction is larger then max transaction limit (${formatGain(
                           swapState.txLimit
-                        )} GAIN)`
+                        )} GAIN). Please reduce transaction to below ${formatGain(
+                          swapState.txLimit
+                        )} and try again.`
                       );
                       return;
                     }
@@ -230,7 +232,9 @@ window.criteo_q.push(
                       alert(
                         `Transaction is larger then max transaction limit (${formatGain(
                           swapState.txLimit
-                        )} GAIN)`
+                        )} GAIN). Please reduce transaction to below ${formatGain(
+                          swapState.txLimit
+                        )} and try again.`
                       );
                       return;
                     }
