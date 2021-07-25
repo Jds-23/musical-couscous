@@ -202,19 +202,23 @@ window.criteo_q.push(
         ${theme === "Dark" ? styles.home__background__dark : ""}`}
         />
         <img
+          alt=""
           src={"./images/background/LeftTop.svg"}
           className={styles.home__bg_left_top}
         />
 
         <img
+          alt=""
           src={"./images/background/TopRight.svg"}
           className={styles.home__bg_right_top}
         />
         <img
+          alt=""
           src={"./images/background/LeftBottom.svg"}
           className={styles.home__bg_left_bottom}
         />
         <img
+          alt=""
           src={"./images/background/RightBottom.svg"}
           className={styles.home__bg_right_bottom}
         />
