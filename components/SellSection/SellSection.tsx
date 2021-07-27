@@ -28,7 +28,7 @@ import {
   tryParseGain,
   useLiquidity,
 } from "../../utils";
-// Remove this comment
+
 interface MyProps {
   onOpen: () => void;
 }
@@ -203,6 +203,26 @@ total amount of GAIN being sold."
       ) : (
         <Main style={{ marginTop: "10px" }} type={"Sell"}>
           <SwapCurrencyInputBox
+            onMax={() => {
+              if (!swapState.GPBalance || !swapState.lockedBalanceOf) {
+                return;
+              }
+              const availableBalance = swapState.GPBalance.sub(
+                swapState.lockedBalanceOf
+              );
+
+              dispatch({
+                type: Types.gain,
+                payload: {
+                  gain: availableBalance.mul(965).div(1000),
+                  bnb: getAmountOut(
+                    gain,
+                    bnb,
+                    availableBalance.mul(965).div(1000)
+                  ),
+                },
+              });
+            }}
             type={"From"}
             amount={appState.gainInBigNumber}
             setShowTotalGain={setShowTotalGain}

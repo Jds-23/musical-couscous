@@ -15,6 +15,7 @@ interface MyProps {
   currencyOptions: string[];
   balance: BigNumber | undefined;
   setShowTotalGain: (a: boolean) => void;
+  onMax?: () => void;
 }
 const re = /^\d*\.?\d*$/;
 const SwapCurrencyInputBox: React.FC<
@@ -28,6 +29,7 @@ const SwapCurrencyInputBox: React.FC<
   setAmount,
   currencyOptions,
   setShowTotalGain,
+  onMax,
   ...props
 }) => {
   const [activate, setActivate] = useState(false);
@@ -94,6 +96,21 @@ const SwapCurrencyInputBox: React.FC<
               }
             }}
           />
+          {onMax && (
+            <button onClick={onMax}>
+              <span>
+                <div
+                  style={{
+                    marginRight: 4,
+                    fontFamily: "Eurostile Bold",
+                    fontSize: "14px",
+                  }}
+                >
+                  MAX
+                </div>
+              </span>
+            </button>
+          )}
           <button>
             <span>
               {(currency || currency !== "") && (

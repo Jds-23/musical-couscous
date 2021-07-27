@@ -68,6 +68,19 @@ const BuySection: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
       ) : (
         <Main type={"Buy"}>
           <SwapCurrencyInputBox
+            onMax={() => {
+              dispatch({
+                type: Types.bnb,
+                payload: {
+                  gain: getAmountOut(
+                    bnb,
+                    gain,
+                    swapState.balance?.sub(parseEther("0.01"))
+                  ),
+                  bnb: swapState.balance?.sub(parseEther("0.01")),
+                },
+              });
+            }}
             type={"From"}
             amount={appState.bnbInBigNumber}
             currency={fromCurrency}
