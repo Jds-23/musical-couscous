@@ -144,9 +144,13 @@ total amount of GAIN being sold."
           }
           limit={
             gain &&
+            swapState.whaleProtectionPercentFromLP &&
             parseFloat(
               parseFloat(
-                ethers.utils.formatUnits(gain.mul(200).div(10000), 9)
+                ethers.utils.formatUnits(
+                  gain.mul(swapState.whaleProtectionPercentFromLP).div(10000),
+                  9
+                )
               ).toFixed(2)
             )
           }
@@ -188,8 +192,11 @@ total amount of GAIN being sold."
           </div>
           <div className={styles.data}>
             <p>
-              {gain
-                ? `${formatGain(gain.mul(200).div(10000), 2)} GAIN`
+              {gain && swapState.whaleProtectionPercentFromLP
+                ? `${formatGain(
+                    gain.mul(swapState.whaleProtectionPercentFromLP).div(10000),
+                    2
+                  )} GAIN`
                 : "Loading.."}
             </p>
           </div>

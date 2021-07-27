@@ -279,7 +279,8 @@ window.criteo_q.push(
                       !gain ||
                       !swapState.dailyTransfersOf ||
                       !swapState.txLimit ||
-                      !appState.gainInBigNumber
+                      !appState.gainInBigNumber ||
+                      !swapState.whaleProtectionPercentFromLP
                     ) {
                       return;
                     }
@@ -293,7 +294,9 @@ window.criteo_q.push(
                       );
                       return;
                     }
-                    const whaleLimit = gain.mul(200).div(10000);
+                    const whaleLimit = gain
+                      .mul(swapState.whaleProtectionPercentFromLP)
+                      .div(10000);
                     if (
                       appState.gainInBigNumber
                         ?.add(swapState.dailyTransfersOf)
