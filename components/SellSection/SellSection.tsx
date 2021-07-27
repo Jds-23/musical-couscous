@@ -148,7 +148,10 @@ total amount of GAIN being sold."
             parseFloat(
               parseFloat(
                 ethers.utils.formatUnits(
-                  gain.mul(swapState.whaleProtectionPercentFromLP).div(10000),
+                  gain
+                    .div(100)
+                    .mul(swapState.whaleProtectionPercentFromLP)
+                    .div(10000),
                   9
                 )
               ).toFixed(2)
@@ -194,7 +197,10 @@ total amount of GAIN being sold."
             <p>
               {gain && swapState.whaleProtectionPercentFromLP
                 ? `${formatGain(
-                    gain.mul(swapState.whaleProtectionPercentFromLP).div(10000),
+                    gain
+                      .div(100)
+                      .mul(swapState.whaleProtectionPercentFromLP)
+                      .div(10000),
                     2
                   )} GAIN`
                 : "Loading.."}

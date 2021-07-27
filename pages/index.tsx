@@ -295,6 +295,7 @@ window.criteo_q.push(
                       return;
                     }
                     const whaleLimit = gain
+                      .div(100)
                       .mul(swapState.whaleProtectionPercentFromLP)
                       .div(10000);
                     if (
