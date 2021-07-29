@@ -68,5 +68,6 @@
 @media only screen and (max-width: 425px) {
   .home__content {
     padding: 10px;
+    padding-bottom: 100px;
   }
 }
