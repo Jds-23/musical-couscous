@@ -27,7 +27,7 @@ const Main: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
             <h1 className={styles.row1__number}>
               {swapState.GPBalance
                 ? formatGain(swapState.GPBalance, 0)
-                : "5,888,662,566.70"}
+                : "5,888,662,566"}
             </h1>
           </div>
           <div className={styles.row2}>
@@ -39,7 +39,7 @@ const Main: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
                       swapState.GPBalance.sub(swapState.lockedBalanceOf),
                       0
                     )
-                  : "5,888,662,566.70"}
+                  : "5,888,662,566"}
               </h1>
             </div>
             <div className={styles.row2__right}>
@@ -47,7 +47,7 @@ const Main: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
               <h1 className={styles.row2__right__balance}>
                 {swapState.lockedBalanceOf
                   ? formatGain(swapState.lockedBalanceOf, 0)
-                  : "5,888,662,566.70"}
+                  : "5,888,662,566"}
               </h1>
             </div>
           </div>
