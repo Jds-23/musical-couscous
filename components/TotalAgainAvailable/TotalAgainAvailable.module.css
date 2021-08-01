@@ -104,3 +104,12 @@
   font-size: 18.74px;
   line-height: 22.49px;
 }
+@media only screen and (max-width: 400px) {
+  .row1__number {
+    font-size: 25px;
+  }
+  .row2__left__balance,
+  .row2__right__balance {
+    font-size: 13px;
+  }
+}

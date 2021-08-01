@@ -14,38 +14,40 @@ const Main: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
     <>
       <main className={styles.main} {...props}>
         <div className={styles.main__header}>
-          <button
+          <span
             onClick={() => setShowTotalGain(false)}
             className={`${styles.main__header__title} ${styles.gradientText}`}
           >
             CLOSE
-          </button>
+          </span>
         </div>
         <div className={styles.main__body}>
           <div className={styles.row1}>
             <h1 className={styles.row1__header}>TOTAL GAIN</h1>
             <h1 className={styles.row1__number}>
-              {swapState.GPBalance ? formatGain(swapState.GPBalance, 2) : "-"}
+              {swapState.GPBalance
+                ? formatGain(swapState.GPBalance, 2)
+                : "5,888,662,566.70"}
             </h1>
           </div>
           <div className={styles.row2}>
             <div className={styles.row2__left}>
               <h1>Available</h1>
-              <h1>
+              <h1 className={styles.row2__left__balance}>
                 {swapState.GPBalance && swapState.lockedBalanceOf
                   ? formatGain(
                       swapState.GPBalance.sub(swapState.lockedBalanceOf),
                       2
                     )
-                  : "-"}
+                  : "5,888,662,566.70"}
               </h1>
             </div>
             <div className={styles.row2__right}>
               <h1>Locked</h1>
-              <h1>
+              <h1 className={styles.row2__right__balance}>
                 {swapState.lockedBalanceOf
                   ? formatGain(swapState.lockedBalanceOf, 2)
-                  : "-"}
+                  : "5,888,662,566.70"}
               </h1>
             </div>
           </div>

@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import MobileMenu from "../MobileMenu/MobileMenu";
 const Sidebar = () => {
   const { theme, setTheme } = useTheme();
-  const [goingUp, setGoingUp] = useState(true);
+  const [goingUp, setGoingUp] = useState(false);
   const [hamburgerMenu, setHamburgerMenu] = useState(false);
   const prevScrollY = useRef(0);
   const [showBuy, setShowBuy] = useState(false);
@@ -31,7 +31,7 @@ const Sidebar = () => {
       <div
         className={`${styles.sidebar} ${
           theme !== "Light" ? styles.sidebar__dark : ""
-        } ${!goingUp && !hamburgerMenu ? styles.goingUp : ""}`}
+        } ${goingUp && !hamburgerMenu ? styles.goingUp : ""}`}
       >
         {/* <span className={styles.left__line}></span>
       <span className={styles.right__line}></span> */}
