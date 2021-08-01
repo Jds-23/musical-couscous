@@ -208,7 +208,7 @@ total amount of GAIN being sold."
           </div>
         </div>
       </HidableBar>
-      {true ? (
+      {showTotalGain ? (
         <TotalAgainAvailable
           setShowTotalGain={setShowTotalGain}
           style={{ height: "612.5px" }}
