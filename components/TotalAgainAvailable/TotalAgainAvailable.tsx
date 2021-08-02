@@ -51,7 +51,7 @@ const Main: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
           </div>
           <div className={styles.line}></div>
           <div className={styles.row3}>
-            <h3>A portion of the locked tokens is being released hourly.</h3>
+            <h3>Only available tokens can be sold.</h3>
           </div>
         </div>
       </main>
