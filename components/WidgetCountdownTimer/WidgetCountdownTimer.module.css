@@ -1,0 +1,33 @@
+.timer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 652px;
+}
+.timer > div > h3 {
+  text-align: center;
+  font-size: 24px;
+  line-height: 30px;
+}
+.timer > div > p {
+  text-align: center;
+  font-size: 7.5px;
+  text-transform: uppercase;
+}
+
+@media only screen and (max-width: 768px) {
+  .timer {
+    max-width: 100%;
+  }
+  .timer > div > h3 {
+    font-size: 7.531vw;
+    line-height: 9vw;
+  }
+  .timer > div > p {
+    font-size: 2.5vw;
+    line-height: 2.5vw;
+  }
+  .timer {
+    width: 85vw;
+  }
+}

@@ -2,12 +2,14 @@ import styles from "./Sidebar.module.css";
 import { Theme, useTheme } from "../../context/StateProvider";
 import React, { useEffect, useRef, useState } from "react";
 import MobileMenu from "../MobileMenu/MobileMenu";
+import WidgetCountdownScreen from "../WidgetCountdownScreen/WidgetCountdownScreen";
 const Sidebar = () => {
   const { theme, setTheme } = useTheme();
   const [goingUp, setGoingUp] = useState(false);
   const [hamburgerMenu, setHamburgerMenu] = useState(false);
   const prevScrollY = useRef(0);
-  const [showBuy, setShowBuy] = useState(false);
+  const [showLock, setShowLock] = useState(false);
+  const [showWinners, setShowWinners] = useState(false);
   const [showPlay, setShowPlay] = useState(false);
   const [showContribute, setShowContribute] = useState(false);
   useEffect(() => {
@@ -28,6 +30,30 @@ const Sidebar = () => {
   }, [goingUp]);
   return (
     <>
+      <WidgetCountdownScreen
+        opensDate={"Aug 4 , 2021 15:50:00"}
+        label={"CONTRIBUTIONS OPENS IN"}
+        setShow={setShowContribute}
+        show={showContribute}
+      />
+      <WidgetCountdownScreen
+        opensDate={"Aug 4 , 2021 15:50:00"}
+        label={"PLAY TIME STARTS IN"}
+        setShow={setShowPlay}
+        show={showPlay}
+      />
+      <WidgetCountdownScreen
+        opensDate={"Aug 4 , 2021 15:50:00"}
+        label={"Lock tokens will be available in"}
+        setShow={setShowLock}
+        show={showLock}
+      />
+      <WidgetCountdownScreen
+        opensDate={"Aug 4 , 2021 15:50:00"}
+        label={"Sweepstakes starts in"}
+        setShow={setShowWinners}
+        show={showWinners}
+      />
       <div
         className={`${styles.sidebar} ${
           theme !== "Light" ? styles.sidebar__dark : ""
@@ -66,6 +92,65 @@ const Sidebar = () => {
           </span>
         </button>
         <button
+          onClick={() => setShowContribute(true)}
+          className={styles.sidebar__button}
+          style={theme !== "Light" ? { color: "#fff" } : { color: "#181823" }}
+        >
+          <img
+            className={styles.image__normal}
+            src={
+              theme !== "Light"
+                ? "./images/Sidebar/LightContribute.svg"
+                : "./images/Sidebar/DarkContribute.svg"
+            }
+          />
+          <img
+            className={styles.image__hover}
+            src={
+              theme !== "Light"
+                ? "./images/Sidebar/Selected/Dark/Contribute.svg"
+                : "./images/Sidebar/Selected/Bright/Contribute.svg"
+            }
+          />
+          <span
+            className={`${styles.button__text} ${styles.button__text__pledge}`}
+          >
+            Pledge
+          </span>
+        </button>
+        <button
+          onClick={() => setShowLock(true)}
+          className={styles.sidebar__button}
+          style={theme !== "Light" ? { color: "#fff" } : { color: "#181823" }}
+        >
+          <img
+            className={styles.image__normal}
+            src={
+              theme !== "Light"
+                ? "./images/Sidebar/LightLock.svg"
+                : "./images/Sidebar/DarkLock.svg"
+            }
+          />
+          <img
+            className={styles.image__hover}
+            src={
+              theme !== "Light"
+                ? "./images/Sidebar/Selected/Dark/Lock.svg"
+                : "./images/Sidebar/Selected/Bright/Lock.svg"
+            }
+          />
+          <span
+            className={`${styles.button__text} ${styles.button__text__lock}`}
+          >
+            Lock
+          </span>
+        </button>
+        <MobileMenu
+          hamburgerMenu={hamburgerMenu}
+          setHamburgerMenu={setHamburgerMenu}
+        />
+        <button
+          onClick={() => setShowPlay(true)}
           className={styles.sidebar__button}
           style={theme !== "Light" ? { color: "#fff" } : { color: "#181823" }}
         >
@@ -91,11 +176,8 @@ const Sidebar = () => {
             Play
           </span>
         </button>
-        <MobileMenu
-          hamburgerMenu={hamburgerMenu}
-          setHamburgerMenu={setHamburgerMenu}
-        />
         <button
+          onClick={() => setShowWinners(true)}
           className={styles.sidebar__button}
           style={theme !== "Light" ? { color: "#fff" } : { color: "#181823" }}
         >
@@ -103,22 +185,22 @@ const Sidebar = () => {
             className={styles.image__normal}
             src={
               theme !== "Light"
-                ? "./images/Sidebar/LightContribute.svg"
-                : "./images/Sidebar/DarkContribute.svg"
+                ? "./images/Sidebar/LightWinners.svg"
+                : "./images/Sidebar/DarkWinners.svg"
             }
           />
           <img
             className={styles.image__hover}
             src={
               theme !== "Light"
-                ? "./images/Sidebar/Selected/Dark/Contribute.svg"
-                : "./images/Sidebar/Selected/Bright/Contribute.svg"
+                ? "./images/Sidebar/Selected/Dark/Winners.svg"
+                : "./images/Sidebar/Selected/Bright/Winners.svg"
             }
           />
           <span
-            className={`${styles.button__text} ${styles.button__text__pledge}`}
+            className={`${styles.button__text} ${styles.button__text__winners}`}
           >
-            Pledge
+            Winners
           </span>
         </button>
         <a
