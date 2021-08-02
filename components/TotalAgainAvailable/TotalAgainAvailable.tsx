@@ -37,7 +37,7 @@ const Main: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
                       swapState.GPBalance.sub(swapState.lockedBalanceOf),
                       0
                     )
-                  : "5,888,662,566"}
+                  : "-"}
               </h1>
             </div>
             <div className={styles.row2__right}>
