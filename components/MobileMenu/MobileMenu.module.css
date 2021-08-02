@@ -5,7 +5,6 @@
   display: none;
   transform: translateY(-3.5px);
   z-index: 30;
-  pointer-events: all;
 }
 .hamburger .line {
   width: 40px;
@@ -61,8 +60,11 @@
 .hamburger__dark .text {
   color: #181823;
 }
-@media only screen and (max-width: 1100px) {
+@media only screen and (orientation: portrait) {
   .hamburger {
     display: block;
+  }
+  .text {
+    font-size: 10px;
   }
 }

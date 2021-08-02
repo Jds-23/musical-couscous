@@ -40,7 +40,10 @@ const SwapCurrencyInputBox: React.FC<
         <div className={styles.swapCurrencyOutput__container__row1}>
           <div className={styles.swapCurrencyOutput__container__row1__content}>
             <p>{type}</p>
-            <p onClick={() => setShowTotalGain(true)}>
+            <p
+              style={{ textAlign: "right" }}
+              onClick={() => setShowTotalGain(true)}
+            >
               {balance
                 ? `Available Balance: ${new Intl.NumberFormat("en-US").format(
                     parseFloat(

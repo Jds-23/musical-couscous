@@ -36,9 +36,9 @@
 }
 .sidebar__dark .background {
   width: 85px;
-  height: 360px;
+  height: 420px;
   right: 0;
-  top: calc(50% - 180px);
+  top: calc(50% - 210px);
   border-radius: 10px 0 0 10px;
   background-color: rgba(0, 0, 0, 0.5);
 }
@@ -67,7 +67,12 @@
 .button__text__pledge {
   transform: translateX(14px) rotate(-90deg);
 }
-
+.button__text__lock {
+  transform: translateX(5px) rotate(-90deg);
+}
+.button__text__winners {
+  transform: translateX(21px) rotate(-90deg);
+}
 .image__hover {
   position: absolute;
   left: 0;
@@ -144,6 +149,7 @@
   .button__text {
     writing-mode: initial;
     transform: rotate(0deg);
+    font-size: 9px;
   }
   .button__text__mood {
     transform: translateX(0) rotate(-0deg);
@@ -157,8 +163,15 @@
   .button__text__pledge {
     transform: translateX(0) rotate(-0deg);
   }
+  .button__text__lock {
+    transform: translateX(0) rotate(-0deg);
+  }
+  .button__text__winners {
+    transform: translateX(0) rotate(-0deg);
+  }
   .sidebar > .sidebar__button > img {
     transform: translateY(-15px);
+    width: 48px;
   }
   .goingUp {
     transform: translateY(90px);
