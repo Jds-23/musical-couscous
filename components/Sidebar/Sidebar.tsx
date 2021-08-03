@@ -31,25 +31,25 @@ const Sidebar = () => {
   return (
     <>
       <WidgetCountdownScreen
-        opensDate={"Aug 4 , 2021 15:50:00"}
+        opensDate={"Spe 1 , 2021 15:50:00"}
         label={"CONTRIBUTIONS OPENS IN"}
         setShow={setShowContribute}
         show={showContribute}
       />
       <WidgetCountdownScreen
-        opensDate={"Aug 4 , 2021 15:50:00"}
+        opensDate={"Aug 15 , 2021 15:50:00"}
         label={"PLAY TIME STARTS IN"}
         setShow={setShowPlay}
         show={showPlay}
       />
       <WidgetCountdownScreen
-        opensDate={"Aug 4 , 2021 15:50:00"}
+        opensDate={"Aug 8 , 2021 15:50:00"}
         label={"Lock tokens will be available in"}
         setShow={setShowLock}
         show={showLock}
       />
       <WidgetCountdownScreen
-        opensDate={"Aug 4 , 2021 15:50:00"}
+        opensDate={"Aug 8 , 2021 15:50:00"}
         label={"Sweepstakes starts in"}
         setShow={setShowWinners}
         show={showWinners}
