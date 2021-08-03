@@ -31,7 +31,7 @@ const Sidebar = () => {
   return (
     <>
       <WidgetCountdownScreen
-        opensDate={"Spe 1, 2021 16:00:00"}
+        opensDate={"Sep 1, 2021 16:00:00"}
         label={"CONTRIBUTIONS OPENS IN"}
         setShow={setShowContribute}
         show={showContribute}
