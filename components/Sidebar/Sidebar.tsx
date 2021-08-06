@@ -3,7 +3,12 @@ import { Theme, useTheme } from "../../context/StateProvider";
 import React, { useEffect, useRef, useState } from "react";
 import MobileMenu from "../MobileMenu/MobileMenu";
 import WidgetCountdownScreen from "../WidgetCountdownScreen/WidgetCountdownScreen";
-const Sidebar = () => {
+interface MyProps {
+  visibility?: boolean;
+}
+const Sidebar: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
+  visibility = false,
+}) => {
   const { theme, setTheme } = useTheme();
   const [goingUp, setGoingUp] = useState(false);
   const [hamburgerMenu, setHamburgerMenu] = useState(false);
@@ -57,7 +62,7 @@ const Sidebar = () => {
       <div
         className={`${styles.sidebar} ${
           theme !== "Light" ? styles.sidebar__dark : ""
-        } ${goingUp && !hamburgerMenu ? styles.goingUp : ""}`}
+        } ${goingUp && !hamburgerMenu && !visibility ? styles.goingUp : ""}`}
       >
         {/* <span className={styles.left__line}></span>
       <span className={styles.right__line}></span> */}

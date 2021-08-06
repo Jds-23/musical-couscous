@@ -7,21 +7,18 @@ import BuySection from "../components/BuySection/BuySection";
 import SellSection from "../components/SellSection/SellSection";
 import WalletInfoModal from "../components/WalletInfoModal/WalletInfoModal";
 import ConfirmSwapModal from "../components/ConfirmSwapModal/ConfirmSwapModal";
-import Info from "../components/Info/Info";
 import ErrorModal from "../components/ErrorModal/ErrorModal";
 import SuccessModal from "../components/SuccessModal/SuccessModal";
-import HidableBar from "../components/HidableBar/HidableBar";
 import { useToast, Box } from "@chakra-ui/react";
 import CountdownScreen from "../components/CountdownScreen/CountdownScreen";
 import Sidebar from "../components/Sidebar/Sidebar";
 import { useTheme, useAppContext, BuyOrSell } from "../context/StateProvider";
 import { ExternalStateContext } from "../context/ExternalState";
-import { ethers } from "ethers";
-import { formatUnits } from "ethers/lib/utils";
 import TransactionsInfos from "../components/TransactionsInfos/TransactionsInfos";
 import TransactionsFees from "../components/TransactionsFees/TransactionsFees";
 import { formatGain, useLiquidity } from "../utils";
 import { Types } from "../reducer/reducer";
+import VisibilitySensor from "react-visibility-sensor";
 
 const opensDate = "Jul 2, 2021 16:00:00";
 export default function Home() {
@@ -29,6 +26,7 @@ export default function Home() {
   const [confirmSwapModal, setConfirmSwapModal] = useState(false);
   const { gain, bnb } = useLiquidity();
   const { state: swapState } = useContext(ExternalStateContext);
+  const [visibility, setVisibility] = useState(false);
 
   const [errorModal, setErrorModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -245,7 +243,7 @@ window.criteo_q.push(
               onClose={() => setSuccessModal(false)}
             />
             <div className={styles.home__content}>
-              <Sidebar />
+              <Sidebar visibility={visibility} />
               <Switch
                 style={{
                   marginLeft: "auto",
@@ -344,6 +342,13 @@ window.criteo_q.push(
           </>
         )}
       </div>
+      {
+        <VisibilitySensor onChange={(isVisible) => setVisibility(isVisible)}>
+          <h1
+            style={{ width: "100%", height: "50px", textAlign: "center" }}
+          ></h1>
+        </VisibilitySensor>
+      }
     </>
   );
 }
