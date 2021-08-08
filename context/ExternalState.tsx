@@ -129,6 +129,11 @@ export const ExternalStateProvider: React.FC = ({ children }) => {
       });
     }
     calls.push({
+      target: process.env.NEXT_PUBLIC_SWEEPSTAKES_ADDRESS,
+      call: ["lockedTokensOf(address)(uint256,uint256)", account],
+      returns: [["unlockedDate"], ["lockedBalance"]],
+    });
+    calls.push({
       target: undefined,
       call: ["getEthBalance(address)(uint256)", account],
       returns: [["balance"]],

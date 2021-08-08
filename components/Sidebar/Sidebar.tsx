@@ -3,6 +3,7 @@ import { Theme, useTheme } from "../../context/StateProvider";
 import React, { useEffect, useRef, useState } from "react";
 import MobileMenu from "../MobileMenu/MobileMenu";
 import WidgetCountdownScreen from "../WidgetCountdownScreen/WidgetCountdownScreen";
+import LockWidget from "../LockWidget/LockWidget";
 const Sidebar = () => {
   const { theme, setTheme } = useTheme();
   const [goingUp, setGoingUp] = useState(false);
@@ -49,11 +50,12 @@ const Sidebar = () => {
         show={showLock}
       />
       <WidgetCountdownScreen
-        opensDate={"Aug 8, 2021 16:00:00"}
+        opensDate={"Aug 9, 2021 16:00:00"}
         label={"Sweepstakes starts in"}
         setShow={setShowWinners}
         show={showWinners}
       />
+      <LockWidget label={"LOCK"} setShow={setShowLock} show={showLock} />
       <div
         className={`${styles.sidebar} ${
           theme !== "Light" ? styles.sidebar__dark : ""
