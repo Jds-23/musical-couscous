@@ -50,6 +50,7 @@
 }
 .locks__percent__option {
   display: flex;
+  flex-direction: column;
 }
 .button__gradient {
   margin: 5.5px;

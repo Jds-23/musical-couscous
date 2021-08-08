@@ -97,20 +97,38 @@ const LockWidget: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
               </h1>
               <div className={styles.line}></div>
               <div className={styles.locks__percent__option}>
-                <button
-                  style={{ width: "100px" }}
-                  className={styles.button__outline}
-                  onClick={() => setPercentage(75)}
+                <div>
+                  <button
+                    style={{ width: "100px" }}
+                    className={styles.button__outline}
+                    onClick={() => setPercentage(70)}
+                  >
+                    70%
+                  </button>
+                  <button
+                    style={{ width: "100px" }}
+                    className={styles.button__outline}
+                    onClick={() => setPercentage(85)}
+                  >
+                    85%
+                  </button>
+                </div>
+
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
                 >
-                  75%
-                </button>
-                <button
-                  style={{ width: "100px" }}
-                  className={styles.button__gradient}
-                  onClick={() => setPercentage(100)}
-                >
-                  100%
-                </button>
+                  <button
+                    style={{ width: "100px" }}
+                    className={styles.button__gradient}
+                    onClick={() => setPercentage(100)}
+                  >
+                    100%
+                  </button>
+                </div>
               </div>
             </div>
           </>
