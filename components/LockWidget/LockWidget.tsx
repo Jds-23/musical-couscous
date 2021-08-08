@@ -48,6 +48,10 @@ const LockWidget: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
         library?.getSigner()
       );
       try {
+        if (!externalState.GPBalance?.gt(0)) {
+          alert("No GAINs in wallet");
+          return;
+        }
         await contract.lockTokens(
           externalState.GPBalance?.mul(percentage).div(100),
           days
