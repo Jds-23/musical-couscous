@@ -14,6 +14,7 @@ import SweepstakesABI from "../../contracts/Sweepstakes.json";
 import { ExternalStateContext } from "../../context/ExternalState";
 import moment from "moment";
 import { formatGain } from "../../utils";
+import AnimatedLoader from "../AnimatedLoader/AnimatedLoader";
 interface MyProps {
   //   opensDate: string;
   show: boolean;
@@ -30,7 +31,7 @@ const LockWidget: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
   const { account, library } = useWeb3React<Web3Provider>();
   const [percentage, setPercentage] = useState(0);
   const { state: externalState } = useContext(ExternalStateContext);
-  const [days, setDays] = useState(0);
+  const [loading, setLoading] = useState(false);
   const state = account
     ? externalState.lockedBalance?.gt(0) && externalState.unlockedDate?.gt(0)
       ? 3
@@ -40,18 +41,24 @@ const LockWidget: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
     : 0;
   const lockTokens = useCallback(
     async (days: number) => {
+      setLoading(true);
       const contract = new Contract(
         process.env.NEXT_PUBLIC_SWEEPSTAKES_ADDRESS!,
         SweepstakesABI,
         library?.getSigner()
       );
-
-      await contract.lockTokens(
-        externalState.GPBalance?.mul(percentage).div(100),
-        days
-      );
+      try {
+        await contract.lockTokens(
+          externalState.GPBalance?.mul(percentage).div(100),
+          days
+        );
+      } catch (err) {
+        alert(err.message);
+      } finally {
+        setLoading(false);
+      }
     },
-    [library, externalState, percentage]
+    [library, externalState, percentage, setLoading]
   );
 
   const getScreen = () => {
@@ -112,38 +119,52 @@ const LockWidget: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
         return (
           <>
             <Header />
-            <div
-              className={`${styles.lockWidget__content} ${
-                theme === "Dark" ? styles.dark : ""
-              }`}
-            >
-              <h1 style={{ textTransform: "uppercase" }}>LOCK duration</h1>
-              <div className={styles.line}></div>
-              <button
-                className={styles.button__outline}
-                onClick={() => {
-                  lockTokens(30);
+            {loading ? (
+              <div
+                style={{
+                  height: "100%",
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
-                30 DAYS
-              </button>
-              <button
-                className={styles.button__outline}
-                onClick={() => {
-                  lockTokens(60);
-                }}
+                <AnimatedLoader />
+              </div>
+            ) : (
+              <div
+                className={`${styles.lockWidget__content} ${
+                  theme === "Dark" ? styles.dark : ""
+                }`}
               >
-                60 DAYS
-              </button>
-              <button
-                className={styles.button__gradient}
-                onClick={() => {
-                  lockTokens(90);
-                }}
-              >
-                90 DAYS
-              </button>
-            </div>
+                <h1 style={{ textTransform: "uppercase" }}>LOCK duration</h1>
+                <div className={styles.line}></div>
+                <button
+                  className={styles.button__outline}
+                  onClick={() => {
+                    lockTokens(30);
+                  }}
+                >
+                  30 DAYS
+                </button>
+                <button
+                  className={styles.button__outline}
+                  onClick={() => {
+                    lockTokens(60);
+                  }}
+                >
+                  60 DAYS
+                </button>
+                <button
+                  className={styles.button__gradient}
+                  onClick={() => {
+                    lockTokens(90);
+                  }}
+                >
+                  90 DAYS
+                </button>
+              </div>
+            )}
             <Footer setShow={() => setPercentage(0)} />
           </>
         );
