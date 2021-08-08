@@ -78,7 +78,7 @@ const LockWidget: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
             </h1>
             <div className={styles.line}></div>
             <h2 style={{ textTransform: "uppercase" }}>
-              Connect Wallet to Lock token
+              Connect Wallet to Lock tokens
             </h2>
             <ConnectButton size="sm" />
           </div>
