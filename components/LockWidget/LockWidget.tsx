@@ -93,7 +93,7 @@ const LockWidget: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
               }`}
             >
               <h1 style={{ textTransform: "uppercase" }}>
-                Percentage of Token to lock
+                Percentage of tokens to lock
               </h1>
               <div className={styles.line}></div>
               <div className={styles.locks__percent__option}>
