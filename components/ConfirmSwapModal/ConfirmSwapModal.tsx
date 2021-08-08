@@ -165,7 +165,7 @@ const ConfirmSwapModal: React.FC<
         })
         .catch((err: any) => {
           console.log(err.message);
-          setErrorMessage(err.message);
+          setErrorMessage(err.data?.message || err.message);
           onErrorOpen();
           onClose();
           setLoading(false);
