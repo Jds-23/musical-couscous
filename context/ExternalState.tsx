@@ -33,6 +33,9 @@ interface StateVars {
   balance?: BigNumber;
   GPBalance?: BigNumber;
   txLimit?: BigNumber;
+
+  lockedBalance?: BigNumber;
+  unlockedDate?: BigNumber;
 }
 export const ExternalStateContext = React.createContext<{ state: StateVars }>({
   state: {},
