@@ -53,9 +53,9 @@ const LockWidget: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
           days
         );
       } catch (err) {
+        setLoading(false);
         alert(err.message);
       } finally {
-        setLoading(false);
       }
     },
     [library, externalState, percentage, setLoading]
