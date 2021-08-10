@@ -1,0 +1,23 @@
+.header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 5px 5px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+.close {
+  text-transform: uppercase;
+  font-size: 16px;
+  font-weight: bold;
+  background: none;
+  border: none;
+  color: #7a71a7;
+  font-family: "Eurostile Bold";
+  font-weight: 600;
+  cursor: pointer;
+}
+.dark .close {
+  color: #cfc5f7;
+}
