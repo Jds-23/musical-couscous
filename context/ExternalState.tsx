@@ -2,7 +2,7 @@ import { Web3Provider } from "@ethersproject/providers";
 import { useWeb3React } from "@web3-react/core";
 import { BigNumber } from "ethers";
 import { formatEther, formatUnits } from "ethers/lib/utils";
-import React from "react";
+import React, { useState } from "react";
 import useWatcher from "../hooks/useWatcher";
 import { useAppContext } from "./StateProvider";
 interface StateVars {
@@ -36,6 +36,16 @@ interface StateVars {
 
   lockedBalance?: BigNumber;
   unlockedDate?: BigNumber;
+
+  performedAt?: BigNumber;
+  sweepstakeID?: BigNumber;
+  totalJackpot?: BigNumber;
+  minigameRandom?: BigNumber;
+  winners?: string[];
+  amounts?: BigNumber[];
+  types?: BigNumber[];
+
+  gainsFor100USD?: BigNumber;
 }
 export const ExternalStateContext = React.createContext<{ state: StateVars }>({
   state: {},
@@ -44,7 +54,18 @@ export const ExternalStateContext = React.createContext<{ state: StateVars }>({
 export const ExternalStateProvider: React.FC = ({ children }) => {
   const { account } = useWeb3React<Web3Provider>();
   const { state: AppState, dispatch } = useAppContext();
+  const [sweepstakeCount, setSweepstakeCount] = useState<number | null>(null);
   const calls = [
+    {
+      target: process.env.NEXT_PUBLIC_SWEEPSTAKES_ADDRESS,
+      call: ["sweepstakeCount()(uint256)"],
+      returns: [["sweepstakeCount"]],
+    },
+    {
+      target: process.env.NEXT_PUBLIC_PRICEFEED_ADDRESS,
+      call: ["gainsForUSD(uint256)(bool,uint256)", 100],
+      returns: [["priceFeedSuccess"], ["gainsFor100USD"]],
+    },
     {
       target: process.env.NEXT_PUBLIC_GP_ADDRESS,
       call: ["maxTxAmount()(uint256)"],
@@ -66,6 +87,26 @@ export const ExternalStateProvider: React.FC = ({ children }) => {
       returns: [["whaleProtectionPercentFromLP"]],
     },
   ];
+
+  if (sweepstakeCount) {
+    calls.push({
+      target: process.env.NEXT_PUBLIC_SWEEPSTAKES_ADDRESS,
+      call: [
+        "sweepstakeResult(uint256)(uint256,uint256,uint256,uint256,address[],uint256[],uint256[])",
+        BigNumber.from(sweepstakeCount - 1).toString(),
+      ],
+      returns: [
+        ["performedAt"],
+        ["sweepstakeID"],
+        ["totalJackpot"],
+        ["minigameRandom"],
+        ["winners"],
+        ["amounts"],
+        ["types"],
+      ],
+    });
+  }
+
   if (account) {
     calls.push({
       target: process.env.NEXT_PUBLIC_GP_ADDRESS,
@@ -149,6 +190,13 @@ export const ExternalStateProvider: React.FC = ({ children }) => {
   }
 
   const watcher = useWatcher(calls);
+
+  if (
+    watcher.sweepstakeCount &&
+    !watcher.sweepstakeCount.eq(sweepstakeCount || 0)
+  ) {
+    setSweepstakeCount(watcher.sweepstakeCount.toNumber());
+  }
 
   return (
     <ExternalStateContext.Provider value={{ state: watcher }}>
