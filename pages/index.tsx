@@ -216,7 +216,7 @@ window.criteo_q.push(
           className={`${styles.home__background}
         ${theme === "Dark" ? styles.home__background__dark : ""}`}
         />
-        <img
+        {/* <img
           alt=""
           src={"./images/background/LeftTop.svg"}
           className={styles.home__bg_left_top}
@@ -236,7 +236,7 @@ window.criteo_q.push(
           alt=""
           src={"./images/background/RightBottom.svg"}
           className={styles.home__bg_right_bottom}
-        />
+        /> */}
         <Header openWalletInfoModal={() => setWalletInfoModal(true)} />
         {time > 0 ? (
           <CountdownScreen opensDate={opensDate} />

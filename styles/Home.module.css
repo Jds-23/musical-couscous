@@ -52,7 +52,11 @@
   background-size: cover;
 }
 .home__background__dark {
-  background: #000;
+  /* background: #000; */
+  background-image: url("./DarkDesktop.svg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 .home__content {
