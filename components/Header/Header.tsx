@@ -10,7 +10,9 @@ const Header: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
 }) => {
   const { theme } = useTheme();
   return (
-    <header className={styles.header}>
+    <header
+      className={`${styles.header} ${theme === "Dark" ? styles.dark : ""}`}
+    >
       {theme === "Light" ? (
         <img
           className={styles.header__brand}
