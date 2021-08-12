@@ -5,6 +5,7 @@
   display: none;
   transform: translateY(-3.5px);
   z-index: 30;
+  pointer-events: all;
 }
 .hamburger .line {
   width: 40px;

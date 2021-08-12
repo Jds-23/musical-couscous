@@ -6,7 +6,12 @@ import WidgetCountdownScreen from "../WidgetCountdownScreen/WidgetCountdownScree
 import LockWidget from "../LockWidget/LockWidget";
 import WinnersWidget from "../WinnersWidget/WinnersWidget";
 import AffiliatesWidget from "../AffiliatesWidget/AffiliatesWidget";
-const Sidebar = () => {
+interface MyProps {
+  visibility?: boolean;
+}
+const Sidebar: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
+  visibility = false,
+}) => {
   const { theme, setTheme } = useTheme();
   const [goingUp, setGoingUp] = useState(false);
   const [hamburgerMenu, setHamburgerMenu] = useState(false);
@@ -66,7 +71,7 @@ const Sidebar = () => {
       <div
         className={`${styles.sidebar} ${
           theme !== "Light" ? styles.sidebar__dark : ""
-        } ${goingUp && !hamburgerMenu ? styles.goingUp : ""}`}
+        } ${goingUp && !hamburgerMenu && !visibility ? styles.goingUp : ""}`}
       >
         {/* <span className={styles.left__line}></span>
       <span className={styles.right__line}></span> */}
