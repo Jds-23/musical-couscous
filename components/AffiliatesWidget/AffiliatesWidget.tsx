@@ -73,7 +73,12 @@ const AffiliatesWidget: React.FC<
     } else if (account && generatingLink) {
       state = DisplayState.Loader;
     } else if (section == Section.Account) {
-      state = 7;
+      if (account && externalState.affiliateID && !affiliateID) {
+        // Affiliate ID loaded, but is empty
+        state = DisplayState.CreateIntro;
+      } else {
+        state = DisplayState.Account;
+      }
     } else if (section == Section.CreateIntro) {
       state = DisplayState.CreateIntro;
     } else if (section == Section.Rules) {
