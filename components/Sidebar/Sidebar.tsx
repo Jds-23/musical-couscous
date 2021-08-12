@@ -241,7 +241,7 @@ const Sidebar = () => {
             Winners
           </span>
         </button>
-        <a
+        {/* <a
           href={"https://www.gainprotocol.com/"}
           className={`${styles.sidebar__button}`}
           style={theme !== "Light" ? { color: "#fff" } : { color: "#181823" }}
@@ -267,7 +267,7 @@ const Sidebar = () => {
           >
             Home
           </span>
-        </a>
+        </a> */}
       </div>
     </>
   );
