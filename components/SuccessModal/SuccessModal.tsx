@@ -54,7 +54,7 @@ const SuccessModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
             >
               View on BscScan
             </h1>
-            <div
+            {/* <div
               className={`${theme === "Dark" ? styles.dark : ""} ${
                 styles.addInfo
               }`}
@@ -63,7 +63,7 @@ const SuccessModal: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
                 Add GAIN PROTOCOL to Metamask
                 <img alt="Meta Mask" src={"./images/MetaMask.svg"} />
               </p>
-            </div>
+            </div> */}
           </ModalBody>
           <ModalFooter backgroundColor={theme === "Dark" ? "#000" : "#fff"}>
             <CustomButton onClick={onClose}>Close</CustomButton>

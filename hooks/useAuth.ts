@@ -19,7 +19,8 @@ import { connectorsByName } from "../connectors";
 const useAuth = () => {
   const { activate, deactivate } = useWeb3React();
   // const { toastError } = useToast();
-  const toastError = console.error;
+  // @ts-ignore
+  const toastError = (err, ...args) => alert(err + ": " + args.join(" - "));
 
   const login = useCallback((connectorID: ConnectorNames) => {
     const connector = connectorsByName[connectorID];

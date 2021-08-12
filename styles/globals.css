@@ -1,8 +1,22 @@
 @font-face {
+  font-family: "Eurostile Tech";
+  src: url("/fonts/Eurostile-tech.ttf");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
   font-family: "Eurostile";
   src: url("/fonts/euro_technic_extended_regular.ttf");
   font-style: normal;
   font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Eurostile Bold Extra";
+  src: url("/fonts/Eurostile-Bold-Extra.TTF");
+  font-style: normal;
+  font-weight: 600;
   font-display: swap;
 }
 @font-face {

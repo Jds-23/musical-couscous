@@ -3,6 +3,9 @@ import { Theme, useTheme } from "../../context/StateProvider";
 import React, { useEffect, useRef, useState } from "react";
 import MobileMenu from "../MobileMenu/MobileMenu";
 import WidgetCountdownScreen from "../WidgetCountdownScreen/WidgetCountdownScreen";
+import LockWidget from "../LockWidget/LockWidget";
+import WinnersWidget from "../WinnersWidget/WinnersWidget";
+import AffiliatesWidget from "../AffiliatesWidget/AffiliatesWidget";
 interface MyProps {
   visibility?: boolean;
 }
@@ -17,6 +20,7 @@ const Sidebar: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
   const [showWinners, setShowWinners] = useState(false);
   const [showPlay, setShowPlay] = useState(false);
   const [showContribute, setShowContribute] = useState(false);
+  const [showAffiliates, setShowAffiliates] = useState(false);
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
@@ -53,11 +57,16 @@ const Sidebar: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
         setShow={setShowLock}
         show={showLock}
       />
-      <WidgetCountdownScreen
-        opensDate={"Aug 8, 2021 16:00:00"}
-        label={"Sweepstakes starts in"}
+      <LockWidget label={"LOCK"} setShow={setShowLock} show={showLock} />
+      <WinnersWidget
+        label={"Winners"}
         setShow={setShowWinners}
         show={showWinners}
+      />
+      <AffiliatesWidget
+        label={"Affiliate starts in"}
+        setShow={setShowAffiliates}
+        show={showAffiliates}
       />
       <div
         className={`${styles.sidebar} ${
@@ -182,6 +191,35 @@ const Sidebar: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
           </span>
         </button>
         <button
+          className={styles.sidebar__button}
+          style={theme !== "Light" ? { color: "#fff" } : { color: "#181823" }}
+          onClick={() => {
+            setShowAffiliates(!showAffiliates);
+          }}
+        >
+          <img
+            className={styles.image__normal}
+            src={
+              theme !== "Light"
+                ? "./images/Sidebar/LightAffiliates.svg"
+                : "./images/Sidebar/DarkAffiliates.svg"
+            }
+          />
+          <img
+            className={styles.image__hover}
+            src={
+              theme !== "Light"
+                ? "./images/Sidebar/Selected/Bright/Affiliates.svg"
+                : "./images/Sidebar/Selected/Dark/Affiliates.svg"
+            }
+          />
+          <span
+            className={`${styles.button__text} ${styles.button__text__affiliates}`}
+          >
+            Affiliates
+          </span>
+        </button>
+        <button
           onClick={() => setShowWinners(true)}
           className={styles.sidebar__button}
           style={theme !== "Light" ? { color: "#fff" } : { color: "#181823" }}
@@ -208,7 +246,7 @@ const Sidebar: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
             Winners
           </span>
         </button>
-        <a
+        {/* <a
           href={"https://www.gainprotocol.com/"}
           className={`${styles.sidebar__button}`}
           style={theme !== "Light" ? { color: "#fff" } : { color: "#181823" }}
@@ -234,7 +272,7 @@ const Sidebar: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
           >
             Home
           </span>
-        </a>
+        </a> */}
       </div>
     </>
   );

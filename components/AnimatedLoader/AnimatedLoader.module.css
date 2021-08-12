@@ -1,0 +1,74 @@
+.diamond {
+  transform: rotate(-45deg);
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  height: calc((40 / 144) * 300px);
+  width: calc((40 / 144) * 300px);
+  /* top: 0; */
+  /* overflow: hidden; */
+}
+.diamond > div {
+  height: 13.5%;
+  /* opacity: 0.5; */
+  /* transition: 1s all ease-in-out; */
+  opacity: 0;
+  transition-duration: 1s;
+  transition-property: all;
+  border-radius: 0px 50px 50px 0px;
+}
+.display > div {
+  border-radius: 0px;
+  opacity: 1;
+}
+
+.display .stripe1 {
+  width: 40%;
+}
+.display .stripe2 {
+  width: 60%;
+}
+.display .stripe3 {
+  width: 80%;
+}
+.display .stripe4 {
+  width: 100%;
+}
+.display .stripe5 {
+  width: 100%;
+}
+
+.stripe1 {
+  width: 0%;
+  background: #a09ac0;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.stripe2 {
+  width: 0%;
+  transition-delay: 1s;
+  background: #a09ac0;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.stripe3 {
+  width: 0%;
+  transition-delay: 2s;
+  background: #a09ac0;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.stripe4 {
+  width: 0%;
+  transition-delay: 3s;
+  background: #a09ac0;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.stripe5 {
+  width: 0%;
+  transition-delay: 4s;
+  background: #a09ac0;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

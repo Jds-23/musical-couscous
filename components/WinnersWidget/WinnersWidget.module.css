@@ -1,0 +1,175 @@
+.widgetScreen {
+  max-width: 400px;
+  max-height: 500px;
+  top: calc(50% - 250px);
+}
+.winnersWidget__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* width: calc(61vw + 32px); */
+  padding: 35px 25px 35px;
+  height: 100%;
+  width: 100%;
+  color: #7a71a7;
+  z-index: 1000;
+}
+.dark.winnersWidget__content {
+  color: #cfc5f7;
+}
+
+.line {
+  width: 234px;
+  border-radius: 4px;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    #ecb42a 0%,
+    #e8a839 48%,
+    #c637c1 81%,
+    #bb12ee 100%
+  );
+  margin-bottom: 20px;
+}
+.winnersWidget__content > h1 {
+  font-size: 21.07px;
+  text-align: center;
+  margin-bottom: 19px;
+}
+.winnersWidget__content > h2 {
+  font-size: 18.13px;
+  text-align: center;
+  margin-bottom: 14px;
+}
+.winnersWidget__content > h3 {
+  font-size: 17.01px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.winnersWidget__content > h4 {
+  font-size: 10.38px;
+  text-align: center;
+  margin-top: 25px;
+}
+.small__text_button {
+  font-size: 9.952px;
+  text-align: center;
+  cursor: pointer;
+}
+.locks__percent__option {
+  display: flex;
+}
+.button__gradient {
+  margin: 5.5px;
+  background: linear-gradient(
+    90deg,
+    #ecb42a 0%,
+    #e8a839 48%,
+    #c637c1 81%,
+    #bb12ee 100%
+  );
+  font-size: 20px;
+  border-radius: 100px;
+  color: #fff;
+  border: none;
+  outline: none;
+  padding: 12px;
+  transform: scale(1);
+  transition: 0.1s all ease-in-out;
+  /* font-family: "Eurostile Tech"; */
+  cursor: pointer;
+  font-family: Eurostile Bold Extra;
+  font-size: 17.1px;
+}
+.winners__list {
+  background: #fff;
+  color: #7a71a7;
+  border-radius: 15px;
+  overflow-y: auto;
+  padding-top: 20px;
+  width: 100%;
+}
+.winner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.address {
+  word-wrap: break-word;
+  text-align: center;
+  max-width: 100%;
+}
+.winners__list::-webkit-scrollbar {
+  width: 10px;
+  overflow: visible;
+  border-radius: 10px;
+}
+
+/* Track */
+.winners__list::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background: #a09ac0;
+  border-left: 2px solid transparent;
+  border-right: 2px solid transparent;
+  background-clip: padding-box;
+}
+.winners__list::-webkit-scrollbar-track-piece {
+  width: 25px;
+}
+/* Handle */
+.winners__list::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    331deg,
+    #ecb42a 0%,
+    #e8a839 25%,
+    #c637c1 72%,
+    #bb12ee 100%
+  );
+  border-radius: 10px;
+}
+@media only screen and (max-width: 768px) {
+  .widgetScreen {
+    max-width: 100%;
+    max-height: 100vh;
+    top: 0;
+  }
+  .winnersWidget__content {
+    max-width: 100%;
+    padding: 0 20px;
+    justify-content: center;
+    margin-top: 0;
+  }
+  .winnersWidget__content > h1 {
+    font-size: 8.232vw;
+  }
+  .line {
+    width: 78.125vw;
+    border-radius: 2px;
+    height: 2px;
+  }
+
+  .winnersWidget__content > h1 {
+    font-size: 6.5vw;
+    text-align: center;
+  }
+  .winnersWidget__content > h2 {
+    font-size: 5.517vw;
+    text-align: center;
+  }
+  .winnersWidget__content > h3 {
+    font-size: 5.08vw;
+    text-align: center;
+  }
+  .winnersWidget__content > h4 {
+    font-size: 4vw;
+    text-align: center;
+  }
+  .small__text {
+    font-size: 2.65vw;
+  }
+  .winners__list {
+    height: 60%;
+  }
+}

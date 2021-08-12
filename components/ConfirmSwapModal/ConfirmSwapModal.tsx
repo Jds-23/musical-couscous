@@ -1,16 +1,23 @@
 import CustomModal from "../Modal/Modal";
 import styles from "./ConfirmSwapModal.module.css";
 import { ModalBody, ModalFooter } from "@chakra-ui/react";
+import Cookies from "universal-cookie";
 import React, { useContext, useState } from "react";
 import CustomButton from "../Button/Button";
+import { useRouter } from "next/router";
 import {
   BuyOrSell,
   useAppContext,
   useTheme,
 } from "../../context/StateProvider";
 import Info from "../Info/Info";
-import { formatEther, formatUnits } from "ethers/lib/utils";
+import {
+  formatBytes32String,
+  formatEther,
+  formatUnits,
+} from "ethers/lib/utils";
 import RouterABI from "../../contracts/PancakeRouter.json";
+import SweepstakesABI from "../../contracts/Sweepstakes.json";
 import { Contract } from "ethers";
 import { Web3Provider } from "@ethersproject/providers";
 import { useWeb3React } from "@web3-react/core";
@@ -38,6 +45,7 @@ const ConfirmSwapModal: React.FC<
   setErrorMessage,
   ...props
 }) => {
+  const router = useRouter();
   const { library } = useWeb3React<Web3Provider>();
   const { account } = useWeb3React<Web3Provider>();
   const { theme } = useTheme();
@@ -69,11 +77,6 @@ const ConfirmSwapModal: React.FC<
       appState.gainInBigNumber &&
       account
     ) {
-      const contract = new Contract(
-        process.env.NEXT_PUBLIC_ROUTER_ADDRESS,
-        RouterABI,
-        library.getSigner()
-      );
       console.log(
         "Min -deadline - value",
         appState.gainInBigNumber?.sub(
@@ -85,35 +88,69 @@ const ConfirmSwapModal: React.FC<
           parseFloat(appState.transactionDeadline) * 60,
         appState.bnbInBigNumber
       );
-      await contract
-        .swapExactETHForTokensSupportingFeeOnTransferTokens(
-          appState.gainInBigNumber?.sub(
-            appState.gainInBigNumber
-              ?.mul(parseFloat(appState.slippageTolerance) * 1000)
-              .div(100000)
-          ),
-          [
-            process.env.NEXT_PUBLIC_ETH_ADDRESS,
-            process.env.NEXT_PUBLIC_GP_ADDRESS,
-          ],
-          account,
-          Math.floor(Date.now() / 1000) +
-            parseFloat(appState.transactionDeadline) * 60,
-          { value: appState.bnbInBigNumber }
-        )
-        .then((res: any) => {
-          console.log(res);
-          successToast(getSwapInfos(), res.hash);
-          onSuccessOpen();
-          onClose();
-          setLoading(false);
-        })
-        .catch((err: any) => {
-          console.log(err);
-          onErrorOpen();
-          onClose();
-          setLoading(false);
-        });
+      const amountOutMin = appState.gainInBigNumber?.sub(
+        appState.gainInBigNumber
+          ?.mul(parseFloat(appState.slippageTolerance) * 1000)
+          .div(100000)
+      );
+      const path = [
+        process.env.NEXT_PUBLIC_ETH_ADDRESS,
+        process.env.NEXT_PUBLIC_GP_ADDRESS,
+      ];
+      const deadline =
+        Math.floor(Date.now() / 1000) +
+        parseFloat(appState.transactionDeadline) * 60;
+      try {
+        let res;
+        const cookies = new Cookies();
+        const af = router.query.af || cookies.get("af");
+        if (af) {
+          const contract = new Contract(
+            process.env.NEXT_PUBLIC_SWEEPSTAKES_ADDRESS!,
+            SweepstakesABI,
+            library?.getSigner()
+          );
+          res = await contract.buyWithAffiliate(
+            formatBytes32String(af),
+            amountOutMin,
+            account,
+            deadline,
+            {
+              value: appState.bnbInBigNumber,
+            }
+          );
+        } else {
+          const contract = new Contract(
+            process.env.NEXT_PUBLIC_ROUTER_ADDRESS,
+            RouterABI,
+            library.getSigner()
+          );
+          res =
+            await contract.swapExactETHForTokensSupportingFeeOnTransferTokens(
+              amountOutMin,
+              path,
+              account,
+              deadline,
+              { value: appState.bnbInBigNumber }
+            );
+        }
+        console.log(res);
+        successToast(getSwapInfos(), res.hash);
+        onSuccessOpen();
+        onClose();
+        setLoading(false);
+      } catch (err) {
+        console.log(err);
+        onErrorOpen();
+        setErrorMessage(
+          (err.data?.message || err.message)?.replace(
+            "execution reverted: ",
+            ""
+          )
+        );
+        onClose();
+        setLoading(false);
+      }
     }
   };
   const sell = async () => {
@@ -165,7 +202,7 @@ const ConfirmSwapModal: React.FC<
         })
         .catch((err: any) => {
           console.log(err.message);
-          setErrorMessage(err.message);
+          setErrorMessage(err.data?.message || err.message);
           onErrorOpen();
           onClose();
           setLoading(false);

@@ -34,13 +34,16 @@ function MyApp({ Component, pageProps }: AppProps) {
       },
     },
   });
+  const SCTheme = themeState === "Dark" ? dark : light;
+  // @ts-ignore
+  SCTheme.zIndices.modal = 1001;
   return (
     <Web3ReactProvider getLibrary={getLibrary}>
       <AppProvider>
         <ExternalStateProvider>
           <ThemeContext.Provider value={{ theme: themeState, setTheme }}>
             <ChakraProvider theme={theme}>
-              <ThemeProvider theme={themeState === "Dark" ? dark : light}>
+              <ThemeProvider theme={SCTheme}>
                 <ModalProvider>
                   <Component {...pageProps} />
                 </ModalProvider>
