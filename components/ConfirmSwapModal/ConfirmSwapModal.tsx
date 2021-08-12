@@ -100,14 +100,14 @@ const ConfirmSwapModal: React.FC<
         Math.floor(Date.now() / 1000) +
         parseFloat(appState.transactionDeadline) * 60;
       try {
-        console.log(router.query);
+        let res;
         if (router.query.af) {
           const contract = new Contract(
             process.env.NEXT_PUBLIC_SWEEPSTAKES_ADDRESS!,
             SweepstakesABI,
             library?.getSigner()
           );
-          await contract.buyWithAffiliate(
+          res = await contract.buyWithAffiliate(
             formatBytes32String(router.query.af as string),
             amountOutMin,
             account,
@@ -122,7 +122,7 @@ const ConfirmSwapModal: React.FC<
             RouterABI,
             library.getSigner()
           );
-          const res =
+          res =
             await contract.swapExactETHForTokensSupportingFeeOnTransferTokens(
               amountOutMin,
               path,
@@ -130,12 +130,12 @@ const ConfirmSwapModal: React.FC<
               deadline,
               { value: appState.bnbInBigNumber }
             );
-          console.log(res);
-          successToast(getSwapInfos(), res.hash);
-          onSuccessOpen();
-          onClose();
-          setLoading(false);
         }
+        console.log(res);
+        successToast(getSwapInfos(), res.hash);
+        onSuccessOpen();
+        onClose();
+        setLoading(false);
       } catch (err) {
         console.log(err);
         onErrorOpen();

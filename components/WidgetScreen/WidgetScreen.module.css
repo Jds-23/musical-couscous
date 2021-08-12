@@ -29,6 +29,7 @@
   font-style: normal;
   font-weight: 500;
   cursor: pointer;
+  z-index: 1001;
 }
 .dark .close {
   color: #cfc5f7;

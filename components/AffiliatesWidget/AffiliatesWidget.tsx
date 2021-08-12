@@ -159,8 +159,8 @@ const AffiliatesWidget: React.FC<
             <p style={{ textAlign: "center" }}>
               Earn 1% commission on all transactions referred by you.
               Additionally, with each referral you will receive 1 entry to the
-              daily af filiates sweepstake with a chance to win big. Everyday we
-              host an exclusive sweepstake for our af filiates.
+              daily affiliates sweepstake with a chance to win big. Everyday we
+              host an exclusive sweepstake for our affiliates.
             </p>
             <div
               style={{ marginTop: "10px", marginBottom: "10px" }}
@@ -172,6 +172,7 @@ const AffiliatesWidget: React.FC<
               style={{
                 textTransform: "uppercase",
                 textDecoration: "underline",
+                cursor: "pointer",
               }}
             >
               See rules
