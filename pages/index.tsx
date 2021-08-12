@@ -1,6 +1,7 @@
 import Head from "next/head";
 import React, { useContext, useEffect, useState } from "react";
 import Switch from "../components/Switch/Switch";
+import Cookies from "universal-cookie";
 import Header from "../components/Header/Header";
 import styles from "../styles/Home.module.css";
 import BuySection from "../components/BuySection/BuySection";
@@ -22,6 +23,7 @@ import TransactionsInfos from "../components/TransactionsInfos/TransactionsInfos
 import TransactionsFees from "../components/TransactionsFees/TransactionsFees";
 import { formatGain, useLiquidity } from "../utils";
 import { Types } from "../reducer/reducer";
+import { useRouter } from "next/router";
 
 const opensDate = "Jul 2, 2021 16:00:00";
 export default function Home() {
@@ -40,6 +42,7 @@ export default function Home() {
       new Date().getTime() -
       new Date().getTimezoneOffset() * 60000
   );
+  const router = useRouter();
   const toast = useToast();
   useEffect(() => {
     dispatch({
@@ -49,6 +52,16 @@ export default function Home() {
       },
     });
   }, [gain, bnb, dispatch]);
+
+  useEffect(() => {
+    if (router.query.af) {
+      const cookies = new Cookies();
+      cookies.set("af", router.query.af, {
+        path: "/",
+        expires: new Date(Date.now() + 5 * 60 * 60 * 1000),
+      });
+    }
+  }, [router.query.af]);
 
   const successToast = (swapInfo: string, txId: string) => {
     toast({

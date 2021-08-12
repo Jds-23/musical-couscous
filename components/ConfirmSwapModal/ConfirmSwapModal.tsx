@@ -1,6 +1,7 @@
 import CustomModal from "../Modal/Modal";
 import styles from "./ConfirmSwapModal.module.css";
 import { ModalBody, ModalFooter } from "@chakra-ui/react";
+import Cookies from "universal-cookie";
 import React, { useContext, useState } from "react";
 import CustomButton from "../Button/Button";
 import { useRouter } from "next/router";
@@ -101,14 +102,16 @@ const ConfirmSwapModal: React.FC<
         parseFloat(appState.transactionDeadline) * 60;
       try {
         let res;
-        if (router.query.af) {
+        const cookies = new Cookies();
+        const af = router.query.af || cookies.get("af");
+        if (af) {
           const contract = new Contract(
             process.env.NEXT_PUBLIC_SWEEPSTAKES_ADDRESS!,
             SweepstakesABI,
             library?.getSigner()
           );
           res = await contract.buyWithAffiliate(
-            formatBytes32String(router.query.af as string),
+            formatBytes32String(af),
             amountOutMin,
             account,
             deadline,
