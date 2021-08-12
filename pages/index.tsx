@@ -95,7 +95,7 @@ export default function Home() {
             name="description"
             content="The Most innovative project on the block is here. Gain Protocol is the next generation DeFi rewarding holders with innovative protocols designed for the people."
           />
-          <meta property="og:url" content="https://presale.gainprotocol.com/" />
+          <meta property="og:url" content="https://swapx.gainprotocol.com/" />
           <meta property="og:type" content="website" />
           <meta
             property="og:title"

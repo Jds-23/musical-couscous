@@ -18,7 +18,7 @@
   margin: 0;
   padding: 0;
   cursor: pointer;
-  margin: 10px 5px;
+  margin: 12px 5px;
   transform: scale(1);
   transition: all 0.25s ease-in-out;
   position: relative;
@@ -36,7 +36,7 @@
 }
 .sidebar__dark .background {
   width: 85px;
-  height: 420px;
+  height: 465px;
   right: 0;
   top: calc(50% - 210px);
   border-radius: 10px 0 0 10px;
@@ -69,6 +69,9 @@
 }
 .button__text__lock {
   transform: translateX(5px) rotate(-90deg);
+}
+.button__text__affiliates {
+  transform: translateX(24px) rotate(-90deg);
 }
 .button__text__winners {
   transform: translateX(21px) rotate(-90deg);

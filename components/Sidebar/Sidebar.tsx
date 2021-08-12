@@ -5,6 +5,7 @@ import MobileMenu from "../MobileMenu/MobileMenu";
 import WidgetCountdownScreen from "../WidgetCountdownScreen/WidgetCountdownScreen";
 import LockWidget from "../LockWidget/LockWidget";
 import WinnersWidget from "../WinnersWidget/WinnersWidget";
+import AffiliatesWidget from "../AffiliatesWidget/AffiliatesWidget";
 const Sidebar = () => {
   const { theme, setTheme } = useTheme();
   const [goingUp, setGoingUp] = useState(false);
@@ -14,6 +15,7 @@ const Sidebar = () => {
   const [showWinners, setShowWinners] = useState(false);
   const [showPlay, setShowPlay] = useState(false);
   const [showContribute, setShowContribute] = useState(false);
+  const [showAffiliates, setShowAffiliates] = useState(false);
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
@@ -55,6 +57,11 @@ const Sidebar = () => {
         label={"Winners"}
         setShow={setShowWinners}
         show={showWinners}
+      />
+      <AffiliatesWidget
+        label={"Affiliate starts in"}
+        setShow={setShowAffiliates}
+        show={showAffiliates}
       />
       <div
         className={`${styles.sidebar} ${
@@ -179,6 +186,35 @@ const Sidebar = () => {
           </span>
         </button>
         <button
+          className={styles.sidebar__button}
+          style={theme !== "Light" ? { color: "#fff" } : { color: "#181823" }}
+          onClick={() => {
+            setShowAffiliates(!showAffiliates);
+          }}
+        >
+          <img
+            className={styles.image__normal}
+            src={
+              theme !== "Light"
+                ? "./images/Sidebar/LightAffiliates.svg"
+                : "./images/Sidebar/DarkAffiliates.svg"
+            }
+          />
+          <img
+            className={styles.image__hover}
+            src={
+              theme !== "Light"
+                ? "./images/Sidebar/Selected/Bright/Affiliates.svg"
+                : "./images/Sidebar/Selected/Dark/Affiliates.svg"
+            }
+          />
+          <span
+            className={`${styles.button__text} ${styles.button__text__affiliates}`}
+          >
+            Affiliates
+          </span>
+        </button>
+        <button
           onClick={() => setShowWinners(true)}
           className={styles.sidebar__button}
           style={theme !== "Light" ? { color: "#fff" } : { color: "#181823" }}
@@ -205,7 +241,7 @@ const Sidebar = () => {
             Winners
           </span>
         </button>
-        <a
+        {/* <a
           href={"https://www.gainprotocol.com/"}
           className={`${styles.sidebar__button}`}
           style={theme !== "Light" ? { color: "#fff" } : { color: "#181823" }}
@@ -231,7 +267,7 @@ const Sidebar = () => {
           >
             Home
           </span>
-        </a>
+        </a> */}
       </div>
     </>
   );
