@@ -139,6 +139,12 @@ const ConfirmSwapModal: React.FC<
       } catch (err) {
         console.log(err);
         onErrorOpen();
+        setErrorMessage(
+          (err.data?.message || err.message)?.replace(
+            "execution reverted: ",
+            ""
+          )
+        );
         onClose();
         setLoading(false);
       }

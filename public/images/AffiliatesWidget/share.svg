@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="8.28" height="9.314" viewBox="0 0 8.28 9.314">
+  <defs>
+    <clipPath id="clip-path">
+      <path id="Path_74" data-name="Path 74" d="M960.692,146.926a1.522,1.522,0,1,1-1.083,2.592L956.86,151.1a1.508,1.508,0,0,1,.119.59,1.545,1.545,0,0,1-.054.4l2.684,1.549a1.523,1.523,0,1,1-.438,1.07,1.54,1.54,0,0,1,.054-.4l-2.685-1.55a1.521,1.521,0,1,1-.152-2.274l2.837-1.638a1.493,1.493,0,0,1-.054-.4,1.522,1.522,0,0,1,1.521-1.523" fill="none" clip-rule="evenodd"/>
+    </clipPath>
+    <linearGradient id="linear-gradient" x1="-0.219" y1="0.498" x2="1.255" y2="0.502" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#ecb42a"/>
+      <stop offset="0.25" stop-color="#e8a839"/>
+      <stop offset="0.72" stop-color="#c637c1"/>
+      <stop offset="1" stop-color="#bb12ee"/>
+    </linearGradient>
+  </defs>
+  <g id="share" transform="translate(-953.935 -146.926)">
+    <g id="Group_179" data-name="Group 179" clip-path="url(#clip-path)">
+      <rect id="Rectangle_91" data-name="Rectangle 91" width="8.279" height="9.313" transform="translate(953.935 146.926)" fill="url(#linear-gradient)"/>
+    </g>
+  </g>
+</svg>

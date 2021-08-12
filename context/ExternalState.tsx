@@ -46,6 +46,8 @@ interface StateVars {
   types?: BigNumber[];
 
   gainsFor100USD?: BigNumber;
+
+  affiliateID?: string;
 }
 export const ExternalStateContext = React.createContext<{ state: StateVars }>({
   state: {},
@@ -112,6 +114,11 @@ export const ExternalStateProvider: React.FC = ({ children }) => {
       target: process.env.NEXT_PUBLIC_GP_ADDRESS,
       call: ["dailyTransfersOf(address)(uint256)", account],
       returns: [["dailyTransfersOf"]],
+    });
+    calls.push({
+      target: process.env.NEXT_PUBLIC_SWEEPSTAKES_ADDRESS,
+      call: ["affiliateIDOf(address)(bytes32)", account],
+      returns: [["affiliateID"]],
     });
     calls.push({
       target: process.env.NEXT_PUBLIC_GP_ADDRESS,

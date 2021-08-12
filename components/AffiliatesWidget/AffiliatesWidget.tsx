@@ -60,8 +60,11 @@ const AffiliatesWidget: React.FC<
   const [viewDetail, setViewDetail] = useState(-1);
   const { state: externalState } = useContext(ExternalStateContext);
   let state = DisplayState.Intro;
+  const affiliateID = externalState.affiliateID
+    ? parseBytes32String(externalState.affiliateID)
+    : "";
   if (section) {
-    if (account && externalState.affiliateID) {
+    if (account && affiliateID) {
       if (section == Section.History) {
         state = DisplayState.History;
       } else {
@@ -79,6 +82,7 @@ const AffiliatesWidget: React.FC<
       state = DisplayState.CreateAccount;
     }
   }
+
   const link = externalState.affiliateID
     ? `https://swapx.gainprotocol.com/?af=${parseBytes32String(
         externalState.affiliateID
@@ -327,7 +331,7 @@ const AffiliatesWidget: React.FC<
                 <span>SHARE </span>
               </span> */}
             </div>
-            <p
+            {/* <p
               className={`${styles.small__text} ${styles.gradient__underline}`}
               style={{
                 textTransform: "uppercase",
@@ -337,7 +341,7 @@ const AffiliatesWidget: React.FC<
               onClick={() => setSection(Section.History)}
             >
               COMMISSION HISTORY
-            </p>
+            </p> */}
           </div>
         );
       case DisplayState.History:
