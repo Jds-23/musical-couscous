@@ -8,7 +8,7 @@ const MobileMenuDrawerItem: React.FC<
   return (
     <a {...props} className={styles.wrapper__nav__box__item}>
       <div>
-        <img src={`./images/Icons/${label}.svg`} />
+        <img src={`./images/icons/${label}.svg`} />
       </div>
       <p style={label === "presale" ? { fontSize: "14px" } : {}}>{label}</p>
     </a>
