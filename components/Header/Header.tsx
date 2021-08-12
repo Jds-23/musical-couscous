@@ -4,9 +4,11 @@ import styles from "./Header.module.css";
 import { Theme, useTheme } from "../../context/StateProvider";
 interface MyProps {
   openWalletInfoModal: () => void;
+  visibility2?: boolean;
 }
 const Header: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
   openWalletInfoModal,
+  visibility2 = true,
 }) => {
   const { theme } = useTheme();
   const [goingUp, setGoingUp] = useState(false);
@@ -27,9 +29,12 @@ const Header: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, [goingUp]);
+  console.log(visibility2);
   return (
     <header
-      className={`${styles.header} ${theme === "Dark" ? styles.dark : ""}`}
+      className={`${styles.header} ${!visibility2 ? styles.visible : ""} ${
+        theme === "Dark" ? styles.dark : ""
+      }`}
     >
       {theme === "Light" ? (
         <img
