@@ -65,6 +65,7 @@
 
 .widgetScreen__bg_right_bottom {
   position: absolute;
+  z-index: -1;
   bottom: 0px;
   right: 0px;
   max-width: 60%;
