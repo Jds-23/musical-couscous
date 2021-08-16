@@ -15,6 +15,7 @@ import {
   formatBytes32String,
   formatEther,
   formatUnits,
+  parseBytes32String,
 } from "ethers/lib/utils";
 import RouterABI from "../../contracts/PancakeRouter.json";
 import SweepstakesABI from "../../contracts/Sweepstakes.json";
@@ -104,7 +105,10 @@ const ConfirmSwapModal: React.FC<
         let res;
         const cookies = new Cookies();
         const af = router.query.af || cookies.get("af");
-        if (af) {
+        const myAffiliateID = swapState.affiliateID
+          ? parseBytes32String(swapState.affiliateID)
+          : "";
+        if (af && af != myAffiliateID) {
           const contract = new Contract(
             process.env.NEXT_PUBLIC_SWEEPSTAKES_ADDRESS!,
             SweepstakesABI,
