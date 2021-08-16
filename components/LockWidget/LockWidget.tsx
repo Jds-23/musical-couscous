@@ -5,11 +5,12 @@ import Footer from "./Footer/Footer";
 import ConnectButton from "../ConnectButton/ConnectButton";
 import { Theme, useTheme } from "../../context/StateProvider";
 import WidgetScreen from "../WidgetScreen/WidgetScreen";
+import Progressbar from "./Progressbar/Progressbar";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import CountdownTimer from "../CountdownTimer/CountdownTimer";
 import { useWeb3React } from "@web3-react/core";
 import { Web3Provider } from "@ethersproject/providers";
-import { Contract } from "ethers";
+import { BigNumber, Contract } from "ethers";
 import SweepstakesABI from "../../contracts/Sweepstakes.json";
 import { ExternalStateContext } from "../../context/ExternalState";
 import moment from "moment";
@@ -30,17 +31,27 @@ const LockWidget: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
 
   const { account, library } = useWeb3React<Web3Provider>();
   const [percentage, setPercentage] = useState(0);
+  const [days, setDays] = useState(90);
+  const [percentageButton, setPercentageButton] = useState(100);
   const { state: externalState } = useContext(ExternalStateContext);
   const [loading, setLoading] = useState(false);
-  const state = account
+  const [showDetails, setShowDetails] = useState(false);
+  const [showLockScreen, setShowLockScreen] = useState(false);
+  const [amount, setAmount] = useState(0);
+
+  const state: number = account
     ? externalState.lockedBalance?.gt(0) && externalState.unlockedDate?.gt(0)
-      ? 3
+      ? showLockScreen
+        ? 5
+        : showDetails
+        ? 4
+        : 3
       : percentage > 0
       ? 2
       : 1
     : 0;
   const lockTokens = useCallback(
-    async (days: number) => {
+    async (days: number, amount?: number) => {
       setLoading(true);
       const contract = new Contract(
         process.env.NEXT_PUBLIC_SWEEPSTAKES_ADDRESS!,
@@ -53,12 +64,16 @@ const LockWidget: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
           return;
         }
         await contract.lockTokens(
-          externalState.GPBalance?.mul(percentage).div(100),
+          amount
+            ? BigNumber.from(amount).mul("1000000000")
+            : externalState.GPBalance?.mul(percentage).div(100),
           days
         );
       } catch (err) {
         setLoading(false);
+        console.log(err);
         alert(err.message);
+        throw err;
       } finally {
       }
     },
@@ -74,6 +89,10 @@ const LockWidget: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
               theme === "Dark" ? styles.dark : ""
             }`}
           >
+            {/* <h4 style={{ textTransform: "uppercase", marginBottom: "5px" }}>
+              Total locked from circulating supply
+            </h4>
+            <Progressbar limit={100} current={27} /> */}
             <h1
               className={styles.marginTop}
               style={{ textTransform: "uppercase" }}
@@ -104,15 +123,23 @@ const LockWidget: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
                 <div>
                   <button
                     style={{ width: "100px" }}
-                    className={styles.button__outline}
-                    onClick={() => setPercentage(70)}
+                    className={
+                      percentageButton === 70
+                        ? styles.button__gradient
+                        : styles.button__outline
+                    }
+                    onClick={() => setPercentageButton(70)}
                   >
                     70%
                   </button>
                   <button
                     style={{ width: "100px" }}
-                    className={styles.button__outline}
-                    onClick={() => setPercentage(85)}
+                    className={
+                      percentageButton === 85
+                        ? styles.button__gradient
+                        : styles.button__outline
+                    }
+                    onClick={() => setPercentageButton(85)}
                   >
                     85%
                   </button>
@@ -127,13 +154,28 @@ const LockWidget: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
                 >
                   <button
                     style={{ width: "100px" }}
-                    className={styles.button__gradient}
-                    onClick={() => setPercentage(100)}
+                    className={
+                      percentageButton === 100
+                        ? styles.button__gradient
+                        : styles.button__outline
+                    }
+                    onClick={() => setPercentageButton(100)}
                   >
                     100%
                   </button>
                 </div>
               </div>
+              <button
+                style={{
+                  padding: "4px 20px 5px 20px",
+                  marginTop: "10px",
+                  textTransform: "uppercase",
+                }}
+                className={styles.button__gradient}
+                onClick={() => setPercentage(percentageButton)}
+              >
+                Continue
+              </button>
             </div>
           </>
         );
@@ -161,29 +203,55 @@ const LockWidget: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
               >
                 <h1 style={{ textTransform: "uppercase" }}>LOCK duration</h1>
                 <div className={styles.line}></div>
+                <div style={{ display: "flex" }}>
+                  <button
+                    className={
+                      days === 30
+                        ? styles.button__gradient
+                        : styles.button__outline
+                    }
+                    onClick={() => {
+                      setDays(30);
+                    }}
+                  >
+                    30 DAYS
+                  </button>
+                  <button
+                    className={
+                      days === 60
+                        ? styles.button__gradient
+                        : styles.button__outline
+                    }
+                    onClick={() => {
+                      setDays(60);
+                    }}
+                  >
+                    60 DAYS
+                  </button>
+                </div>
+
                 <button
-                  className={styles.button__outline}
+                  className={
+                    days === 90
+                      ? styles.button__gradient
+                      : styles.button__outline
+                  }
                   onClick={() => {
-                    lockTokens(30);
-                  }}
-                >
-                  30 DAYS
-                </button>
-                <button
-                  className={styles.button__outline}
-                  onClick={() => {
-                    lockTokens(60);
-                  }}
-                >
-                  60 DAYS
-                </button>
-                <button
-                  className={styles.button__gradient}
-                  onClick={() => {
-                    lockTokens(90);
+                    setDays(90);
                   }}
                 >
                   90 DAYS
+                </button>
+                <button
+                  style={{
+                    padding: "4px 20px 5px 20px",
+                    marginTop: "10px",
+                    textTransform: "uppercase",
+                  }}
+                  className={styles.button__gradient}
+                  onClick={() => lockTokens(days)}
+                >
+                  Continue
                 </button>
               </div>
             )}
@@ -210,33 +278,186 @@ const LockWidget: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
                   .unix(externalState.unlockedDate!.toNumber())
                   .format("LL")}
               </h3>
+              <h4
+                style={{
+                  textTransform: "uppercase",
+                  textDecoration: "underline",
+                  cursor: "pointer",
+                }}
+                onClick={() => setShowDetails(true)}
+              >
+                View Details
+              </h4>
             </div>
           </>
         );
-      // case 4:
-      //   return (
-      //     <>
-      //       <Header />
-      //       <div
-      //         className={`${styles.lockWidget__content} ${
-      //           theme === "Dark" ? styles.dark : ""
-      //         }`}
-      //       >
-      //         <h3 style={{ textTransform: "uppercase" }}>
-      //           Tokens will unlock in
-      //         </h3>
-      //         <div className={styles.line}></div>
-      //         <CountdownTimer opensDate={"Sep 1, 2021 00:00:00"} />
 
-      //         <h4
-      //           onClick={() => setState(1)}
-      //           style={{ textTransform: "uppercase" }}
-      //         >
-      //           Lock remaining Tokens
-      //         </h4>
-      //       </div>
-      //     </>
-      //   );
+      case 4:
+        return (
+          <>
+            <Header />
+            <div
+              className={`${styles.lockWidget__content}
+               ${theme === "Dark" ? styles.dark : ""}`}
+            >
+              <h3 style={{ textTransform: "uppercase", marginBottom: "0px" }}>
+                Total gain tokens
+              </h3>
+              <h3 style={{ textTransform: "uppercase" }}>
+                {externalState.GPBalance
+                  ? formatGain(externalState.GPBalance, 2)
+                  : "?"}
+              </h3>
+              <div style={{ display: "flex", width: "100%" }}>
+                <div
+                  style={{
+                    width: "50%",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <h4
+                    className={styles.h4}
+                    style={{ textTransform: "uppercase" }}
+                  >
+                    Available:
+                  </h4>
+                  <h4
+                    className={styles.h4}
+                    style={{ textTransform: "uppercase" }}
+                  >
+                    {externalState.lockedBalance && externalState.GPBalance
+                      ? formatGain(
+                          externalState.GPBalance.sub(
+                            externalState.lockedBalance
+                          ),
+                          1
+                        )
+                      : "?"}
+                  </h4>
+                </div>
+                <div
+                  style={{
+                    width: "50%",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <h4
+                    className={styles.h4}
+                    style={{ textTransform: "uppercase" }}
+                  >
+                    Locked:
+                  </h4>
+                  <h4
+                    className={styles.h4}
+                    style={{ textTransform: "uppercase" }}
+                  >
+                    {formatGain(externalState.lockedBalance!, 1)}
+                  </h4>
+                </div>
+              </div>
+              <div
+                style={{ marginTop: "10px", marginBottom: "10px" }}
+                className={styles.line}
+              ></div>
+              <button
+                className={styles.button__gradient}
+                style={{
+                  padding: "4px 20px 5px 20px",
+                  marginTop: "10px",
+                  textTransform: "uppercase",
+                }}
+                onClick={() => setShowLockScreen(true)}
+              >
+                Lock more tokens
+              </button>
+            </div>
+            <Footer setShow={() => setShowDetails(false)} />
+          </>
+        );
+
+      case 5:
+        return (
+          <>
+            <Header />
+            {loading ? (
+              <div
+                style={{
+                  height: "100%",
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <AnimatedLoader />
+              </div>
+            ) : (
+              <>
+                <div
+                  className={`${styles.lockWidget__content} ${
+                    theme === "Dark" ? styles.dark : ""
+                  }`}
+                >
+                  <h3
+                    style={{ textTransform: "uppercase", marginBottom: "0px" }}
+                  >
+                    Available tokens
+                  </h3>
+                  <h3 style={{ textTransform: "uppercase" }}>
+                    {externalState.lockedBalance && externalState.GPBalance
+                      ? formatGain(
+                          externalState.GPBalance.sub(
+                            externalState.lockedBalance
+                          ),
+                          2
+                        )
+                      : "?"}
+                  </h3>
+                  <div
+                    style={{ marginBottom: "0" }}
+                    className={styles.line}
+                  ></div>
+                  <h4>How many additional tokens would you like to lock?</h4>
+                  <input
+                    type="number"
+                    className={styles.input}
+                    placeholder="Enter amount here"
+                    onChange={(e) => setAmount(parseInt(e.target.value))}
+                    value={amount}
+                  />
+                  <button
+                    className={styles.button__gradient}
+                    style={{
+                      padding: "4px 20px 5px 20px",
+                      marginTop: "10px",
+                      textTransform: "uppercase",
+                    }}
+                    onClick={() => {
+                      if (!amount) {
+                        alert("Please enter amount");
+                        return;
+                      }
+                      lockTokens(0, amount).then(() => {
+                        setTimeout(() => {
+                          setLoading(false);
+                          setShowLockScreen(false);
+                          setShowDetails(false);
+                        }, 10000);
+                      });
+                    }}
+                  >
+                    Lock tokens
+                  </button>
+                </div>
+                <Footer setShow={() => setShowLockScreen(false)} />
+              </>
+            )}
+          </>
+        );
     }
   };
   return (
