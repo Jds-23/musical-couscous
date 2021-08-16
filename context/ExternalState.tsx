@@ -46,6 +46,7 @@ interface StateVars {
   types?: BigNumber[];
 
   gainsFor100USD?: BigNumber;
+  usdBNBPrice?: BigNumber;
 
   affiliateID?: string;
 }
@@ -68,6 +69,12 @@ export const ExternalStateProvider: React.FC = ({ children }) => {
       call: ["gainsForUSD(uint256)(bool,uint256)", 100],
       returns: [["priceFeedSuccess"], ["gainsFor100USD"]],
     },
+    {
+      target: process.env.NEXT_PUBLIC_PRICEFEED_ADDRESS,
+      call: ["usdBNBPrice()(bool,uint256)"],
+      returns: [["priceFeed2Success"], ["usdBNBPrice"]],
+    },
+
     {
       target: process.env.NEXT_PUBLIC_GP_ADDRESS,
       call: ["maxTxAmount()(uint256)"],

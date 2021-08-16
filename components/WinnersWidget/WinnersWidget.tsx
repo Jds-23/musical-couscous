@@ -28,6 +28,7 @@ const types = [
   "LOYALISTS",
   "NEWCOMERS",
   "BELIEVERS",
+  "AFFILIATE",
 ];
 function gainsToUSD(gains: BigNumber, gainsFor100USD: BigNumber) {
   return gains.mul(10000).div(gainsFor100USD).toNumber() / 100;
@@ -159,39 +160,52 @@ const WinnersWidget: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
                     : "?"}
                 </h3>
                 <div className={styles.winners__list}>
-                  {externalState.winners?.map((winner, index) => (
-                    <div key={winner} className={styles.winner}>
-                      <h2>
-                        {externalState.types &&
-                        winnerIndex < externalState.types.length
-                          ? types[externalState.types[index].toNumber()]
-                          : "?"}
-                      </h2>
-                      <h3>Wallet Address</h3>
-                      <p className={styles.address}>{winner}</p>
-                      <h3 style={{ textTransform: "uppercase" }}>Prize Won:</h3>
-                      <h3 style={{ textTransform: "uppercase" }}>
-                        {externalState.amounts &&
-                        winnerIndex < externalState.amounts.length
-                          ? formatGain(externalState.amounts[index], 2)
-                          : "?"}{" "}
-                        GAIN
-                      </h3>
-                      <h3 style={{ textTransform: "uppercase" }}>
-                        {`($${
-                          externalState.amounts &&
-                          externalState.gainsFor100USD &&
+                  {externalState.winners?.map((winner, index) => {
+                    const isBNB =
+                      externalState.types &&
+                      externalState.types[index].toNumber() == 8;
+                    return (
+                      <div key={winner} className={styles.winner}>
+                        <h2>
+                          {externalState.types &&
+                          winnerIndex < externalState.types.length
+                            ? types[externalState.types[index].toNumber()]
+                            : "?"}
+                        </h2>
+                        <h3>Wallet Address</h3>
+                        <p className={styles.address}>{winner}</p>
+                        <h3 style={{ textTransform: "uppercase" }}>
+                          Prize Won:
+                        </h3>
+                        <h3 style={{ textTransform: "uppercase" }}>
+                          {externalState.amounts &&
                           winnerIndex < externalState.amounts.length
-                            ? gainsToUSD(
-                                externalState.amounts[index],
-                                externalState.gainsFor100USD
-                              )
-                            : "?"
-                        })`}
-                      </h3>
-                      <div className={styles.line}></div>
-                    </div>
-                  ))}
+                            ? formatGain(externalState.amounts[index], 2)
+                            : "?"}{" "}
+                          {isBNB ? "BNB" : "GAIN"}
+                        </h3>
+                        <h3 style={{ textTransform: "uppercase" }}>
+                          {`($${
+                            externalState.amounts &&
+                            externalState.gainsFor100USD &&
+                            externalState.usdBNBPrice &&
+                            winnerIndex < externalState.amounts.length
+                              ? isBNB
+                                ? externalState.amounts[index]
+                                    .mul(externalState.usdBNBPrice)
+                                    .div(BigNumber.from(10).pow(18 + 6))
+                                    .toNumber() / 100
+                                : gainsToUSD(
+                                    externalState.amounts[index],
+                                    externalState.gainsFor100USD
+                                  )
+                              : "?"
+                          })`}
+                        </h3>
+                        <div className={styles.line}></div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </>
