@@ -38,7 +38,6 @@
   position: absolute;
   left: 0px;
   width: 160px;
-  top: 0;
 }
 
 @media only screen and (max-width: 400px) {
@@ -73,19 +72,23 @@
 
 .widgetScreen__background {
   position: absolute;
-  background: linear-gradient(90deg, #f2f2f2 0%, #cfc5f7 100%) 0% 0% no-repeat;
+  background: #ffffff;
+  background-image: url(./background-white.svg);
+  background-size: cover;
   background-repeat: no-repeat;
   top: 0;
   right: 0;
   left: 0;
   bottom: 0;
   background-attachment: absolute;
-  background-size: cover;
   display: none;
   z-index: -1;
 }
 .dark .widgetScreen__background {
-  background: #000000;
+  background: #161824;
+  background-image: url(./background.svg);
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 .widgetScreen__background__show {
   display: flex;
@@ -137,16 +140,23 @@
   .root__show {
     transform: translateY(0);
   }
-  /* .widgetScreen__content {
-    max-width: 100%;
-    padding: 0 20px;
-  } */
-  /* .widgetScreen__content > h1 {
-    font-size: 6.532vw;
+  .widgetScreen__background {
+    position: absolute;
+    background: #ffffff;
+    background-image: url(./background-mobile-white.svg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-attachment: absolute;
+    /* display: none; */
   }
-  .line {
-    width: 78.125vw;
-    border-radius: 2px;
-    height: 2px;
-  } */
+  .dark .widgetScreen__background {
+    background: #161824;
+    background-image: url(./background-mobile-dark.svg);
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
 }

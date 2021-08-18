@@ -17,7 +17,7 @@ const WidgetScreen: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
         <div
           className={`${styles.widgetScreen__background} ${styles.widgetScreen__background__show}`}
         />
-        <div className={styles.widgetScreen__background} />
+        {/* <div className={styles.widgetScreen__background} />
         <img
           src={"./images/background/LeftTop.svg"}
           className={styles.widgetScreen__bg_left_top}
@@ -34,7 +34,7 @@ const WidgetScreen: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
         <img
           src={"./images/background/RightBottom.svg"}
           className={styles.widgetScreen__bg_right_bottom}
-        />
+        /> */}
         {children}
         {!hideClose && (
           <button onClick={() => setShow(false)} className={styles.close}>
