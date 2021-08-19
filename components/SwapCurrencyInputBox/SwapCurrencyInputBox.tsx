@@ -76,7 +76,7 @@ const SwapCurrencyInputBox: React.FC<
                   ? ethers.utils.formatEther(amount)
                   : ""
                 : amount
-                ? ethers.utils.formatUnits(amount, 9)
+                ? parseFloat(ethers.utils.formatUnits(amount, 9)).toFixed(2)
                 : ""
             }
             onFocus={() => {

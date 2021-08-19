@@ -60,7 +60,7 @@ const ConfirmSwapModal: React.FC<
   };
   const getGAIN = () => {
     return appState.gainInBigNumber
-      ? formatUnits(appState.gainInBigNumber, 9)
+      ? parseFloat(formatUnits(appState.gainInBigNumber, 9)).toFixed(2)
       : "";
   };
   const getSwapInfos = () => {
