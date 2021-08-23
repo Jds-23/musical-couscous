@@ -54,7 +54,10 @@ const MobileMenuDrawer: React.FC<
               label={"protocols"}
               href={"https://www.gainprotocol.com/whitepaper#protocol"}
             />
-            <MobileMenuDrawerItem label={"fees"} href={"/whitepaper#fees"} />
+            <MobileMenuDrawerItem
+              label={"fees"}
+              href={"https://www.gainprotocol.com//whitepaper#fees"}
+            />
           </div>
           <div className={styles.wrapper__nav__box}>
             <MobileMenuDrawerItem
