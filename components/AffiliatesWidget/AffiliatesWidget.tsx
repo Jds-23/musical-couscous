@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useTheme } from "../../context/StateProvider";
 import { useWeb3React } from "@web3-react/core";
 import { Web3Provider } from "@ethersproject/providers";
@@ -8,10 +8,16 @@ import AnimatedDiamond from "../AnimatedLoader/AnimatedLoader";
 import styles from "./AffiliatesWidget.module.css";
 import ConnectButton from "../ConnectButton/ConnectButton";
 import { ExternalStateContext } from "../../context/ExternalState";
-import { formatBytes32String, parseBytes32String } from "ethers/lib/utils";
+import {
+  formatBytes32String,
+  formatEther,
+  parseBytes32String,
+} from "ethers/lib/utils";
 import SweepstakesABI from "../../contracts/Sweepstakes.json";
 import { Contract } from "ethers";
 import { useRouter } from "next/router";
+import useSWR from "swr";
+import moment from "moment";
 
 interface MyProps {
   //   opensDate: string;
@@ -57,8 +63,21 @@ const AffiliatesWidget: React.FC<
   const router = useRouter();
   const [generatingLink, setGeneratingLink] = useState(false);
   const [section, setSection] = useState<Section | null>(null);
-  const [viewDetail, setViewDetail] = useState(-1);
+  const [viewDetail, setViewDetail] = useState("");
   const { state: externalState } = useContext(ExternalStateContext);
+
+  const { data, error } = useSWR(
+    account
+      ? "https://api.bscscan.com/api?module=logs" +
+          "&action=getLogs&fromBlock=0&toBlock=latest&" +
+          "address=0x2cf13601129aaa1f2c2dd528baff72754ce97522&" +
+          "topic0=0x6ad218c5fb85cf67a932505ab650605788068846227b3f708d63f4cddf421d5c&" +
+          `topic1=0x${account.substring(2).padStart(64, "0")}&` +
+          "apikey=99BRHSEW1IJVUM2NSZRZDJ53NYCE9E7AJZ"
+      : null,
+    { refreshInterval: 10000 }
+  );
+
   let state = DisplayState.Intro;
   const affiliateID = externalState.affiliateID
     ? parseBytes32String(externalState.affiliateID)
@@ -337,17 +356,18 @@ const AffiliatesWidget: React.FC<
                 <span>SHARE </span>
               </span> */}
             </div>
-            {/* <p
+            <p
               className={`${styles.small__text} ${styles.gradient__underline}`}
               style={{
                 textTransform: "uppercase",
                 marginTop: "20px",
                 fontSize: "calc((4.83 / 144) * 300px)",
+                cursor: "pointer",
               }}
               onClick={() => setSection(Section.History)}
             >
               COMMISSION HISTORY
-            </p> */}
+            </p>
           </div>
         );
       case DisplayState.History:
@@ -367,87 +387,55 @@ const AffiliatesWidget: React.FC<
               className={styles.line}
               style={{ marginTop: "10px", marginBottom: "10px" }}
             ></div>
-            <div className={styles.commission__history__item}>
-              <div className={styles.commission__history__item__main}>
-                <p>06/22/21</p>
-                <p>1.23 BNB</p>
-                {viewDetail === 1 ? (
-                  <p
-                    onClick={() => setViewDetail(-1)}
-                    style={{ cursor: "pointer" }}
-                  >
-                    CLOSE DETAILS
-                  </p>
-                ) : (
-                  <p
-                    onClick={() => setViewDetail(1)}
-                    style={{ cursor: "pointer" }}
-                  >
-                    VIEW DETAILS
-                  </p>
-                )}
-              </div>
-              {viewDetail === 1 && (
-                <div className={styles.commission__history__item__more}>
-                  <p style={{ cursor: "pointer" }}>View Wallet Address</p>
-                  <p style={{ cursor: "pointer" }}>View on BscScan</p>
+
+            {data?.result?.map((item: any) => {
+              return (
+                <div
+                  key={item.transactionHash}
+                  className={styles.commission__history__item}
+                >
+                  {" "}
+                  <div className={styles.commission__history__item__main}>
+                    <p>
+                      {moment.unix(parseInt(item.timeStamp, 16)).format("l")}
+                    </p>
+                    <p>
+                      {formatEther("0x" + item.data.substring(32 + 32 + 2))} BNB
+                    </p>
+                    <a
+                      target="_blank"
+                      rel="noreferrer"
+                      href={`https://bscscan.com/tx/${item.transactionHash}`}
+                    >
+                      View on BscScan
+                    </a>
+                    {/* {viewDetail === item.transactionHash ? (
+                      <p
+                        onClick={() => setViewDetail("")}
+                        style={{ cursor: "pointer" }}
+                      >
+                        CLOSE DETAILS
+                      </p>
+                    ) : (
+                      <p
+                        onClick={() => setViewDetail(item.transactionHash)}
+                        style={{ cursor: "pointer" }}
+                      >
+                        VIEW DETAILS
+                      </p>
+                    )}
+                  </div>
+                  {viewDetail === item.transactionHash && (
+                    <div className={styles.commission__history__item__more}>
+                      <a style={{ cursor: "pointer" }} href={`https://bscscan.com/`}>View Wallet Address</a>
+                      <a style={{ cursor: "pointer" }}>View on BscScan</a>
+                    </div>
+                  )} */}
+                  </div>
                 </div>
-              )}
-            </div>
-            <div className={styles.commission__history__item}>
-              <div className={styles.commission__history__item__main}>
-                <p>06/22/21</p>
-                <p>1.23 BNB</p>
-                {viewDetail === 2 ? (
-                  <p
-                    onClick={() => setViewDetail(-1)}
-                    style={{ cursor: "pointer" }}
-                  >
-                    CLOSE DETAILS
-                  </p>
-                ) : (
-                  <p
-                    onClick={() => setViewDetail(2)}
-                    style={{ cursor: "pointer" }}
-                  >
-                    VIEW DETAILS
-                  </p>
-                )}
-              </div>
-              {viewDetail === 2 && (
-                <div className={styles.commission__history__item__more}>
-                  <p style={{ cursor: "pointer" }}>View Wallet Address</p>
-                  <p style={{ cursor: "pointer" }}>View on BscScan</p>
-                </div>
-              )}
-            </div>
-            <div className={styles.commission__history__item}>
-              <div className={styles.commission__history__item__main}>
-                <p>06/22/21</p>
-                <p>1.23 BNB</p>
-                {viewDetail === 3 ? (
-                  <p
-                    onClick={() => setViewDetail(-1)}
-                    style={{ cursor: "pointer" }}
-                  >
-                    CLOSE DETAILS
-                  </p>
-                ) : (
-                  <p
-                    onClick={() => setViewDetail(3)}
-                    style={{ cursor: "pointer" }}
-                  >
-                    VIEW DETAILS
-                  </p>
-                )}
-              </div>
-              {viewDetail === 3 && (
-                <div className={styles.commission__history__item__more}>
-                  <p style={{ cursor: "pointer" }}>View Wallet Address</p>
-                  <p style={{ cursor: "pointer" }}>View on BscScan</p>
-                </div>
-              )}
-            </div>
+              );
+            })}
+
             <Footer setShow={() => setSection(Section.Account)} />
           </div>
         );

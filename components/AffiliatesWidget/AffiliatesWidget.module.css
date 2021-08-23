@@ -166,6 +166,9 @@
 .commission__history__item__main > p {
   font-size: calc((5 / 144) * 300px);
 }
+.commission__history__item__main > a {
+  font-size: calc((5 / 144) * 300px);
+}
 .commission__history__item__more {
   display: flex;
   justify-content: space-evenly;
