@@ -46,10 +46,13 @@ const MobileMenuDrawer: React.FC<
             ></span>
           </div>
           <div className={styles.wrapper__nav__box}>
-            <MobileMenuDrawerItem label={"whitepaper"} href={"/whitepaper"} />
+            <MobileMenuDrawerItem
+              label={"whitepaper"}
+              href={"https://www.gainprotocol.com/whitepaper"}
+            />
             <MobileMenuDrawerItem
               label={"protocols"}
-              href={"/whitepaper#protocol"}
+              href={"https://www.gainprotocol.com/whitepaper#protocol"}
             />
             <MobileMenuDrawerItem label={"fees"} href={"/whitepaper#fees"} />
           </div>
@@ -62,7 +65,7 @@ const MobileMenuDrawer: React.FC<
             />
             <MobileMenuDrawerItem
               label={"sweepstakes"}
-              href={"/whitepaper#sweepstakes"}
+              href={"https://www.gainprotocol.com/whitepaper#sweepstakes"}
             />
             <MobileMenuDrawerItem
               label={"swapx"}
