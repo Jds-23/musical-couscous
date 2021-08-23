@@ -9,9 +9,10 @@ import { useWeb3React } from "@web3-react/core";
 import ConnectButton from "../ConnectButton/ConnectButton";
 import { Web3Provider } from "@ethersproject/providers";
 import { ExternalStateContext } from "../../context/ExternalState";
-import { formatGain } from "../../utils";
+import { formatEtherShort, formatGain } from "../../utils";
 import moment from "moment";
 import { BigNumber } from "ethers";
+import { formatEther } from "ethers/lib/utils";
 interface MyProps {
   //   opensDate: string;
   show: boolean;
@@ -180,7 +181,12 @@ const WinnersWidget: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
                         <h3 style={{ textTransform: "uppercase" }}>
                           {externalState.amounts &&
                           winnerIndex < externalState.amounts.length
-                            ? formatGain(externalState.amounts[index], 2)
+                            ? isBNB
+                              ? formatEtherShort(
+                                  externalState.amounts[index],
+                                  3
+                                )
+                              : formatGain(externalState.amounts[index], 2)
                             : "?"}{" "}
                           {isBNB ? "BNB" : "GAIN"}
                         </h3>

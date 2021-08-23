@@ -18,6 +18,7 @@ import { BigNumberish, Contract } from "ethers";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import moment from "moment";
+import { formatEtherShort } from "../../utils";
 
 interface MyProps {
   //   opensDate: string;
@@ -52,13 +53,6 @@ function generateUniqID() {
     Math.floor((1 + Math.random()) * 0x10000)
       .toString(16)
       .substring(1)
-  );
-}
-
-function formatBNB(number: BigNumberish) {
-  const formatted = formatEther(number);
-  return (
-    formatted.split(".")[0] + "." + formatted.split(".")[1].substring(0, 3)
   );
 }
 
@@ -410,7 +404,11 @@ const AffiliatesWidget: React.FC<
                         {moment.unix(parseInt(item.timeStamp, 16)).format("l")}
                       </p>
                       <p>
-                        {formatBNB("0x" + item.data.substring(32 + 32 + 2))} BNB
+                        {formatEtherShort(
+                          "0x" + item.data.substring(32 + 32 + 2),
+                          3
+                        )}{" "}
+                        BNB
                       </p>
                       <a
                         target="_blank"
