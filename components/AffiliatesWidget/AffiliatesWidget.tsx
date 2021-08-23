@@ -14,7 +14,7 @@ import {
   parseBytes32String,
 } from "ethers/lib/utils";
 import SweepstakesABI from "../../contracts/Sweepstakes.json";
-import { Contract } from "ethers";
+import { BigNumberish, Contract } from "ethers";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import moment from "moment";
@@ -52,6 +52,13 @@ function generateUniqID() {
     Math.floor((1 + Math.random()) * 0x10000)
       .toString(16)
       .substring(1)
+  );
+}
+
+function formatBNB(number: BigNumberish) {
+  const formatted = formatEther(number);
+  return (
+    formatted.split(".")[0] + "." + formatted.split(".")[1].substring(0, 3)
   );
 }
 
@@ -387,29 +394,32 @@ const AffiliatesWidget: React.FC<
               className={styles.line}
               style={{ marginTop: "10px", marginBottom: "10px" }}
             ></div>
-
-            {data?.result?.map((item: any) => {
-              return (
-                <div
-                  key={item.transactionHash}
-                  className={styles.commission__history__item}
-                >
-                  {" "}
-                  <div className={styles.commission__history__item__main}>
-                    <p>
-                      {moment.unix(parseInt(item.timeStamp, 16)).format("l")}
-                    </p>
-                    <p>
-                      {formatEther("0x" + item.data.substring(32 + 32 + 2))} BNB
-                    </p>
-                    <a
-                      target="_blank"
-                      rel="noreferrer"
-                      href={`https://bscscan.com/tx/${item.transactionHash}`}
-                    >
-                      View on BscScan
-                    </a>
-                    {/* {viewDetail === item.transactionHash ? (
+            <div style={{ width: "100%", overflow: "scroll" }}>
+              {data?.result?.map((item: any) => {
+                if (item.topics.length == 1) {
+                  return null;
+                }
+                return (
+                  <div
+                    key={item.transactionHash}
+                    className={styles.commission__history__item}
+                  >
+                    {" "}
+                    <div className={styles.commission__history__item__main}>
+                      <p>
+                        {moment.unix(parseInt(item.timeStamp, 16)).format("l")}
+                      </p>
+                      <p>
+                        {formatBNB("0x" + item.data.substring(32 + 32 + 2))} BNB
+                      </p>
+                      <a
+                        target="_blank"
+                        rel="noreferrer"
+                        href={`https://bscscan.com/tx/${item.transactionHash}`}
+                      >
+                        View on BscScan
+                      </a>
+                      {/* {viewDetail === item.transactionHash ? (
                       <p
                         onClick={() => setViewDetail("")}
                         style={{ cursor: "pointer" }}
@@ -431,11 +441,11 @@ const AffiliatesWidget: React.FC<
                       <a style={{ cursor: "pointer" }}>View on BscScan</a>
                     </div>
                   )} */}
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-
+                );
+              })}
+            </div>
             <Footer setShow={() => setSection(Section.Account)} />
           </div>
         );
