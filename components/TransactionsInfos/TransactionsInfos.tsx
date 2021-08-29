@@ -17,9 +17,9 @@ const TransactionsInfos = () => {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "5fr 4fr",
+              gridTemplateColumns: "4fr 5fr",
               width: "100%",
-              fontSize: "11px",
+              fontSize: "9px",
             }}
           >
             <div>
@@ -78,7 +78,7 @@ const TransactionsInfos = () => {
               display: "grid",
               gridTemplateColumns: "5fr 4fr",
               width: "100%",
-              fontSize: "11px",
+              fontSize: "10px",
             }}
           >
             <div>
