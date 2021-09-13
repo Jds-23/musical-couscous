@@ -29,6 +29,7 @@ export default function Home() {
   const { gain, bnb } = useLiquidity();
   const { state: swapState } = useContext(ExternalStateContext);
   const [visibility, setVisibility] = useState(false);
+  const [visibility2, setVisibility2] = useState(false);
 
   const [errorModal, setErrorModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -216,7 +217,16 @@ window.criteo_q.push(
           className={`${styles.home__background}
         ${theme === "Dark" ? styles.home__background__dark : ""}`}
         />
-        <img
+        {
+          <VisibilitySensor
+            onChange={(isVisible2: boolean) => setVisibility2(isVisible2)}
+          >
+            <h1
+              style={{ width: "100%", height: "5px", textAlign: "center" }}
+            ></h1>
+          </VisibilitySensor>
+        }
+        {/* <img
           alt=""
           src={"./images/background/LeftTop.svg"}
           className={styles.home__bg_left_top}
@@ -236,8 +246,11 @@ window.criteo_q.push(
           alt=""
           src={"./images/background/RightBottom.svg"}
           className={styles.home__bg_right_bottom}
+        /> */}
+        <Header
+          visibility2={visibility2}
+          openWalletInfoModal={() => setWalletInfoModal(true)}
         />
-        <Header openWalletInfoModal={() => setWalletInfoModal(true)} />
         {time > 0 ? (
           <CountdownScreen opensDate={opensDate} />
         ) : (

@@ -18,7 +18,7 @@ const TransactionsFees = () => {
         <InfoCards>
           <div
             style={{
-              fontSize: "14px",
+              fontSize: "12px",
               display: "grid",
               gridTemplateColumns: "4fr 1fr 4fr",
             }}
@@ -70,7 +70,7 @@ const TransactionsFees = () => {
                   display: "grid",
                   gridTemplateColumns: "4fr 1fr 4fr",
                   width: "100%",
-                  fontSize: "11px",
+                  fontSize: "10px",
                 }}
               >
                 <div>
@@ -102,7 +102,7 @@ const TransactionsFees = () => {
         <InfoCards>
           <div
             style={{
-              fontSize: "14px",
+              fontSize: "12px",
               display: "grid",
               gridTemplateColumns: "4fr 1fr 4fr",
             }}
@@ -167,7 +167,7 @@ const TransactionsFees = () => {
                   display: "grid",
                   gridTemplateColumns: "4fr 1fr 4fr",
                   width: "100%",
-                  fontSize: "11px",
+                  fontSize: "10px",
                 }}
               >
                 <div>
