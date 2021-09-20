@@ -40,13 +40,13 @@ const Sidebar: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
   return (
     <>
       <WidgetCountdownScreen
-        opensDate={"Sep 1, 2021 16:00:00"}
+        opensDate={"Nov 1, 2021 16:00:00"}
         label={"CONTRIBUTIONS OPENS IN"}
         setShow={setShowContribute}
         show={showContribute}
       />
       <WidgetCountdownScreen
-        opensDate={"Sep 20, 2021 16:00:00"}
+        opensDate={"Sep 27, 2021 16:00:00"}
         label={"PLAY TIME STARTS IN"}
         setShow={setShowPlay}
         show={showPlay}
