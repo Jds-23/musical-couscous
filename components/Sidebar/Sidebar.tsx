@@ -46,7 +46,7 @@ const Sidebar: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
         show={showContribute}
       />
       <WidgetCountdownScreen
-        opensDate={"Oct 4, 2021 16:00:00"}
+        opensDate={"Oct 11, 2021 16:00:00"}
         label={"PLAY TIME STARTS IN"}
         setShow={setShowPlay}
         show={showPlay}
