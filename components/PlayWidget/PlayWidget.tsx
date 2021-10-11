@@ -72,7 +72,7 @@ const PlayWidget: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
   const nextSweepstake = nextSweepstakeMoment
     ? nextSweepstakeMoment.unix() * 1000 + timezoneOFfset
     : null;
-  console.log(nextSweepstakeMoment?.format(), nextSweepstake);
+
   const isInSweepstake =
     nextSweepstakeMoment &&
     moment().isAfter(nextSweepstakeMoment) &&
@@ -81,7 +81,7 @@ const PlayWidget: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
   const isInReveal =
     isInSweepstake &&
     moment(nextSweepstakeMoment).add(2, "minute").isBefore(moment());
-  console.log("isInReveal", isInReveal, nextSweepstakeMoment?.format());
+
   useEffect(() => {
     if (show) {
       document.querySelector("body")?.classList.add("overflow-hidden");
