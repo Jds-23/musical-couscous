@@ -3,13 +3,15 @@ import { useState } from "react";
 import styles from "./CountdownTimer.module.css";
 import timer from "./timer";
 interface MyProps {
-  opensDate: string;
+  opensDate: string | number | Date;
+  hideDay?: boolean;
+  small?: boolean;
 }
 const CountdownTimer: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
-  ({ opensDate }) => {
+  ({ opensDate, hideDay = false, small = false }) => {
     const [state, setState] = useState([0, 0, 0, 0]);
     useEffect(() => {
-      setInterval(
+      const handler = setInterval(
         () =>
           setState(
             timer(
@@ -19,13 +21,16 @@ const CountdownTimer: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> =
           ),
         1000
       );
-    }, []);
+      return () => clearInterval(handler);
+    }, [opensDate]);
     return (
-      <div className={styles.timer}>
-        <div>
-          <h3>{state[0]}</h3>
-          <p>days</p>
-        </div>
+      <div className={`${styles.timer} ${small ? styles.small : ""}`}>
+        {!hideDay && (
+          <div>
+            <h3>{state[0]}</h3>
+            <p>days</p>
+          </div>
+        )}
         <div>
           <h3>{state[1]}</h3>
           <p>hours</p>

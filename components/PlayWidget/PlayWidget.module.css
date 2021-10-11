@@ -1,0 +1,159 @@
+.playWidget__screen {
+  top: calc(50% - 225px);
+  max-height: 450px;
+}
+.playWidget__content {
+  display: flex;
+  flex-direction: column;
+  -webkit-box-align: center;
+  align-items: center;
+  justify-content: center;
+  padding: 0px 5px 0px;
+  height: 100%;
+  width: 100%;
+  color: #7a71a7;
+  z-index: 1000;
+}
+.dark {
+  color: #a09ac0;
+}
+.line {
+  /* margin-top: 10px; */
+  width: 234px;
+  border-radius: 4px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    #ecb42a 0%,
+    #e8a839 48%,
+    #c637c1 81%,
+    #bb12ee 100%
+  );
+}
+.playWidget__content > h1 {
+  font-size: 23px;
+  text-align: center;
+}
+.playWidget__content > h3 {
+  font-size: 18px;
+  text-align: center;
+}
+.paragraph__1 {
+  text-align: center;
+  font-size: 17px;
+}
+.paragraph__6 {
+  text-align: center;
+  font-size: 16px;
+}
+.paragraph__7 {
+  text-align: center;
+  font-size: 10px;
+}
+.paragraph__2 {
+  text-align: center;
+  font-size: 14px;
+  line-height: 16px;
+}
+.paragraph__3 {
+  text-align: center;
+  font-size: 11px;
+}
+.bold__text {
+  font-family: "Eurostile Bold Extra";
+}
+.address {
+  font-family: "Eurostile Bold Extra";
+  max-width: 100%;
+  word-break: break-all;
+  text-align: center;
+  font-size: 10px;
+}
+.won__text {
+  margin-top: 5px;
+  font-size: 15px;
+  font-family: "Eurostile Bold Extra";
+}
+.timer > div {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.timer > p {
+  font-size: 8px;
+}
+.small > p {
+  font-size: 6.5px;
+}
+.small > div {
+  padding: 0 10px;
+}
+.input {
+  background-color: #fff;
+  border: none;
+  outline: none;
+  border-radius: 25px;
+  padding: 7px 10px;
+  font-family: Eurostile Tech;
+  color: #4b456d;
+  width: 100%;
+  font-size: 10px;
+}
+.dark .input {
+  background-color: #a09ac0;
+}
+.input::placeholder {
+  color: #4b456d;
+  opacity: 1; /* Firefox */
+}
+
+.input:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #4b456d;
+}
+
+.input::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: #4b456d;
+}
+@media only screen and (max-width: 768px) {
+  .playWidget__screen {
+    top: 0;
+    max-height: 100%;
+  }
+  .playWidget__content {
+    max-width: 100%;
+    padding: 0 20px;
+  }
+  .playWidget__content > h1 {
+    font-size: 6.19vw;
+    margin-bottom: 4.6vw;
+  }
+  .paragraph__1 {
+    font-size: 5.3vw;
+  }
+  .paragraph__6 {
+    font-size: 5vw;
+  }
+  .paragraph__2 {
+    font-size: 14px;
+    line-height: 16px;
+    font-size: 4.4vw;
+  }
+  .paragraph__3 {
+    font-size: 3.4vw;
+  }
+  .paragraph__7 {
+    font-size: 3.2vw;
+  }
+  .timer > p {
+    font-size: 3.36vw;
+  }
+  .line {
+    width: 62.92vw;
+    border-radius: 2px;
+    height: 1px;
+    /* margin-top: 3.09vw; */
+    margin-bottom: 3.81vw;
+  }
+}

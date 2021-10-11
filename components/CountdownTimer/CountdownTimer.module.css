@@ -6,12 +6,23 @@
 }
 .timer > div > h3 {
   text-align: center;
-  font-size: 55px;
-  line-height: 69px;
+  font-size: 24px;
+  line-height: 26px;
 }
 .timer > div > p {
   text-align: center;
-  font-size: 15px;
+  font-size: 7.5px;
+  text-transform: uppercase;
+}
+.small > div > h3 {
+  text-align: center;
+  font-size: 19px;
+  line-height: 20px;
+}
+.small > div > p {
+  text-align: center;
+  font-size: 4.5px;
+  text-transform: uppercase;
 }
 
 @media only screen and (max-width: 768px) {

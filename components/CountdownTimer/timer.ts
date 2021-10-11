@@ -1,7 +1,7 @@
 export default function timer(countDownDate: number): number[] {
   const now = new Date().getTime();
 
-  const distance = countDownDate - now;
+  const distance = Math.max(countDownDate - now, 0);
 
   const days = Math.floor(distance / (1000 * 60 * 60 * 24));
   const hours = Math.floor(

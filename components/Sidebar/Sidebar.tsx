@@ -6,6 +6,7 @@ import WidgetCountdownScreen from "../WidgetCountdownScreen/WidgetCountdownScree
 import LockWidget from "../LockWidget/LockWidget";
 import WinnersWidget from "../WinnersWidget/WinnersWidget";
 import AffiliatesWidget from "../AffiliatesWidget/AffiliatesWidget";
+import PlayWidget from "../PlayWidget/PlayWidget";
 interface MyProps {
   visibility?: boolean;
 }
@@ -45,8 +46,7 @@ const Sidebar: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
         setShow={setShowContribute}
         show={showContribute}
       />
-      <WidgetCountdownScreen
-        opensDate={"Oct 11, 2021 16:00:00"}
+      <PlayWidget
         label={"PLAY TIME STARTS IN"}
         setShow={setShowPlay}
         show={showPlay}

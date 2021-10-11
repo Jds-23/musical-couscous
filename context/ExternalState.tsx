@@ -49,6 +49,11 @@ interface StateVars {
   usdBNBPrice?: BigNumber;
 
   affiliateID?: string;
+
+  randomGenerationStartTime?: BigNumber;
+  randomGenerationMinimumBalance?: BigNumber;
+  randomGenerationMinigameRandom?: BigNumber;
+  minigameRange?: BigNumber;
 }
 export const ExternalStateContext = React.createContext<{ state: StateVars }>({
   state: {},
@@ -63,6 +68,26 @@ export const ExternalStateProvider: React.FC = ({ children }) => {
       target: process.env.NEXT_PUBLIC_SWEEPSTAKES_ADDRESS,
       call: ["sweepstakeCount()(uint256)"],
       returns: [["sweepstakeCount"]],
+    },
+    {
+      target: process.env.NEXT_PUBLIC_RANDOM_GENERATOR_ADDRESS,
+      call: ["minimumBalance()(uint256)"],
+      returns: [["randomGenerationMinimumBalance"]],
+    },
+    {
+      target: process.env.NEXT_PUBLIC_RANDOM_GENERATOR_ADDRESS,
+      call: ["minigameRandom()(uint256)"],
+      returns: [["randomGenerationMinigameRandom"]],
+    },
+    {
+      target: process.env.NEXT_PUBLIC_RANDOM_GENERATOR_ADDRESS,
+      call: ["minigameRange()(uint256)"],
+      returns: [["minigameRange"]],
+    },
+    {
+      target: process.env.NEXT_PUBLIC_RANDOM_GENERATOR_ADDRESS,
+      call: ["startTime()(uint256)"],
+      returns: [["randomGenerationStartTime"]],
     },
     {
       target: process.env.NEXT_PUBLIC_PRICEFEED_ADDRESS,

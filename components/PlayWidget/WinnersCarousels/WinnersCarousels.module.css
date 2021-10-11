@@ -1,0 +1,48 @@
+.winnersCarousels {
+  position: relative;
+}
+.winnersCarousels > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 0 25px;
+}
+.winnersCarousels > button {
+  background: none;
+  border: none;
+  position: absolute;
+  top: calc(50% - 25px);
+  cursor: pointer;
+  padding: 0;
+}
+.winnersCarousels > button > img {
+  height: 50px;
+  object-fit: contain;
+}
+.address {
+  font-family: "Eurostile Bold Extra";
+  max-width: 100%;
+  word-break: break-all;
+  text-align: center;
+  font-size: 10px;
+}
+.won__text {
+  margin-top: 5px;
+  font-size: 15px;
+  font-family: "Eurostile Bold Extra";
+}
+.arrowLeft {
+  left: -1%;
+}
+.arrowRight {
+  right: -1%;
+}
+@media only screen and (max-width: 768px) {
+  .arrowLeft {
+    left: -3%;
+  }
+  .arrowRight {
+    right: -3%;
+  }
+}

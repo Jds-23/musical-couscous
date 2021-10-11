@@ -1,0 +1,24 @@
+.viewOnBscScan {
+  border: none;
+  background: none;
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: "Eurostile Bold Extra";
+  cursor: pointer;
+  margin-top: 13px;
+}
+.viewOnBscScan > p {
+  font-size: 10px;
+  color: #7a71a7;
+}
+.dark > p {
+  color: #a09ac0;
+}
+.viewOnBscScan > img {
+  object-fit: contain;
+  height: 25px;
+  margin-bottom: 5px;
+}
