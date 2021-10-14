@@ -138,7 +138,7 @@ const PlayWidget: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
       case 1:
         return (
           <>
-            <h1>IT'S TIME TO PLAY</h1>
+            <h1>IT&apos;S TIME TO PLAY</h1>
             <p
               style={{ marginTop: "100px", marginBottom: "90px" }}
               className={styles.paragraph__2}
@@ -151,7 +151,7 @@ const PlayWidget: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
       case 2:
         return (
           <>
-            <h1 style={{ marginBottom: "20px" }}>IT'S TIME TO PLAY</h1>
+            <h1 style={{ marginBottom: "20px" }}>IT&apos;S TIME TO PLAY</h1>
 
             <ConnectButton size="sm" />
             <p className={styles.paragraph__1}>Time left to guess a number:</p>
@@ -228,7 +228,7 @@ const PlayWidget: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
       case 3:
         return (
           <>
-            <h1 style={{ marginBottom: "20px" }}>IT'S TIME TO PLAY</h1>
+            <h1 style={{ marginBottom: "20px" }}>IT&apos;S TIME TO PLAY</h1>
 
             <ConnectButton size="sm" />
             <p className={styles.paragraph__1}>
@@ -244,7 +244,7 @@ const PlayWidget: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
             <p className={styles.paragraph__2}>
               Be sure to stay here for the next few minutes to confirm your
               submission. Without confirming your submission you will not enter
-              today's s contributors sweepstake.
+              today&apos;s s contributors sweepstake.
             </p>
           </>
         );
@@ -277,8 +277,8 @@ const PlayWidget: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
               </p>
             )}
             <p style={{ marginTop: "17px" }} className={styles.paragraph__3}>
-              You are now participating in today's contributors sweepstakes.
-              Stay tuned, we will be announcing the winner soon.
+              You are now participating in today&apos;s contributors
+              sweepstakes. Stay tuned, we will be announcing the winner soon.
             </p>
           </>
         );
