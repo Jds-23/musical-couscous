@@ -7,7 +7,6 @@ import { Theme, useTheme } from "../../context/StateProvider";
 import WidgetScreen from "../WidgetScreen/WidgetScreen";
 import Progressbar from "./Progressbar/Progressbar";
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import CountdownTimer from "../CountdownTimer/CountdownTimer";
 import { useWeb3React } from "@web3-react/core";
 import { Web3Provider } from "@ethersproject/providers";
 import { BigNumber, Contract } from "ethers";
@@ -229,19 +228,32 @@ const LockWidget: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
                     60 DAYS
                   </button>
                 </div>
-
-                <button
-                  className={
-                    days === 90
-                      ? styles.button__gradient
-                      : styles.button__outline
-                  }
-                  onClick={() => {
-                    setDays(90);
-                  }}
-                >
-                  90 DAYS
-                </button>
+                <div style={{ display: "flex" }}>
+                  <button
+                    className={
+                      days === 90
+                        ? styles.button__gradient
+                        : styles.button__outline
+                    }
+                    onClick={() => {
+                      setDays(90);
+                    }}
+                  >
+                    90 DAYS
+                  </button>
+                  <button
+                    className={
+                      days === 180
+                        ? styles.button__gradient
+                        : styles.button__outline
+                    }
+                    onClick={() => {
+                      setDays(180);
+                    }}
+                  >
+                    180 DAYS
+                  </button>
+                </div>
                 <button
                   style={{
                     padding: "4px 20px 5px 20px",
