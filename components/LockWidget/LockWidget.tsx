@@ -228,20 +228,20 @@ const LockWidget: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
                     60 DAYS
                   </button>
                 </div>
-                <div style={{ display: "flex" }}>
-                  <button
-                    className={
-                      days === 90
-                        ? styles.button__gradient
-                        : styles.button__outline
-                    }
-                    onClick={() => {
-                      setDays(90);
-                    }}
-                  >
-                    90 DAYS
-                  </button>
-                  <button
+                {/* <div style={{ display: "flex" }}> */}
+                <button
+                  className={
+                    days === 90
+                      ? styles.button__gradient
+                      : styles.button__outline
+                  }
+                  onClick={() => {
+                    setDays(90);
+                  }}
+                >
+                  90 DAYS
+                </button>
+                {/* <button
                     className={
                       days === 180
                         ? styles.button__gradient
@@ -253,7 +253,7 @@ const LockWidget: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
                   >
                     180 DAYS
                   </button>
-                </div>
+                </div> */}
                 <button
                   style={{
                     padding: "4px 20px 5px 20px",
