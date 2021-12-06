@@ -44,6 +44,12 @@ const useRefreshTimer = (interval: number) => {
   return timer;
 };
 
+function sleep(timeout: number) {
+  return new Promise<void>((resolve, reject) => {
+    setTimeout(resolve, timeout);
+  });
+}
+
 const PlayWidget: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
   show,
   setShow,
@@ -72,7 +78,6 @@ const PlayWidget: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
   const nextSweepstake = nextSweepstakeMoment
     ? nextSweepstakeMoment.unix() * 1000 + timezoneOFfset
     : null;
-
   const isInSweepstake =
     nextSweepstakeMoment &&
     moment().isAfter(nextSweepstakeMoment) &&
@@ -195,7 +200,17 @@ const PlayWidget: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
                 const hash = keccak256(
                   solidityPack(["uint256", "address"], [randomValue, account])
                 );
-                await contract.registerRandom(hash);
+                try {
+                  await contract.registerRandom(hash);
+                } catch (err: any) {
+                  console.log(err);
+                  alert(
+                    "Error: " +
+                      (err?.data?.message || err?.message || "Unknown") +
+                      "\nPlease try again"
+                  );
+                  return;
+                }
                 const timeToReveal =
                   (moment(nextSweepstakeMoment).add(2, "minute").unix() -
                     moment().unix()) *
@@ -210,8 +225,16 @@ const PlayWidget: React.FC<React.HTMLAttributes<HTMLDivElement> & MyProps> = ({
                       await contract.reveal(randomValue);
                       success = true;
                       break;
-                    } catch (err) {
-                      console.log("err", err);
+                    } catch (err: any) {
+                      if (i == 9) {
+                        // Last retry
+                        alert(
+                          "Error: " +
+                            (err?.data?.message || err?.message || "Unknown")
+                        );
+                      }
+                      console.log("err", i, err);
+                      await sleep(i * 1000);
                     }
                   }
                   if (success) {
